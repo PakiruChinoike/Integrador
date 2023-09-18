@@ -34,6 +34,4 @@ public abstract class Criatura {
         this.armadura = armadura;
     }
 
-    public String usaHabilidade(int n);
-
 }
