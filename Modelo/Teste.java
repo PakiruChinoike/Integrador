@@ -2,17 +2,30 @@ import java.util.ArrayList;
 
 public class Teste {
     
-    public static void main(String[] args) {
+       public static void main(String[] args) {
 
-        Habilidade habilidade = new Habilidade("Boa noite");
-        ArrayList<Habilidade> listaHabilidades = new ArrayList<Habilidade>();
-        listaHabilidades.add(habilidade);
+        Personagem pakiru = new Personagem("Pakiru", 1, 1);
+        Inimigo esqueleto = new Inimigo("Esqueleto", 1, 3);
 
-        Criatura inimigo = new Inimigo("Esqueleto", 1, 1, listaHabilidades);
-        Criatura personagem = new Personagem(1);
+        System.out.println(pakiru.getNome());
+        System.out.println(esqueleto.getNome());
 
-        System.out.println(inimigo.usaHabilidade(1));
-        System.out.println(number1);
+        if (Habilidade.personagemHabilidade(1, pakiru, esqueleto)==1) {
+            System.out.println("Pakiru acertou Esqueleto");
+            System.out.println(esqueleto.getVida());
+        }
+        else {
+            System.out.println("Pakiru errou!");
+        }
+        
+        if (Habilidade.monstroHabilidade(5, esqueleto, pakiru)==1) {
+            System.out.println("Esqueleto acertou Pakiru");
+            System.out.println(pakiru.getVida());
+        }
+        else {
+            System.out.println("Esqueleto errou!");
+        }
+        
     }
 
 }

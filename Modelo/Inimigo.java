@@ -3,17 +3,24 @@ import java.util.ArrayList;
 public class Inimigo extends Criatura{
     
     private int dificuldade;
-    private ArrayList<Habilidade> listaHabilidades;
+    private int ataque;
 
-    public Inimigo(String nome, int dificuldade, int n, ArrayList<Habilidade> listaHabilidades) {
+    public Inimigo(String nome, int dificuldade, int ataque) {
         super(nome);
         this.dificuldade = dificuldade;
-        this.listaHabilidades = new ArrayList<Habilidade>(n);
-        this.listaHabilidades.addAll(listaHabilidades);
+        this.ataque = ataque;
     }
 
-    public String usaHabilidade(int i) {
-        return listaHabilidades.get(i-1).getFuncao();
+    public int getAtaque() {
+        return ataque;
+    }
+
+    public void setAtaque(int ataque) {
+        this.ataque = ataque;
+    }
+
+    public int getDificuldade() {
+        return dificuldade;
     }
 
 }

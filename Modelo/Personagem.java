@@ -9,10 +9,9 @@ public class Personagem extends Criatura{
         private int experiencia;
         private int nivel;
 
-        public Personagem(int classe, int nivel) {
-            super("Pakiru");
-            this.nivel = nivel;
-            this.classe = new Classe(classe); 
+        public Personagem(String nome, int classe, int nivel) {
+            super(nome);
+            this.nivel = nivel; 
             switch(classe) {
                 case 1: {
                     this.classe = new Guerreiro(1);
@@ -20,9 +19,11 @@ public class Personagem extends Criatura{
                 }
                 case 2: {
                     this.classe = new Ladino(2);
+                    break;
                 }
                 case 3: {
                     this.classe = new Mago(3); 
+                    break;
                 }
             }
             this.agilidade = this.classe.getPadrao(0);

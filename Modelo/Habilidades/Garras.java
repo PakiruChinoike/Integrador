@@ -1,13 +1,13 @@
 import java.lang.Math;
 
-public class Golpeada extends Habilidade{
+public class Garras extends Habilidade{
     
-    public Golpeada(){
-        super(1, "Golpeada", "Um forte ataque físico.");
+    public Garras(){
+        super(5, "Garras", "Um ataque com garras.");
     }
 
-    protected static int habilidadeAtiva(Personagem usuario, Inimigo alvo) {
-        int hit = (int)(Math.random() * 20) + 1 + usuario.getForca();
+    protected static int habilidadeAtiva(Inimigo usuario, Personagem alvo) {
+        int hit = (int)(Math.random() * 20) + 1 + usuario.getAtaque();
             if (hit>alvo.getArmadura()) {
                 int damage = (int)(Math.random()*8)+1;
                 alvo.setVida(alvo.getVida()-damage);

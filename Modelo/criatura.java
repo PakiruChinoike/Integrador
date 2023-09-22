@@ -1,4 +1,4 @@
-public abstract class Criatura {
+public class Criatura {
 
     private String nome;
     private int vida;

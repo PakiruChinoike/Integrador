@@ -4,10 +4,10 @@ import java.util.ArrayList;
 public class AtaquePesado extends Habilidade{
     
     public AtaquePesado(){
-        super("Ataque Pesado", "Um golpe de varrida devastador que acerta todos em sua frente.");
+        super(3, "Ataque Pesado", "Um golpe de varrida devastador que acerta todos em sua frente.");
     }
 
-    protected int habilidadeAtiva(Personagem usuario, ArrayList<Criatura> alvos) {
+    protected static int habilidadeAtiva(Criatura usuario, ArrayList<Criatura> alvos) {
         int hit = (int)(Math.random()*20)+5+usuario.getForca();
         int acertos = 0;
         for (int i = 0; i<alvos.lastIndexOf(alvos); i++) {
