@@ -12,7 +12,7 @@ public abstract class Habilidade {
 
     public abstract boolean habilidadeAtiva();
 
-    public static int personagemHabilidade(int id, Personagem usuario, Inimigo alvo) {
+    public static int personagemHabilidade(int id, Personagem usuario, Monstro alvo) {
         switch(id) {
             case 1: {
                 return Golpeada.habilidadeAtiva(usuario, alvo);
@@ -29,7 +29,7 @@ public abstract class Habilidade {
         }
     }
 
-    public static int monstroHabilidade(int id, Inimigo usuario, Personagem alvo) {
+    public static int monstroHabilidade(int id, Monstro usuario, Personagem alvo) {
         switch(id) {
             case 5: {
                 return Garras.habilidadeAtiva(usuario, alvo);

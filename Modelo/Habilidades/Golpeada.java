@@ -6,7 +6,7 @@ public class Golpeada extends Habilidade{
         super(1, "Golpeada", "Um forte ataque físico.");
     }
 
-    protected static int habilidadeAtiva(Personagem usuario, Inimigo alvo) {
+    protected static int habilidadeAtiva(Personagem usuario, Monstro alvo) {
         int hit = (int)(Math.random() * 20) + 1 + usuario.getForca();
             if (hit>alvo.getArmadura()) {
                 int damage = (int)(Math.random()*8)+1;

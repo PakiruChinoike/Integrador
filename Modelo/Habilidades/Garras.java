@@ -6,7 +6,7 @@ public class Garras extends Habilidade{
         super(5, "Garras", "Um ataque com garras.");
     }
 
-    protected static int habilidadeAtiva(Inimigo usuario, Personagem alvo) {
+    protected static int habilidadeAtiva(Monstro usuario, Personagem alvo) {
         int hit = (int)(Math.random() * 20) + 1 + usuario.getAtaque();
             if (hit>alvo.getArmadura()) {
                 int damage = (int)(Math.random()*8)+1;

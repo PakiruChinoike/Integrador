@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
-public class Teste {
+public class TesteCombate {
     
        public static void main(String[] args) {
 
         Personagem pakiru = new Personagem("Pakiru", 1, 1);
-        Inimigo esqueleto = new Inimigo("Esqueleto", 1, 3);
+        Monstro esqueleto = new Monstro("Esqueleto", 1, 3);
 
         System.out.println(pakiru.getNome());
         System.out.println(esqueleto.getNome());

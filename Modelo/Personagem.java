@@ -2,7 +2,7 @@ public class Personagem extends Criatura{
     
         private int id;
         private Classe classe;
-        private Equipe equipe;
+        private int idEquipe;
         private int agilidade;
         private int forca;
         private int inteligencia;
@@ -41,10 +41,6 @@ public class Personagem extends Criatura{
 
         public String getClasseNome() {
             return classe.getNome();
-        }
-
-        public Equipe getEquipe() {
-            return equipe;
         }
 
         public String getAtributos() {

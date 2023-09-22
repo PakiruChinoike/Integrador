@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
-public class Inimigo extends Criatura{
+public class Monstro extends Criatura{
     
     private int dificuldade;
     private int ataque;
 
-    public Inimigo(String nome, int dificuldade, int ataque) {
+    public Monstro(String nome, int dificuldade, int ataque) {
         super(nome);
         this.dificuldade = dificuldade;
         this.ataque = ataque;
