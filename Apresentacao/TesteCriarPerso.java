@@ -24,7 +24,7 @@ public class TesteCriarPerso {
         inimigos.add(mon1);
         inimigos.add(mon2);
 
-        System.out.printf("Um esqueleto e um zumbi surgem na sua frente! %n");
+        System.out.println("Um esqueleto e um zumbi surgem na sua frente!");
 
         for (int i = 0; char1.getVida()>=0 || (mon1.getVida()>=0 && mon2.getVida()>=0); i++) {
             System.out.println("O que você deseja fazer?");

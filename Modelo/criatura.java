@@ -10,6 +10,12 @@ public class Criatura {
         this.armadura = 10;
     }
 
+    public Criatura(String nome, int vida, int armadura) {
+        this.nome = nome;
+        this.vida = vida;
+        this.armadura = vida;
+    }
+
     public String getNome() {
         return nome;
     }
