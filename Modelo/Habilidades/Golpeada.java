@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Golpeada extends Habilidade{
     
     public Golpeada(){
-        super(1, "Golpeada", "Um forte ataque físico.");
+        super(1, "Golpeada", "Um forte ataque físico.", 3);
     }
 
     protected static int habilidadeAtiva(Personagem usuario, ArrayList<Monstro> inimigos, int alvo) {

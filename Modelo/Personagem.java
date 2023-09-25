@@ -5,6 +5,7 @@ public class Personagem extends Criatura{
         private int id;
         private Classe classe;
         private ArrayList<Integer> listaHabilidades;
+        private ArrayList<Boolean> listaFraquezas;
 
         private int agilidade;
         private int forca;
@@ -38,6 +39,9 @@ public class Personagem extends Criatura{
 
             this.listaHabilidades = new ArrayList<Integer>();
             this.listaHabilidades.addAll(this.classe.getListaHabilidades());
+
+            this.listaFraquezas = new ArrayList<Boolean>();
+            this.listaFraquezas.addAll(this.classe.getListaFraquezas());
 
             super.setVida((10+forca)*nivel);
             super.setArmadura((10+agilidade+nivel));

@@ -2,14 +2,22 @@ import java.util.ArrayList;
 
 public abstract class Habilidade {
 
-    protected int id;
-    protected String nome;
-    protected String descricao;
+    private int id;
+    private String nome;
+    private String descricao;
+    private int dano;
 
-    public Habilidade(int id, String nome, String descricao) {
+    protected Habilidade(int id, String nome, String descricao) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
+    }
+
+    protected Habilidade(int id, String nome, String descricao, int dano) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.dano = dano;
     }
 
     public int habilidadeAtiva() {

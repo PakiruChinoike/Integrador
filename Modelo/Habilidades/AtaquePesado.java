@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class AtaquePesado extends Habilidade{
     
     public AtaquePesado(){
-        super(3, "Ataque Pesado", "Um golpe de varrida devastador que acerta todos em sua frente.");
+        super(3, "Ataque Pesado", "Um golpe de varrida devastador que acerta todos em sua frente.", 3);
     }
 
     protected static int habilidadeAtiva(Personagem usuario, ArrayList<Monstro> inimigos) {
