@@ -10,7 +10,7 @@ public class TesteCombate {
         System.out.println(pakiru.getNome());
         System.out.println(esqueleto.getNome());
 
-        if (Habilidade.personagemHabilidade(1, pakiru, esqueleto)==1) {
+        if (Habilidade.usaHabilidade(1, pakiru, esqueleto)==1) {
             System.out.println("Pakiru acertou Esqueleto");
             System.out.println(esqueleto.getVida());
         }
@@ -18,7 +18,7 @@ public class TesteCombate {
             System.out.println("Pakiru errou!");
         }
         
-        if (Habilidade.monstroHabilidade(5, esqueleto, pakiru)==1) {
+        if (Habilidade.usaHabilidade(13, esqueleto, pakiru)==1) {
             System.out.println("Esqueleto acertou Pakiru");
             System.out.println(pakiru.getVida());
         }

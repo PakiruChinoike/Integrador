@@ -10,9 +10,11 @@ public abstract class Habilidade {
         this.descricao = descricao;
     }
 
-    public abstract boolean habilidadeAtiva();
+    public int habilidadeAtiva() {
+        return 0;
+    }
 
-    public static int personagemHabilidade(int id, Personagem usuario, Monstro alvo) {
+    public static int usaHabilidade(int id, Personagem usuario, Monstro alvo) {
         switch(id) {
             case 1: {
                 return Golpeada.habilidadeAtiva(usuario, alvo);
@@ -29,11 +31,30 @@ public abstract class Habilidade {
         }
     }
 
-    public static int monstroHabilidade(int id, Monstro usuario, Personagem alvo) {
+    public static int usaHabilidade(int id, Personagem usuario, ArrayList<Monstro> alvos) {
         switch(id) {
-            case 5: {
+            case 3: {
+                return AtaquePesado.habilidadeAtiva(usuario, alvos);
+            }
+            default: {
+                return 0;
+            }
+        }
+    }
+
+    public static int usaHabilidade(int id, Monstro usuario, Personagem alvo) {
+        switch(id) {
+            case 13: {
                 return Garras.habilidadeAtiva(usuario, alvo);
             }
+            default: {
+                return 0;
+            }
+        }
+    }
+
+    public static int usaHabilidade(int id, Monstro usuario, ArrayList<Personagem> alvos) {
+        switch(id) {
             default: {
                 return 0;
             }

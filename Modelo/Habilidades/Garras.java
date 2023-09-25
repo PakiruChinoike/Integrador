@@ -3,7 +3,7 @@ import java.lang.Math;
 public class Garras extends Habilidade{
     
     public Garras(){
-        super(5, "Garras", "Um ataque com garras.");
+        super(13, "Garras", "Um ataque com garras.");
     }
 
     protected static int habilidadeAtiva(Monstro usuario, Personagem alvo) {
