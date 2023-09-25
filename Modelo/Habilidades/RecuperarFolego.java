@@ -6,10 +6,10 @@ public class RecuperarFolego extends Habilidade{
         super(4, "Recuperar Fôlego", "Você respira fundo, recuperando suas forças vitais.");
     }
 
-    protected static int habilidadeAtiva(Criatura usuario) {
+    protected static int habilidadeAtiva(Personagem usuario) {
         int cura = (int)(Math.random() * 16) + 2;
-        usuario.setVida(usuario.getVida()+cura);
-        return 1;
+        usuario.setVida((usuario.getVida())+cura);
+        return 10;
     }
 
 }

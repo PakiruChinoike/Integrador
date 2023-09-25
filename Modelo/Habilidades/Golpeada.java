@@ -1,4 +1,5 @@
 import java.lang.Math;
+import java.util.ArrayList;
 
 public class Golpeada extends Habilidade{
     
@@ -6,11 +7,11 @@ public class Golpeada extends Habilidade{
         super(1, "Golpeada", "Um forte ataque físico.");
     }
 
-    protected static int habilidadeAtiva(Personagem usuario, Monstro alvo) {
+    protected static int habilidadeAtiva(Personagem usuario, ArrayList<Monstro> inimigos, int alvo) {
         int hit = (int)(Math.random() * 20) + 1 + usuario.getForca();
-            if (hit>alvo.getArmadura()) {
+            if (hit>inimigos.get(alvo).getArmadura()) {
                 int damage = (int)(Math.random()*8)+1;
-                alvo.setVida(alvo.getVida()-damage);
+                inimigos.get(alvo).setVida((inimigos.get(alvo).getVida())-damage);
                 return 1;
             }
             else {

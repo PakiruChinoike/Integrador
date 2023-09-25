@@ -9,7 +9,7 @@ public class Garras extends Habilidade{
     protected static int habilidadeAtiva(Monstro usuario, Personagem alvo) {
         int hit = (int)(Math.random() * 20) + 1 + usuario.getAtaque();
             if (hit>alvo.getArmadura()) {
-                int damage = (int)(Math.random()*8)+1;
+                int damage = (int)(Math.random()*4)+1;
                 alvo.setVida(alvo.getVida()-damage);
                 return 1;
             }

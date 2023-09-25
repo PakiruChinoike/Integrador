@@ -1,8 +1,10 @@
+import java.util.ArrayList;
+
 public class Personagem extends Criatura{
     
         private int id;
         private Classe classe;
-        private int idEquipe;
+        private ArrayList<Integer> listaHabilidades;
         private int agilidade;
         private int forca;
         private int inteligencia;
@@ -14,21 +16,24 @@ public class Personagem extends Criatura{
             this.nivel = nivel; 
             switch(classe) {
                 case 1: {
-                    this.classe = new Guerreiro(1);
+                    this.classe = new Classe(1);
                     break;
                 }
                 case 2: {
-                    this.classe = new Ladino(2);
+                    this.classe = new Classe(2);
                     break;
                 }
                 case 3: {
-                    this.classe = new Mago(3); 
+                    this.classe = new Classe(3); 
                     break;
                 }
             }
             this.agilidade = this.classe.getPadrao(0);
             this.forca = this.classe.getPadrao(1);
             this.inteligencia = this.classe.getPadrao(2);
+
+            this.listaHabilidades = new ArrayList<Integer>();
+            this.listaHabilidades.addAll(this.classe.getListaHabilidades());
         }
 
         public int getId() {
@@ -80,11 +85,19 @@ public class Personagem extends Criatura{
         }
 
         public int getNivel() {
-        return nivel;
+            return nivel;
         }
 
         public void setNivel(int nivel) {
             this.nivel = nivel;
+        }
+
+        public ArrayList<Integer> getListaHabilidades() {
+            return listaHabilidades;
+        }
+
+        public String toString() {
+            return super.getNome() + " é um " + classe.getNome() + " de nível " + nivel;
         }
 
         public void subirNivel(int atributoAumentar) {

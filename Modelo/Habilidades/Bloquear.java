@@ -4,8 +4,8 @@ public class Bloquear extends Habilidade{
         super(2, "Bloquear", "Protege um aliado de um ataque próximo.");
     }
 
-    public static int habilidadeAtiva(Criatura usuario) {
-        return 1;
+    public static int habilidadeAtiva(Personagem usuario) {
+        return 10;
     }
 
 }
