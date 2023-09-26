@@ -1,9 +1,15 @@
 import java.lang.Math;
 
-public class RecuperarFolego extends Habilidade{
+public final class RecuperarFolego extends Habilidade{
     
+    private static int id;
+    private static String nome;
+    private static String descricao;
+
     public RecuperarFolego(){
-        super(4, "Recuperar Fôlego", "Você respira fundo, recuperando suas forças vitais.");
+        id = 4;
+        nome = "Recuperar Fôlego";
+        descricao = "Você respira fundo e trata de seus ferimentos";
     }
 
     protected static int habilidadeAtiva(Personagem usuario) {

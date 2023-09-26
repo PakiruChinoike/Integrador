@@ -12,7 +12,9 @@ public class Classe {
         padrao = new ArrayList<Integer>(3);
         listaHabilidades = new ArrayList<Integer>(4);
         fraquezas = new ArrayList<Boolean>(5);
-        fraquezas.forEach((n) -> fraquezas.add(false));
+        for (int i = 0; i<5; i++) {
+            fraquezas.add(false);
+        }
 
         switch(tipo) {
             case 1: {

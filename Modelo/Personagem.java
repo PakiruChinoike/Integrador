@@ -42,6 +42,7 @@ public class Personagem extends Criatura{
 
             this.listaFraquezas = new ArrayList<Boolean>();
             this.listaFraquezas.addAll(this.classe.getListaFraquezas());
+            super.setFraquezas(this.listaFraquezas);
 
             super.setVida((10+forca)*nivel);
             super.setArmadura((10+agilidade+nivel));

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Criatura {
 
     private String nome;
@@ -9,6 +11,14 @@ public class Criatura {
         this.nome = nome;
         this.vida = 10;
         this.armadura = 10;
+    }
+
+    public Criatura(String nome, ArrayList<Boolean> fraquezas) {
+        this.nome = nome;
+        this.vida = 10;
+        this.armadura = 10;
+        this.fraquezas = new ArrayList<Boolean>();
+        this.fraquezas.addAll(fraquezas);
     }
 
     public Criatura(String nome, int vida, int armadura, ArrayList<Boolean> fraquezas) {
@@ -41,6 +51,29 @@ public class Criatura {
 
     public void setArmadura(int armadura) {
         this.armadura = armadura;
+    }
+
+    public ArrayList<Boolean> getFraquezas() {
+        return fraquezas;
+    }
+
+    public Boolean getFraquezas(int index) {
+        return fraquezas.get(index);
+    }
+
+    public Boolean setFraquezas(ArrayList<Boolean> fraquezas) {
+        if (this.fraquezas.isEmpty()) {
+            this.fraquezas = new ArrayList<Boolean>(5);
+            this.fraquezas.addAll(fraquezas);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    public void setFraquezas(int index, boolean fraqueza) {
+        fraquezas.set(index, fraqueza);
     }
 
 }

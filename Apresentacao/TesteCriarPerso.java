@@ -12,14 +12,21 @@ public class TesteCriarPerso {
         int classe = keyboard2.nextInt();
 
         Personagem char1 = new Personagem(nome, classe, 1);
+        ArrayList<Personagem> equipe = new ArrayList<Personagem>(3);
+        equipe.add(char1);
 
         System.out.println(char1.toString());
         System.out.println(char1.getNome());
         System.out.println(char1.getListaHabilidades());
         System.out.printf(char1.getAtributos());
 
-        Monstro mon1 = new Monstro("Esqueleto", 1, 3);
-        Monstro mon2 = new Monstro("Zumbi", 1, 4);
+        ArrayList<Boolean> fraquezas = new ArrayList<Boolean>(5);
+        for (int i = 0; i<5; i++) {
+            fraquezas.add(false);
+        }
+        fraquezas.set(0, true);
+        Monstro mon1 = new Monstro("Esqueleto", 1, 3, fraquezas);
+        Monstro mon2 = new Monstro("Zumbi", 1, 4, fraquezas);
         ArrayList<Monstro> inimigos = new ArrayList<Monstro>();
         inimigos.add(mon1);
         inimigos.add(mon2);
@@ -50,7 +57,7 @@ public class TesteCriarPerso {
                 }
             }
             if (mon1.getVida()>0) {
-                int resultado = Habilidade.usaHabilidade(13, mon1, char1);
+                int resultado = Habilidade.usaHabilidade(13, mon1, equipe, 0);
                 if (resultado==1) {
                     System.out.println(mon1.getNome() + " acertou " + char1.getNome() + ", o deixando com " + char1.getVida() + " pontos de vida.");
                 }
@@ -59,7 +66,7 @@ public class TesteCriarPerso {
                 }
             }
             if (mon2.getVida()>0) {
-                int resultado = Habilidade.usaHabilidade(13, mon2, char1);
+                int resultado = Habilidade.usaHabilidade(13, mon2, equipe, 0);
                 if (resultado==1) {
                     System.out.println(mon2.getNome() + " acertou " + char1.getNome() + ", o deixando com " + char1.getVida() + " pontos de vida.");
                 }

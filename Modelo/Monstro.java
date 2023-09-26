@@ -5,8 +5,8 @@ public class Monstro extends Criatura{
     private int dificuldade;
     private int ataque;
 
-    public Monstro(String nome, int dificuldade, int ataque) {
-        super(nome);
+    public Monstro(String nome, int dificuldade, int ataque, ArrayList<Boolean> fraquezas) {
+        super(nome, fraquezas);
         this.dificuldade = dificuldade;
         this.ataque = ataque;
     }
