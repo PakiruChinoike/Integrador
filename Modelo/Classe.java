@@ -1,16 +1,17 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Classe {
     
     private String nome;
-    private ArrayList<Integer> padrao;
-    private ArrayList<Integer> listaHabilidades;
-    private ArrayList<Boolean> fraquezas;
+    private List<Integer> padrao;
+    private List<Habilidade> listaHabilidades;
+    private List<Boolean> fraquezas;
 
     public Classe(int tipo) {
 
         padrao = new ArrayList<Integer>(3);
-        listaHabilidades = new ArrayList<Integer>(4);
+        listaHabilidades = new ArrayList<Habilidade>(4);
         fraquezas = new ArrayList<Boolean>(5);
         for (int i = 0; i<5; i++) {
             fraquezas.add(false);
@@ -22,9 +23,16 @@ public class Classe {
                 padrao.add(2);
                 padrao.add(3);
                 padrao.add(1);
-                for (int id = 1; id<=4; id++) {
-                    listaHabilidades.add(id);
-                }
+
+                // Habilidade golpeada = new Golpeada();
+                // Habilidade bloquear = new Bloquear();
+                // Habilidade ataquePesado = new AtaquePesado();
+                // Habilidade recuperarFolego = new RecuperarFolego();
+                // listaHabilidades.add(golpeada);
+                // listaHabilidades.add(bloquear);
+                // listaHabilidades.add(ataquePesado);
+                // listaHabilidades.add(recuperarFolego);
+
                 fraquezas.set(0, true);
                 break;
             }
@@ -33,9 +41,9 @@ public class Classe {
                 padrao.add(3);
                 padrao.add(2);
                 padrao.add(1);
-                for (int id = 5; id<=8; id++) {
-                    listaHabilidades.add(id);
-                }
+                // for (int id = 5; id<=8; id++) {
+                //     listaHabilidades.add(id);
+                // }
                 fraquezas.set(1, true);
                 break;
             }
@@ -44,9 +52,9 @@ public class Classe {
                 padrao.add(2);
                 padrao.add(1);
                 padrao.add(3);
-                for (int id = 9; id<=12; id++) {
-                    listaHabilidades.add(id);
-                }
+                // for (int id = 9; id<=12; id++) {
+                //     listaHabilidades.add(id);
+                // }
                 fraquezas.set(2, true);
                 break;
             }
@@ -57,8 +65,8 @@ public class Classe {
         return nome;
     }
 
-    public int getPadrao(int index) {
-        return padrao.get(index);
+    public List<Integer> getPadrao() {
+        return padrao;
     }
 
     public ArrayList<Integer> getListaHabilidades() {

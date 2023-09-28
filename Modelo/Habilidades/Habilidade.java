@@ -1,36 +1,30 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Habilidade {
 
-    public static int usaHabilidade(int id, Personagem usuario, ArrayList<Monstro> inimigos, int alvo) {
-        switch(id) {
-            case 1: {
-                return Golpeada.habilidadeAtiva(usuario, inimigos, alvo);
-            }
-            case 2: {
-                return Bloquear.habilidadeAtiva(usuario);
-            }
-            case 3: {
-                return AtaquePesado.habilidadeAtiva(usuario, inimigos);
-            }
-            case 4: {
-                return RecuperarFolego.habilidadeAtiva(usuario);
-            }
-            default: {
-                return 0;
-            }
-        }
+    private int id;
+    private String nome;
+    private String descricao;
+
+    protected Habilidade(int id, String nome, String descricao) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
     }
 
-    public static int usaHabilidade(int id, Monstro usuario, ArrayList<Personagem> inimigos, int alvo) {
-        switch(id) {
-            case 13: {
-                return Garras.habilidadeAtiva(usuario, inimigos, alvo);
-            }
-            default: { 
-                return 0;
-            }
-        }
+    public abstract String usaHabilidade(Personagem usuario, List<Monstro> inimigos, int alvo);
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 
 }

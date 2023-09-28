@@ -1,22 +1,12 @@
-import java.util.ArrayList;
+import java.util.List;
 
 public class Monstro extends Criatura{
     
     private int dificuldade;
-    private int ataque;
 
-    public Monstro(String nome, int dificuldade, int ataque, ArrayList<Boolean> fraquezas) {
-        super(nome, fraquezas);
+    public Monstro(String nome, int dificuldade, List<Boolean> fraquezas, List<Integer> atributos) {
+        super(nome, fraquezas, atributos);
         this.dificuldade = dificuldade;
-        this.ataque = ataque;
-    }
-
-    public int getAtaque() {
-        return ataque;
-    }
-
-    public void setAtaque(int ataque) {
-        this.ataque = ataque;
     }
 
     public int getDificuldade() {
