@@ -39,8 +39,8 @@ public abstract class Ataque extends Habilidade{
         }
     }
 
-    protected int causaDano(int damage, Monstro monstro) {
-        vidaAtual = monstro.setVida((monstro.getVida())-damage);
+    protected int causaDano(int damage, Criatura inimigo) {
+        vidaAtual = inimigo.setVida((inimigo.getVida())-damage);
         return vidaAtual;
     }
 

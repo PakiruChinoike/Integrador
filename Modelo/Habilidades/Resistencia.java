@@ -1,4 +1,5 @@
 import java.util.List;
+import java.lang.Math;
 
 public class Resistencia extends Habilidade{
     
@@ -30,8 +31,8 @@ public class Resistencia extends Habilidade{
         return damage;
     }
 
-    protected int causaDano(int damage, Monstro monstro) {
-        vidaAtual = monstro.setVida((monstro.getVida())-damage);
+    protected int causaDano(int damage, Criatura inimigo) {
+        vidaAtual = inimigo.setVida((inimigo.getVida())-damage);
         return vidaAtual;
     }
 
