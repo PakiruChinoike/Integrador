@@ -6,6 +6,7 @@ public class Personagem extends Criatura{
         private int id;
         private Classe classe;
         private List<Habilidade> listaHabilidades;
+        private List<Item> listaItens;
 
         private int experiencia;
         private int nivel;
