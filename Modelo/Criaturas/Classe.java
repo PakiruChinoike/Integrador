@@ -24,15 +24,6 @@ public class Classe {
                 padrao.add(3);
                 padrao.add(1);
 
-                // Habilidade golpeada = new Golpeada();
-                // Habilidade bloquear = new Bloquear();
-                // Habilidade ataquePesado = new AtaquePesado();
-                // Habilidade recuperarFolego = new RecuperarFolego();
-                // listaHabilidades.add(golpeada);
-                // listaHabilidades.add(bloquear);
-                // listaHabilidades.add(ataquePesado);
-                // listaHabilidades.add(recuperarFolego);
-
                 fraquezas.set(0, true);
                 break;
             }
@@ -41,9 +32,7 @@ public class Classe {
                 padrao.add(3);
                 padrao.add(2);
                 padrao.add(1);
-                // for (int id = 5; id<=8; id++) {
-                //     listaHabilidades.add(id);
-                // }
+
                 fraquezas.set(1, true);
                 break;
             }
@@ -52,9 +41,7 @@ public class Classe {
                 padrao.add(2);
                 padrao.add(1);
                 padrao.add(3);
-                // for (int id = 9; id<=12; id++) {
-                //     listaHabilidades.add(id);
-                // }
+
                 fraquezas.set(2, true);
                 break;
             }

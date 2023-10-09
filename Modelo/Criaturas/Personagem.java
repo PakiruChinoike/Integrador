@@ -36,6 +36,8 @@ public class Personagem extends Criatura{
             this.listaHabilidades = new ArrayList<Habilidade>();
             this.listaHabilidades.addAll(this.classe.getListaHabilidades());
 
+            this.listaItens = new ArrayList<Item>();
+
             super.setArmadura((5+super.getAtributos(0)+nivel));
             super.setVida((10+super.getAtributos(1))*nivel);
             this.poder = ((10+super.getAtributos(2)+nivel));

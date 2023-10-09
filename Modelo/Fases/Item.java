@@ -1,5 +1,6 @@
 public class Item {
 
+    private int id;
     private String nome;
     private int raridade;
     private Habilidade habilidade;
@@ -8,6 +9,10 @@ public class Item {
         this.nome = nome;
         this.raridade = raridade;
         this.habilidade = habilidade;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNome(){

@@ -1,5 +1,6 @@
 public class Recompensa{
 
+    private int id;
     private int tipo;
     private int raridade;
     private int experiencia;
@@ -32,6 +33,10 @@ public class Recompensa{
         this.experiencia = experiencia;
         this.item = item;
         this.habilidade = habilidade;
+    }
+    
+    public int getId() {
+        return id;
     }
 
     public int getTipo() {

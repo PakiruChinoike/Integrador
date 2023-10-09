@@ -19,6 +19,10 @@ public class Sala{
         this.inimigos.addAll(inimigos);
     }
 
+    public int getId() {
+        return id;
+    }
+
     public String entraSala(Equipe party) {
         return party.getPersonagem(0).getNome() + ", " + party.getPersonagem(1).getNome() + " e " + party.getPersonagem(2).getNome() +
         "entram na sala adiante. " + descricao;
