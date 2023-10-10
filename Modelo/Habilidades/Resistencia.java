@@ -32,38 +32,11 @@ public class Resistencia extends Habilidade{
     }
 
     protected int causaDano(int damage, Criatura inimigo) {
-        vidaAtual = inimigo.setVida((inimigo.getVida())-damage);
+        int vidaAtual = inimigo.setVida((inimigo.getVida())-damage);
         return vidaAtual;
     }
 
-    public String usaHabilidade(Personagem usuario, List<Monstro> inimigos, int alvo) {
-        int teste = rolagemResistencia(inimigos.get(alvo).getDificuldade(), inimigos.get(alvo).getAtributos(atributo));
-        int damage = rolagemDano(inimigos.get(alvo).getFraquezas(tipoDano));
-        if (teste<minTeste) {
-            int vidaAtual = causaDano(damage, inimigos.get(alvo));
-            return usuario.getNome() + " utilizou " + super.getNome() + " em " + inimigos.get(alvo).getNome() + 
-            " que falhou em resistir ao efeito, sofrendo " + damage + " de dano, e ficando com " + 
-            vidaAtual + " pontos de vida.";
-        }
-        else {
-            return inimigos.get(alvo).getNome() + " resistiu ao efeito de " + usuario.getNome();
-        }
-    }
-
-    public String usaHabilidade(Personagem usuario, List<Monstro> inimigos) {
-        int acertos = 0;
-        for (int i = 0; i<inimigos.size(); i++) {
-            int teste = rolagemResistencia(inimigos.get(i).getDificuldade(), inimigos.get(i).getAtributos(atributo));
-            int damage = rolagemDano(inimigos.get(i).getFraquezas(tipoDano));
-            if (teste<minTeste) {
-                causaDano(damage, inimigos.get(i));
-                acertos++;
-            }
-        }
-        return acertos + " alvos falharam na resistência do efeito de " + usuario.getNome();
-    }
-
-    public String usaHabilidade(Monstro usuario, List<Personagem> inimigos, int alvo) {
+    public String usaHabilidade(Personagem usuario, List<Criatura> inimigos, int alvo) {
         int teste = rolagemResistencia(inimigos.get(alvo).getNivel(), inimigos.get(alvo).getAtributos(atributo));
         int damage = rolagemDano(inimigos.get(alvo).getFraquezas(tipoDano));
         if (teste<minTeste) {
@@ -77,7 +50,34 @@ public class Resistencia extends Habilidade{
         }
     }
 
-    public String usaHabilidade(Monstro usuario, List<Personagem> inimigos) {
+    public String usaHabilidade(Personagem usuario, List<Criatura> inimigos) {
+        int acertos = 0;
+        for (int i = 0; i<inimigos.size(); i++) {
+            int teste = rolagemResistencia(inimigos.get(i).getNivel(), inimigos.get(i).getAtributos(atributo));
+            int damage = rolagemDano(inimigos.get(i).getFraquezas(tipoDano));
+            if (teste<minTeste) {
+                causaDano(damage, inimigos.get(i));
+                acertos++;
+            }
+        }
+        return acertos + " alvos falharam na resistência do efeito de " + usuario.getNome();
+    }
+
+    public String usaHabilidade(Monstro usuario, List<Criatura> inimigos, int alvo) {
+        int teste = rolagemResistencia(inimigos.get(alvo).getNivel(), inimigos.get(alvo).getAtributos(atributo));
+        int damage = rolagemDano(inimigos.get(alvo).getFraquezas(tipoDano));
+        if (teste<minTeste) {
+            int vidaAtual = causaDano(damage, inimigos.get(alvo));
+            return usuario.getNome() + " utilizou " + super.getNome() + " em " + inimigos.get(alvo).getNome() + 
+            " que falhou em resistir ao efeito, sofrendo " + damage + " de dano, e ficando com " + 
+            vidaAtual + " pontos de vida.";
+        }
+        else {
+            return inimigos.get(alvo).getNome() + " resistiu ao efeito de " + usuario.getNome();
+        }
+    }
+
+    public String usaHabilidade(Monstro usuario, List<Criatura> inimigos) {
         int acertos = 0;
         for (int i = 0; i<inimigos.size(); i++) {
             int teste = rolagemResistencia(inimigos.get(i).getNivel(), inimigos.get(i).getAtributos(atributo));

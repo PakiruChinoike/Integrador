@@ -3,19 +3,13 @@ import java.util.List;
 public class Monstro extends Criatura{
     
     private int id;
-    private int dificuldade;
 
-    public Monstro(String nome, int dificuldade, List<Boolean> fraquezas, List<Integer> atributos) {
-        super(nome, fraquezas, atributos);
-        this.dificuldade = dificuldade;
+    public Monstro(String nome, int vida, int armadura, int nivel, List<Boolean> fraquezas, List<Integer> atributos, List<Habilidade> habilidades) {
+        super(nome, vida, armadura, nivel, fraquezas, atributos, habilidades);
     }
 
     public int getId() {
         return id;
-    }
-
-    public int getDificuldade() {
-        return dificuldade;
     }
 
 }

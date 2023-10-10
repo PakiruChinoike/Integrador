@@ -56,11 +56,11 @@ public class Classe {
         return padrao;
     }
 
-    public ArrayList<Integer> getListaHabilidades() {
+    public List<Habilidade> getListaHabilidades() {
         return listaHabilidades;
     }
 
-    public ArrayList<Boolean> getListaFraquezas() {
+    public List<Boolean> getListaFraquezas() {
         return fraquezas;
     }
 

@@ -9,13 +9,13 @@ public class Personagem extends Criatura{
         private List<Item> listaItens;
 
         private int experiencia;
-        private int nivel;
 
         private int poder;
 
-        public Personagem(String nome, int classe, int nivel) {
+        private Equipe equipe;
+
+        public Personagem(String nome, int classe) {
             super(nome);
-            this.nivel = nivel; 
             switch(classe) {
                 case 1: {
                     this.classe = new Classe(1);
@@ -32,15 +32,13 @@ public class Personagem extends Criatura{
             }
             super.setAtributos(this.classe.getPadrao());
             super.setFraquezas(this.classe.getListaFraquezas());
-
-            this.listaHabilidades = new ArrayList<Habilidade>();
-            this.listaHabilidades.addAll(this.classe.getListaHabilidades());
+            super.setHabilidades(this.classe.getListaHabilidades());
 
             this.listaItens = new ArrayList<Item>();
 
-            super.setArmadura((5+super.getAtributos(0)+nivel));
-            super.setVida((10+super.getAtributos(1))*nivel);
-            this.poder = ((10+super.getAtributos(2)+nivel));
+            super.setArmadura((5+super.getAtributos(0)+super.getNivel()));
+            super.setVida((10+super.getAtributos(1))*super.getNivel());
+            this.poder = ((10+super.getAtributos(2)+super.getNivel()));
         }
 
         public int getId() {
@@ -63,14 +61,6 @@ public class Personagem extends Criatura{
             this.experiencia = experiencia;
         }
 
-        public int getNivel() {
-            return nivel;
-        }
-
-        public void setNivel(int nivel) {
-            this.nivel = nivel;
-        }
-
         public int getPoder() {
             return poder;
         }
@@ -79,29 +69,29 @@ public class Personagem extends Criatura{
             this.poder = poder;
         }
 
-        public ArrayList<Integer> getListaHabilidades() {
+        public List<Habilidade> getListaHabilidades() {
             return listaHabilidades;
         }
 
-        public String toString() {
-            return super.getNome() + " é um " + classe.getNome() + " de nível " + nivel;
+        public Equipe getEquipe() {
+            return equipe;
         }
 
-        // public void subirNivel(int atributoAumentar) {
-        //     this.nivel++;
-        //     this.experiencia = 0;
-        //     switch(atributoAumentar) {
-        //         case 1: {
-        //             this.agilidade++;
-        //             break;
-        //         }
-        //         case 2: {
-        //             this.forca++;
-        //             break;
-        //         }
-        //         case 3: {
-        //             this.inteligencia++;
-        //         }
-        //     }
-        //}
+        public void setEquipe(Equipe equipe) {
+            this.equipe = equipe;
+        }
+
+        public List<Item> getListaItens() {
+            return listaItens;
+        }
+
+        public String toString() {
+            return super.getNome() + " é um " + classe.getNome() + " de nível " + super.getNivel();
+        }
+
+        public void subirNivel(int atributoAumentar) {
+            super.setNivel(super.getNivel()+1);
+            this.experiencia = 0;
+            super.setAtributos(atributoAumentar, (super.getAtributos(atributoAumentar))+1);
+        }
 }

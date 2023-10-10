@@ -1,5 +1,4 @@
 import java.lang.Math;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Ataque extends Habilidade{
@@ -40,11 +39,11 @@ public abstract class Ataque extends Habilidade{
     }
 
     protected int causaDano(int damage, Criatura inimigo) {
-        vidaAtual = inimigo.setVida((inimigo.getVida())-damage);
+        int vidaAtual = inimigo.setVida((inimigo.getVida())-damage);
         return vidaAtual;
     }
 
-    public String usaHabilidade(Personagem usuario, List<Monstro> inimigos, int alvo) {
+    public String usaHabilidade(Personagem usuario, List<Criatura> inimigos, int alvo) {
         int hit = rolagemAtaque(usuario.getAtributos(atributo));
         int damage = rolagemDano(inimigos.get(alvo).getFraquezas(tipoDano));
         if (testeAtaque(hit, inimigos.get(alvo).getArmadura())) {
@@ -57,7 +56,7 @@ public abstract class Ataque extends Habilidade{
         }
     }
 
-    public String usaHabilidade(Personagem usuario, List<Monstro> inimigos) {
+    public String usaHabilidade(Personagem usuario, List<Criatura> inimigos) {
         int hit = rolagemAtaque(usuario.getAtributos(atributo));
         int acertos = 0;
         for (int i = 0; i<inimigos.size(); i++) {
@@ -70,7 +69,7 @@ public abstract class Ataque extends Habilidade{
         return usuario.getNome() + " acertou " + acertos + " inimigos.";
     }
 
-    public String usaHabilidade(Monstro usuario, List<Personagem> inimigos, int alvo) {
+    public String usaHabilidade(Monstro usuario, List<Criatura> inimigos, int alvo) {
         int hit = rolagemAtaque(usuario.getAtributos(atributo));
         int damage = rolagemDano(inimigos.get(alvo).getFraquezas(tipoDano));
         if (testeAtaque(hit, inimigos.get(alvo).getArmadura())) {
@@ -83,7 +82,7 @@ public abstract class Ataque extends Habilidade{
         }        
     }
 
-    public String usaHabilidade(Monstro usuario, List<Personagem> inimigos) {
+    public String usaHabilidade(Monstro usuario, List<Criatura> inimigos) {
         int hit = rolagemAtaque(usuario.getAtributos(atributo));
         int acertos = 0;
         for (int i = 0; i<inimigos.size(); i++) {

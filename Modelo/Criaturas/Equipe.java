@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Equipe {
     
     private int id;
-    private ArrayList<Personagem> personagens;
+    private List<Personagem> personagens;
 
     public Equipe(int id, Personagem personagem) {
         this.id = id;

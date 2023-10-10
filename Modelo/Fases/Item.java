@@ -19,8 +19,12 @@ public class Item {
         return nome;
     }
     
-    public void setNome(String nome){
-        this.nome = nome;
+    public int getRaridade() {
+        return raridade;
+    }
+
+    public Habilidade getHabilidade() {
+        return habilidade;
     }
 
 }

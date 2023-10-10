@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Habilidade {
@@ -13,7 +12,7 @@ public abstract class Habilidade {
         this.descricao = descricao;
     }
 
-    public abstract String usaHabilidade(Personagem usuario, List<Monstro> inimigos, int alvo);
+    public abstract String usaHabilidade(Personagem usuario, List<Criatura> inimigos, int alvo);
 
     public int getId() {
         return id;
