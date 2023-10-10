@@ -21,6 +21,10 @@ public class Fase{
         return id;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
     public String prossegueSala() {
         salaAtual++;
         return listaSalas.get(salaAtual).entraSala(party);

@@ -16,20 +16,8 @@ public class Personagem extends Criatura{
 
         public Personagem(String nome, int classe) {
             super(nome);
-            switch(classe) {
-                case 1: {
-                    this.classe = new Classe(1);
-                    break;
-                }
-                case 2: {
-                    this.classe = new Classe(2);
-                    break;
-                }
-                case 3: {
-                    this.classe = new Classe(3); 
-                    break;
-                }
-            }
+            this.classe = new Classe(classe);
+            
             super.setAtributos(this.classe.getPadrao());
             super.setFraquezas(this.classe.getListaFraquezas());
             super.setHabilidades(this.classe.getListaHabilidades());
