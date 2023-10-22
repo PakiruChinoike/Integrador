@@ -119,3 +119,11 @@ PRIMARY KEY(id_monstro_habilidade),
 FOREIGN KEY(id_monstro) REFERENCES monstro(id_monstro),
 FOREIGN KEY(id_habilidade) REFERENCES habilidade(id_habilidade)
 );
+CREATE table inventario(
+ id_inventario BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
+ id_item BIGINT NOT NULL UNIQUE,
+ id_personagem BIGINT NOT NULL UNIQUE,
+ PRIMARY KEY (id_inventario),
+ FOREIGN KEY (id_item) REFERENCES item (id_item),
+ FOREIGN KEY (id_personagem) REFERENCES personagem (id_personagem)
+ );
