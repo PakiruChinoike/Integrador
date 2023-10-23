@@ -4,8 +4,8 @@ import java.util.List;
 public class Personagem extends Criatura{
     
         private int id;
+
         private Classe classe;
-        private List<Habilidade> listaHabilidades;
         private List<Item> listaItens;
 
         private int experiencia;
@@ -57,10 +57,6 @@ public class Personagem extends Criatura{
             this.poder = poder;
         }
 
-        public List<Habilidade> getListaHabilidades() {
-            return listaHabilidades;
-        }
-
         public Equipe getEquipe() {
             return equipe;
         }
@@ -71,6 +67,11 @@ public class Personagem extends Criatura{
 
         public List<Item> getListaItens() {
             return listaItens;
+        }
+
+        public String addItem(Item item) {
+            listaItens.add(item);
+            return item.getNome() + " foi adicionado ao inventário de " + super.getNome();
         }
 
         public String toString() {

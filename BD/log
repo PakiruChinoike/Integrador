@@ -20,12 +20,10 @@ sala_desafio(id_sala_desafio, tipo, dificuldade, #id_sala, #id_desafio)
 
 sala_monstro(id_sala_monstro, tipo, dificuldade, #id_sala, #id_monstro)
 
-monstro(id_monstro, nome, vida, armadura, ataque, portrait, ia, #id_tesouro)
+monstro(id_monstro, nome, vida, armadura, ataque, portrait, ia, #id_recompensa)
 
 monstro_habilidade(id_monstro_habilidade, #id_monstro, #id_habilidade)
 
-desafio(id_desafio, nome, portrait, desafio, #id_tesouro)
-
-tesouro(id_tesouro, raridade, tipo, #id_habilidade, #id_item, #id_experiencia) 
+recompensa(id_recompensa, raridade, tipo, #id_habilidade, #id_item, #id_experiencia) 
 
 
