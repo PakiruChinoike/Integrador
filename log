@@ -1,0 +1,31 @@
+personagem(id_personagem, nome, classe, agilidade, forca, inteligencia, nivel, vida, armadura, portrait, #id_party)
+
+personagem_habilidade(id_personagem_habilidade, #id_personagem, #id_habilidade)
+
+habilidade(id_habilidade, nome, tipo, funcao)
+
+personagem_item(id_personagem_item, #id_personagem, #id_item)
+
+item(id_item, nome, raridade, #id_habilidade)
+
+party(id_party, #id_personagem)
+
+fase(id_fase, nome, nº salas, #id_sala, #id_chefe)
+
+fase_sala(id_fase_sala, #id_fase, #id_sala)
+
+sala(id_sala, nome, tipo)
+
+sala_desafio(id_sala_desafio, tipo, dificuldade, #id_sala, #id_desafio)
+
+sala_monstro(id_sala_monstro, tipo, dificuldade, #id_sala, #id_monstro)
+
+monstro(id_monstro, nome, vida, armadura, ataque, portrait, ia, #id_tesouro)
+
+monstro_habilidade(id_monstro_habilidade, #id_monstro, #id_habilidade)
+
+desafio(id_desafio, nome, portrait, desafio, #id_tesouro)
+
+tesouro(id_tesouro, raridade, tipo, #id_habilidade, #id_item, #id_experiencia) 
+
+
