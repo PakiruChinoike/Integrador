@@ -1,15 +1,14 @@
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PersonagemDAO {
 
-    private Connection conexao;
+    private ConexaoMYSQL conexao;
 
     public void salvar(Personagem personagem) {
         try {
             this.conexao.abrirConexao();
-            String sql = "INSER INTO personagem VALUES(null, ?)";
+            String sql = "INSERT INTO personagem VALUES(null, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, personagem.getNome());
             statement.executeUpdate();
@@ -28,6 +27,21 @@ public class PersonagemDAO {
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, personagem.getNome());
             statement.setLong(2, personagem.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            this.conexao.fecharConexao();
+        }
+    }
+
+    public void excluir(long id) {
+        try {
+            this.conexao.abrirConexao();
+            String sql = "DELETE FROM personagem WHERE id_usuario=?";
+            PreparedStatement statement = this.conexaxo.getConexao().prepareStatement(sql);
+            statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
