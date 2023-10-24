@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Sala{
 
-    private int id;
+    private long id;
     private int dificuldade;
     private String descricao;
     private List<Monstro> inimigos;
@@ -19,7 +19,7 @@ public class Sala{
         this.inimigos.addAll(inimigos);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

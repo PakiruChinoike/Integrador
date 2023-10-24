@@ -2,7 +2,7 @@ import java.util.List;
 
 public abstract class Habilidade {
 
-    private int id;
+    private long id;
     private String nome;
     private String descricao;
 
@@ -14,7 +14,7 @@ public abstract class Habilidade {
 
     public abstract String usaHabilidade(Personagem usuario, List<Criatura> inimigos, int alvo);
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

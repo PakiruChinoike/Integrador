@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Personagem extends Criatura{
     
-        private int id;
+        private long id;
 
         private Classe classe;
         private List<Item> listaItens;
@@ -29,7 +29,7 @@ public class Personagem extends Criatura{
             this.poder = ((10+super.getAtributos(2)+super.getNivel()));
         }
 
-        public int getId() {
+        public long getId() {
             return id;
         }
 

@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Equipe {
     
-    private int id;
+    private long id;
     private List<Personagem> personagens;
 
     public Equipe(int id, Personagem personagem) {
@@ -18,7 +18,7 @@ public class Equipe {
         this.personagens.addAll(personagens);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

@@ -1,6 +1,6 @@
 public class Item {
 
-    private int id;
+    private long id;
     private String nome;
     private int raridade;
     private Habilidade habilidade;
@@ -11,7 +11,7 @@ public class Item {
         this.habilidade = habilidade;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

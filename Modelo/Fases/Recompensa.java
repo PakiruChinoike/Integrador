@@ -1,6 +1,6 @@
 public class Recompensa{
 
-    private int id;
+    private long id;
     private int tipo;
     private int raridade;
     private int experiencia;
@@ -35,7 +35,7 @@ public class Recompensa{
         this.habilidade = habilidade;
     }
     
-    public int getId() {
+    public long getId() {
         return id;
     }
 

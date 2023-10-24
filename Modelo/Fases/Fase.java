@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Fase{
 
-    private int id;
+    private long id;
     private String nome;
     private List<Sala> listaSalas;
     private int salaAtual;
@@ -17,7 +17,7 @@ public class Fase{
         listaSalas.get(salaAtual).entraSala(party);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
