@@ -1,6 +1,8 @@
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PersonagemDAO {
 
@@ -63,6 +65,25 @@ public class PersonagemDAO {
             else {
                 return null;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.conexao.fecharConexao();
+        }
+    }
+
+    public List<Personagem> buscarTodos() {
+        try {
+            this.conexao.abrirConexao();
+            String sql = "SELECT * FROM personagem";
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            List<Personagem> listaPersonagens = new ArrayList<Personagem>();
+            while (rs.next()) {
+                Personagem personagem = new Personagem(rs.getString("nome"), rs.getInt("classe"));
+                listaPersonagens.add(personagem);
+            }
+            return listaPersonagens;
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
