@@ -1,29 +1,27 @@
-personagem(id_personagem, nome, classe, agilidade, forca, inteligencia, nivel, vida, armadura, portrait, #id_party)
+personagem(id_personagem, atributos, poder, xp, nivel, hp, nome, classe, #inventario #id_party)
 
-personagem_habilidade(id_personagem_habilidade, #id_personagem, #id_habilidade)
+inventario(id_inventario, #id_item)
 
-habilidade(id_habilidade, nome, tipo, funcao)
+item(id_item, raridade, nome, xp, #id_inventario)
 
-personagem_item(id_personagem_item, #id_personagem, #id_item)
+inventario_item(id_inventario_item, raridade, nome, xp,#id_item #id_inventario )
 
-item(id_item, nome, raridade, #id_habilidade)
+habilidade(id_habilidade, nivel, classe, min_teste, max_roll, min_roll, tipo, descricao, nome, tipo_dano, atributo, #id_inventario_item)
 
-party(id_party, #id_personagem)
+item_habilidade(id_item_habilidade, #id_habilidade, #id_item)
 
-fase(id_fase, nome, nº salas, #id_sala, #id_chefe)
+monstro(id_monstro, atributos, armadura, dificuldade, vida, fraquezas, nome)
 
-fase_sala(id_fase_sala, #id_fase, #id_sala)
+habilidade_monstro(id_habilidade_monstro, nome, fraquezas, vida, dificuldade, armadura, atributos, #id_habilidade)
 
-sala(id_sala, nome, tipo)
+sala(id_sala, tipo, nome, #id_fase)
 
-sala_desafio(id_sala_desafio, tipo, dificuldade, #id_sala, #id_desafio)
+sala_monstro(id_sala_monstro, #id_sala #id_monstro)
 
-sala_monstro(id_sala_monstro, tipo, dificuldade, #id_sala, #id_monstro)
+recompensa(id_recompensa, tipo, xp, raridade #id_item, #id_habilidade)
 
-monstro(id_monstro, nome, vida, armadura, ataque, portrait, ia, #id_recompensa)
+sala_recompensa(id_sala_recompensa, #id_sala, #id_recompensa)
 
-monstro_habilidade(id_monstro_habilidade, #id_monstro, #id_habilidade)
+party(id_party)
 
-recompensa(id_recompensa, raridade, tipo, #id_habilidade, #id_item, #id_experiencia) 
-
-
+fase(id_fase, num_sala, nome, #id_party)
