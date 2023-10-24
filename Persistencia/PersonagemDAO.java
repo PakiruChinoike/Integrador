@@ -1,4 +1,5 @@
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PersonagemDAO {
@@ -14,8 +15,7 @@ public class PersonagemDAO {
             statement.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             this.conexao.fecharConexao();
         }
     }
@@ -30,8 +30,7 @@ public class PersonagemDAO {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             this.conexao.fecharConexao();
         }
     }
@@ -40,13 +39,33 @@ public class PersonagemDAO {
         try {
             this.conexao.abrirConexao();
             String sql = "DELETE FROM personagem WHERE id_usuario=?";
-            PreparedStatement statement = this.conexaxo.getConexao().prepareStatement(sql);
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            this.conexao.fecharConexao();
         }
-        finally {
+    }
+
+    public Personagem buscar(long id) {
+        try {
+            this.conexao.abrirConexao();
+            String sql = "SELECT * FROM personagem WHERE id_usuario=?";
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+            statement.setLong(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                Personagem personagem = new Personagem(rs.getString("nome"), rs.getInt("classe"));
+                return personagem;
+            }   
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             this.conexao.fecharConexao();
         }
     }
