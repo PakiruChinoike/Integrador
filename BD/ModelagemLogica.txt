@@ -1,16 +1,16 @@
-personagem(id_personagem, atributos, poder, xp, nivel, hp, nome, classe, #inventario #id_party)
+personagem(id_personagem, poder, xp, nivel, hp, nome, classe, #id_atributos, #id_item, #id_party)
 
-inventario(id_inventario, #id_item)
+atributos(id_atributos, agilidade, forca, inteligencia)
 
 item(id_item, raridade, nome, xp, #id_inventario)
 
-inventario_item(id_inventario_item, raridade, nome, xp,#id_item #id_inventario )
+personagem_item(id_personagem_item, raridade, nome, xp,#id_item #id_inventario )
 
 habilidade(id_habilidade, nivel, classe, min_teste, max_roll, min_roll, tipo, descricao, nome, tipo_dano, atributo, #id_inventario_item)
 
 item_habilidade(id_item_habilidade, #id_habilidade, #id_item)
 
-monstro(id_monstro, atributos, armadura, dificuldade, vida, fraquezas, nome)
+monstro(id_monstro, atributos, armadura, dificuldade, vida, fraquezas, nome, #id_atributos)
 
 habilidade_monstro(id_habilidade_monstro, nome, fraquezas, vida, dificuldade, armadura, atributos, #id_habilidade)
 
