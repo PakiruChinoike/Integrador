@@ -45,11 +45,11 @@ CREATE TABLE habilidade(
     nome VARCHAR(30) NOT NULL,
     tipo TINYINT NOT NULL,
     descricao VARCHAR(200) NOT NULL,
-    max_roll TINYINT NOT NULL,
-    min_roll TINYINT NOT NULL,
-    min_test TINYINT NOT NULL,
-    tipo_dano TINYINT NOT NULL,
-    atributo TINYINT NOT NULL,
+    max_roll TINYINT,
+    min_roll TINYINT,
+    min_test TINYINT,
+    tipo_dano TINYINT,
+    atributo TINYINT,
     PRIMARY KEY(id_habilidade)
 );
 
@@ -65,8 +65,7 @@ CREATE TABLE personagem_habilidade(
 CREATE TABLE item(
     id_item BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
     nome VARCHAR(30) NOT NULL,
-    raridade VARCHAR(30) NOT NULL,
-    xp TINYINT,
+    raridade TINYINT NOT NULL,
     id_habilidade BIGINT NOT NULL,
     PRIMARY KEY(id_item),
     FOREIGN KEY (id_habilidade) REFERENCES habilidade(id_habilidade)
@@ -85,7 +84,12 @@ CREATE TABLE sala(
     id_sala BIGINT NOT NULL UNIQUE AUTO_INCREMENT, 
     nome VARCHAR(30) NOT NULL,
     tipo TINYINT NOT NULL,
-    PRIMARY KEY(id_sala)
+    descricao VARCHAR(500) NOT NULL,
+    id_inimigo BIGINT NOT NULL, 
+    id_recompensa BIGINT NOT NULL,
+    PRIMARY KEY(id_sala),
+    FOREIGN KEY(id_inimigo) REFERENCES monstro(id_monstro),
+    FOREIGN KEY(id_recompensa) REFERENCES recompensa(id_recompensa)
 );
 
 CREATE TABLE fase(

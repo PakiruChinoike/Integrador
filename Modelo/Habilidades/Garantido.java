@@ -2,25 +2,18 @@ import java.lang.Math;
 import java.util.List;
 
 public class Garantido extends Habilidade{
-    
-    private int maxRoll;
-    private int minRoll;
-    private int tipoDano;
 
     public Garantido(int id, String nome, String descricao, int maxRoll, int minRoll, int tipoDano) {
-        super(id, nome, descricao);
-        this.maxRoll = maxRoll;
-        this.minRoll = minRoll;
-        this.tipoDano = tipoDano;
+        super(id, nome, descricao, 2, maxRoll, minRoll, 0, tipoDano, 0);
     }
 
     protected int rolagemValor() {
-        int valor = (int)(Math.random() * maxRoll) + minRoll;
+        int valor = (int)(Math.random() * super.getMaxRoll()) + super.getMinRoll();
         return valor;
     }
 
     protected int rolagemValor(boolean isFraco) {
-        int valor = (int)(Math.random() * maxRoll) + minRoll;
+        int valor = (int)(Math.random() * super.getMaxRoll()) + super.getMinRoll();
         if(isFraco) {
             valor = valor*2;
         }
@@ -39,7 +32,7 @@ public class Garantido extends Habilidade{
 
     public String usaHabilidade(Personagem usuario, List<Criatura> inimigos, int alvo) {
         if(inimigos.get(0) instanceof Monstro) {
-            int damage = rolagemValor(inimigos.get(alvo).getFraquezas(tipoDano));
+            int damage = rolagemValor(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
             int vidaAtual = causaDano(damage, inimigos.get(alvo));
             return usuario.getNome() + " acertou " + inimigos.get(alvo).getNome() + " causando "
             + damage + " de dano, e o deixando com " + vidaAtual + " pontos de vida.";
@@ -55,7 +48,7 @@ public class Garantido extends Habilidade{
     }
 
     public String usaHabilidade(Monstro usuario, List<Criatura> inimigos, int alvo) {
-        int damage = rolagemValor(inimigos.get(alvo).getFraquezas(tipoDano));
+        int damage = rolagemValor(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
         int vidaAtual = causaDano(damage, inimigos.get(alvo));
         return usuario.getNome() + " acertou " + inimigos.get(alvo).getNome() + " causando "
         + damage + " de dano, e o deixando com " + vidaAtual + " pontos de vida.";

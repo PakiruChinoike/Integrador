@@ -3,17 +3,8 @@ import java.util.List;
 
 public abstract class Ataque extends Habilidade{
 
-    private int maxRoll;
-    private int minRoll;
-    private int tipoDano;
-    private int atributo;
-
     protected Ataque(int id, String nome, String descricao, int maxRoll, int minRoll, int tipoDano, int atributo) {
-        super(id, nome, descricao);
-        this.maxRoll = maxRoll;
-        this.minRoll = minRoll;
-        this.tipoDano = tipoDano;
-        this.atributo = atributo;
+        super(id, nome, descricao, 0, maxRoll, minRoll, 0, tipoDano, atributo);
     }
 
     protected int rolagemAtaque(int atributo) {
@@ -22,7 +13,7 @@ public abstract class Ataque extends Habilidade{
     }
 
     protected int rolagemDano(boolean isFraco) {
-        int damage = (int)(Math.random() * maxRoll) + minRoll;
+        int damage = (int)(Math.random() * super.getMaxRoll()) + super.getMinRoll();
         if(isFraco) {
             damage = damage*2;
         }
@@ -44,8 +35,8 @@ public abstract class Ataque extends Habilidade{
     }
 
     public String usaHabilidade(Personagem usuario, List<Criatura> inimigos, int alvo) {
-        int hit = rolagemAtaque(usuario.getAtributos(atributo));
-        int damage = rolagemDano(inimigos.get(alvo).getFraquezas(tipoDano));
+        int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
+        int damage = rolagemDano(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
         if (testeAtaque(hit, inimigos.get(alvo).getArmadura())) {
             int vidaAtual = causaDano(damage, inimigos.get(alvo));
             return usuario.getNome() + " acertou " + inimigos.get(alvo).getNome() + " com um " + hit + " causando "
@@ -57,10 +48,10 @@ public abstract class Ataque extends Habilidade{
     }
 
     public String usaHabilidade(Personagem usuario, List<Criatura> inimigos) {
-        int hit = rolagemAtaque(usuario.getAtributos(atributo));
+        int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
         int acertos = 0;
         for (int i = 0; i<inimigos.size(); i++) {
-            int damage = rolagemDano(inimigos.get(i).getFraquezas(tipoDano));
+            int damage = rolagemDano(inimigos.get(i).getFraquezas(super.getTipoDano()));
             if (testeAtaque(hit, inimigos.get(i).getArmadura())) {
                 causaDano(damage, inimigos.get(i));
                 acertos++;
@@ -70,8 +61,8 @@ public abstract class Ataque extends Habilidade{
     }
 
     public String usaHabilidade(Monstro usuario, List<Criatura> inimigos, int alvo) {
-        int hit = rolagemAtaque(usuario.getAtributos(atributo));
-        int damage = rolagemDano(inimigos.get(alvo).getFraquezas(tipoDano));
+        int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
+        int damage = rolagemDano(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
         if (testeAtaque(hit, inimigos.get(alvo).getArmadura())) {
             int vidaAtual = causaDano(damage, inimigos.get(alvo));
             return usuario.getNome() + " acertou " + inimigos.get(alvo).getNome() + " com um " + hit + " causando "
@@ -83,20 +74,16 @@ public abstract class Ataque extends Habilidade{
     }
 
     public String usaHabilidade(Monstro usuario, List<Criatura> inimigos) {
-        int hit = rolagemAtaque(usuario.getAtributos(atributo));
+        int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
         int acertos = 0;
         for (int i = 0; i<inimigos.size(); i++) {
-            int damage = rolagemDano(inimigos.get(i).getFraquezas(tipoDano));
+            int damage = rolagemDano(inimigos.get(i).getFraquezas(super.getTipoDano()));
             if (testeAtaque(hit, inimigos.get(i).getArmadura())) {
                 causaDano(damage, inimigos.get(i));
                 acertos++;
             }
         }
         return usuario.getNome() + " acertou " + acertos + " inimigos.";
-    }
-
-    public int getTipoDano() {
-        return tipoDano;
     }
 
 }

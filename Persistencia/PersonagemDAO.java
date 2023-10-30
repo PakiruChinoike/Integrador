@@ -8,12 +8,26 @@ public class PersonagemDAO {
 
     private ConexaoMYSQL conexao;
 
+    public PersonagemDAO() {
+		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "root", "bd_comunicacao_java_mysql_2i_2023");
+	}
+
     public void salvar(Personagem personagem) {
         try {
             this.conexao.abrirConexao();
-            String sql = "INSERT INTO personagem VALUES(null, ?)";
+            String sql = "INSERT INTO personagem VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, personagem.getNome());
+            statement.setInt(2, personagem.getClasse());
+            statement.setInt(3, personagem.getVida());
+            statement.setInt(4, personagem.getArmadura());
+            statement.setInt(5, personagem.getPoder());
+            statement.setInt(6, personagem.getExperiencia());
+            statement.setLong(7, personagem.getEquipe().getId());
+            //setar habilidade
+            //setar inventario
+            statement.setLong(9, personagem.getAtributosId());
+            statement.setLong(10, personagem.getId());
             statement.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
@@ -25,10 +39,15 @@ public class PersonagemDAO {
     public void editar(Personagem personagem) {
         try {
             this.conexao.abrirConexao();
-            String sql = "UPDATE personagem SET nome=? WHERE id_personagem=?";
+            String sql = "UPDATE personagem SET nome=?, classe=?, vida=?, armadura=?, poder=?, nivel=?, experiencia=? WHERE id_personagem=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, personagem.getNome());
-            statement.setLong(2, personagem.getId());
+            statement.setInt(2, personagem.getClasse());
+            statement.setInt(3, personagem.getVida());
+            statement.setInt(4, personagem.getArmadura());
+            statement.setInt(5, personagem.getPoder());
+            statement.setInt(6, personagem.getExperiencia());
+            statement.setLong(7, personagem.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,7 +59,7 @@ public class PersonagemDAO {
     public void excluir(long id) {
         try {
             this.conexao.abrirConexao();
-            String sql = "DELETE FROM personagem WHERE id_usuario=?";
+            String sql = "DELETE FROM personagem WHERE id_personagem=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
             statement.executeUpdate();
@@ -54,7 +73,7 @@ public class PersonagemDAO {
     public Personagem buscar(long id) {
         try {
             this.conexao.abrirConexao();
-            String sql = "SELECT * FROM personagem WHERE id_usuario=?";
+            String sql = "SELECT * FROM personagem WHERE id_personagem=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
@@ -67,6 +86,7 @@ public class PersonagemDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         } finally {
             this.conexao.fecharConexao();
         }
@@ -86,6 +106,7 @@ public class PersonagemDAO {
             return listaPersonagens;
         } catch (SQLException e) {
             e.printStackTrace();
+            return null;
         } finally {
             this.conexao.fecharConexao();
         }

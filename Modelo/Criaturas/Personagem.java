@@ -33,8 +33,22 @@ public class Personagem extends Criatura{
             return id;
         }
 
-        public Classe getClasse() {
-            return classe;
+        public int getClasse() {
+            String nomeClasse = classe.getNome();
+            switch(nomeClasse) {
+                case "Ladino": {
+                    return 1;
+                }
+                case "Guerreiro": {
+                    return 2;
+                }
+                case "Mago": {
+                    return 3;
+                }
+                default: {
+                    return 0;
+                }
+            }
         }
 
         public String getClasseNome() {

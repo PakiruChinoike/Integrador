@@ -106,7 +106,16 @@ public class Criatura {
     }
 
     public int getAtributos(int index) {
-        return atributos.get(index);
+        if(index<4) {
+            return atributos.get(index);
+        }
+        else {
+            return 0;
+        }
+    }
+
+    public int getAtributosId() {
+        return atributos.get(4);
     }
 
     public boolean setAtributos(List<Integer> atributos) {

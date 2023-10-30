@@ -5,12 +5,14 @@ public class Sala{
 
     private long id;
     private int dificuldade;
+    private int tipo;
     private String descricao;
     private List<Monstro> inimigos;
     private Recompensa recompensa;
 
-    public Sala(int id, int dificuldade, String descricao, List<Monstro> inimigos, Recompensa recompesa) {
+    public Sala(int id, int tipo, int dificuldade, String descricao, List<Monstro> inimigos, Recompensa recompesa) {
         this.id = id;
+        this.tipo = tipo;
         this.dificuldade = dificuldade;
         this.descricao = descricao;
         this.recompensa = recompesa;
@@ -29,6 +31,18 @@ public class Sala{
 
     public Recompensa getRecompensa() {
         return recompensa;
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public List<Monstro> getInimigos() {
+        return inimigos;
     }
 
     public String entraSala(Equipe party) {
