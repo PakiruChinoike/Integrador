@@ -22,7 +22,7 @@ public class SalaDAO {
             statement.setString(3, sala.getDescricao());
             statement.setInt(4, sala.getInimigos().getId());
             statement.setLong(5, sala.getRecompensa().getId());
-            statement.executeUpdate();
+            statement.executeUpdate();ç
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
