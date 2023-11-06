@@ -18,6 +18,11 @@ Raridade:
 2 - Épico
 3 - Lendário
 
+Tipo de Habilidade:
+0 - Ataque
+1 - Resistência
+2 - Garantido
+
 Tipo de Recompensa:
 0 - Apenas XP
 1 - XP e Item

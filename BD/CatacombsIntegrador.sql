@@ -127,7 +127,7 @@ CREATE TABLE monstro(
     id_monstro_habilidade BIGINT NOT NULL,
     id_atributos BIGINT NOT NULL,
     PRIMARY KEY(id_monstro),
-    FOREIGN KEY(id_monstro_habilidade)REFERENCES monstro_habilidade(id_monstro_habilidade),
+    FOREIGN KEY(id_monstro_habilidade) REFERENCES monstro_habilidade(id_monstro_habilidade),
     FOREIGN KEY(id_atributos) REFERENCES atributos(id_atributos)
 );
 

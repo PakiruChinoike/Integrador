@@ -15,13 +15,14 @@ public class HabilidadeDAO {
     public void salvar(Habilidade habilidade) {
         try {
             this.conexao.abrirConexao();
-            String sql = "INSERT INTO habilidade VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO habilidade VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, habilidade.getNome());
             statement.setInt(2, habilidade.getTipo());
             statement.setString(3, habilidade.getDescricao());
             statement.setInt(4, habilidade.getMaxRoll());
             statement.setInt(5, habilidade.getMinRoll());
+            statement.setInt(6, habilidade.getMinTeste());
             statement.setInt(6, habilidade.getTipoDano());
             statement.setLong(7, habilidade.getAtributo());
             statement.executeUpdate();
@@ -35,16 +36,17 @@ public class HabilidadeDAO {
     public void editar(Habilidade habilidade) {
         try {
             this.conexao.abrirConexao();
-            String sql = "UPDATE habilidade SET nome=?, classe=?, vida=?, armadura=?, poder=?, nivel=?, experiencia=? WHERE id_habilidade=?";
+            String sql = "UPDATE habilidade SET nome=?, tipo=?, descricao=?, max_roll=?, min_roll=?, min_test=?, tipo_dano=?, atributo=? WHERE id_habilidade=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, habilidade.getNome());
             statement.setInt(2, habilidade.getTipo());
             statement.setString(3, habilidade.getDescricao());
             statement.setInt(4, habilidade.getMaxRoll());
             statement.setInt(5, habilidade.getMinRoll());
-            statement.setInt(6, habilidade.getTipoDano());
-            statement.setLong(7, habilidade.getAtributo());
-            statement.setLong(8, habilidade.getId());
+            statement.setInt(6, habilidade.getMinTeste());
+            statement.setInt(7, habilidade.getTipoDano());
+            statement.setLong(8, habilidade.getAtributo());
+            statement.setLong(9, habilidade.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,8 +77,24 @@ public class HabilidadeDAO {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                Habilidade habilidade = new Habilidade();
-                return habilidade;
+                int tipo = rs.getInt("tipo");
+                switch (tipo) {
+                    case 0: {
+                        Habilidade habilidade = new Ataque();
+                        return habilidade;
+                    }
+                    case 1: {
+                        Habilidade habilidade = new Resistencia();
+                        return habilidade;
+                    }
+                    case 2: {
+                        Habilidade habilidade = new Garantido();
+                        return habilidade;
+                    }
+                    default: {
+                        return null;
+                    }
+                }
             }   
             else {
                 return null;
@@ -97,16 +115,38 @@ public class HabilidadeDAO {
             ResultSet rs = statement.executeQuery();
             List<Habilidade> listaPersonagens = new ArrayList<Habilidade>();
             while (rs.next()) {
-                Habilidade habilidade = new Habilidade();
-                listaPersonagens.add(habilidade);
-            }
+                int tipo = rs.getInt("tipo");
+                switch (tipo) {
+                    case 0: {
+                        Habilidade habilidade = new Ataque();
+                        listaPersonagens.add(habilidade);
+                        break;
+                    }
+                    case 1: {
+                        Habilidade habilidade = new Resistencia();
+                        listaPersonagens.add(habilidade);
+                        break;
+                    }
+                    case 2: {
+                        Habilidade habilidade = new Garantido();
+                        listaPersonagens.add(habilidade);
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
             return listaPersonagens;
-        } catch (SQLException e) {
+            } 
+        }
+        catch (SQLException e) {
             e.printStackTrace();
             return null;
         } finally {
             this.conexao.fecharConexao();
         }
+        return null;
+
     }
 
 }

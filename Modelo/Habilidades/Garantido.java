@@ -3,6 +3,10 @@ import java.util.List;
 
 public class Garantido extends Habilidade{
 
+    public Garantido() {
+        super();
+    }
+
     public Garantido(int id, String nome, String descricao, int maxRoll, int minRoll, int tipoDano) {
         super(id, nome, descricao, 2, maxRoll, minRoll, 0, tipoDano, 0);
     }

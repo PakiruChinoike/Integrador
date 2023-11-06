@@ -7,6 +7,15 @@ public class Recompensa{
     private Item item;
     private Habilidade habilidade;
 
+    public Recompensa() {
+        this.id = 0;
+        this.tipo = 0;
+        this.raridade = 0;
+        this.experiencia = 0;
+        this.item = new Item();
+        this.habilidade = null;
+    }
+
     public Recompensa(int tipo, int raridade, int experiencia) {
         this.tipo = tipo;
         this.raridade = raridade;

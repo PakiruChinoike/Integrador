@@ -36,7 +36,7 @@ public class ItemDAO{
             statement.setString(1, item.getNome());
             statement.setInt(2, item.getRaridade());
             statement.setLong(3, item.getHabilidade().getId());
-            statement.setLong(8, item.getId());
+            statement.setLong(4, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

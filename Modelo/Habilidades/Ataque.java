@@ -1,9 +1,13 @@
 import java.lang.Math;
 import java.util.List;
 
-public abstract class Ataque extends Habilidade{
+public class Ataque extends Habilidade{
 
-    protected Ataque(int id, String nome, String descricao, int maxRoll, int minRoll, int tipoDano, int atributo) {
+    public Ataque() {
+        super();
+    }
+
+    public Ataque(int id, String nome, String descricao, int maxRoll, int minRoll, int tipoDano, int atributo) {
         super(id, nome, descricao, 0, maxRoll, minRoll, 0, tipoDano, atributo);
     }
 

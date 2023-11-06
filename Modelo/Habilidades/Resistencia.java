@@ -3,7 +3,11 @@ import java.lang.Math;
 
 public class Resistencia extends Habilidade{
 
-    protected Resistencia(int id, String nome, String descricao, int maxRoll, int minRoll, int minTeste, int tipoDano, int atributo) {
+    public Resistencia() {
+        super();
+    }
+
+    public Resistencia(int id, String nome, String descricao, int maxRoll, int minRoll, int minTeste, int tipoDano, int atributo) {
         super(id, nome, descricao, 1, maxRoll, minRoll, minTeste, tipoDano, atributo);
     }
 
