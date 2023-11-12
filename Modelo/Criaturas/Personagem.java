@@ -14,6 +14,15 @@ public class Personagem extends Criatura{
 
         private Equipe equipe;
 
+        public Personagem(String nome, int classe, int armadura, int vida, int nivel, int poder) {
+            super(nome, vida, armadura, nivel);
+            this.poder = poder;
+
+            this.classe = new Classe(classe);
+
+            this.listaItens = new ArrayList<Item>();
+        }
+
         public Personagem(String nome, int classe) {
             super(nome);
             this.classe = new Classe(classe);

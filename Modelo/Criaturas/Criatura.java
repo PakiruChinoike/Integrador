@@ -17,7 +17,16 @@ public class Criatura {
         this.armadura = 10;
         this.nivel = 1;
         this.fraquezas = new ArrayList<Boolean>(5);
-        this.atributos = new ArrayList<Integer>(3);
+        this.atributos = new ArrayList<Integer>(4);
+    }
+
+    public Criatura(String nome, int vida, int armadura, int nivel) {
+        this.nome = nome;
+        this.vida = vida;
+        this.armadura = armadura;
+        this.nivel = nivel;
+        this.fraquezas = new ArrayList<Boolean>(5);
+        this.atributos = new ArrayList<Integer>(4);
     }
 
     public Criatura(String nome, List<Boolean> fraquezas, List<Integer> atributos) {
@@ -27,7 +36,7 @@ public class Criatura {
         this.nivel = 1;
         this.fraquezas = new ArrayList<Boolean>(5);
         this.fraquezas.addAll(fraquezas);
-        this.atributos = new ArrayList<Integer>(3);
+        this.atributos = new ArrayList<Integer>(4);
         this.atributos.addAll(atributos);
     }
 
@@ -38,7 +47,7 @@ public class Criatura {
         this.nivel = nivel;
         this.fraquezas = new ArrayList<Boolean>(5);
         this.fraquezas.addAll(fraquezas);
-        this.atributos = new ArrayList<Integer>(3);
+        this.atributos = new ArrayList<Integer>(4);
         this.atributos.addAll(atributos);
         this.habilidades = new ArrayList<Habilidade>();
         this.habilidades.addAll(habilidades);

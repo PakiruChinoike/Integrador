@@ -15,14 +15,13 @@ public class SalaDAO {
     public void salvar(Sala sala) {
         try {
             this.conexao.abrirConexao();
-            String sql = "INSERT INTO sala VALUES(null, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO sala VALUES(null, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, sala.getNome());
             statement.setInt(2, sala.getTipo());
             statement.setString(3, sala.getDescricao());
-            statement.setInt(4, sala.getInimigos().getId());
-            statement.setLong(5, sala.getRecompensa().getId());
-            statement.executeUpdate();ç
+            statement.setLong(4, sala.getRecompensa().getId());
+            statement.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
@@ -33,14 +32,13 @@ public class SalaDAO {
     public void editar(Sala sala) {
         try {
             this.conexao.abrirConexao();
-            String sql = "UPDATE sala SET nome=?, tipo=?, descricao=?, id_inimigo=?, id_recompensa=? WHERE id_sala=?";
+            String sql = "UPDATE sala SET nome=?, tipo=?, descricao=?, id_recompensa=? WHERE id_sala=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, sala.getNome());
             statement.setInt(2, sala.getTipo());
             statement.setString(3, sala.getDescricao());
-            statement.setInt(4, sala.getInimigos().getId());
-            statement.setLong(5, sala.getRecompensa().getId());
-            statement.setLong(6, sala.getId());
+            statement.setLong(4, sala.getRecompensa().getId());
+            statement.setLong(5, sala.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -21,10 +21,23 @@ public class MonstroDAO {
             statement.setInt(2, monstro.getNivel());
             statement.setInt(3, monstro.getVida());
             statement.setInt(4, monstro.getArmadura());
-            //statement.setInt(5, monstro.getFraquezas());
-            //statement.setInt(6, monstro.getHabilidade().getId());
-            statement.setLong(7, monstro.getAtributos().getId());
             statement.executeUpdate();
+
+            String sql2 = "UPDATE atributos SET agilidade=?, forca=?, inteligencia=? WHERE id_monstro=?";
+            PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
+            statement2.setInt(1, monstro.getAtributos(0));
+            statement2.setInt(2, monstro.getAtributos(1));
+            statement2.setInt(3, monstro.getAtributos(3));
+            statement2.setLong(4, monstro.getId());
+
+            String sql3 = "UPDATE fraquezas SET flamejante=?, congelante=?, eletrico=?, fisico=?, arcano=? WHERE id_monstro=?";
+            PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
+            statement3.setBoolean(1, monstro.getFraquezas(0));
+            statement3.setBoolean(2, monstro.getFraquezas(1));
+            statement3.setBoolean(3, monstro.getFraquezas(2));
+            statement3.setBoolean(4, monstro.getFraquezas(3));
+            statement3.setBoolean(5, monstro.getFraquezas(4));
+            statement3.setLong(6, monstro.getId());
         } catch(SQLException e) {
             e.printStackTrace();
         } finally {
@@ -41,8 +54,6 @@ public class MonstroDAO {
             statement.setInt(2, monstro.getNivel());
             statement.setInt(3, monstro.getVida());
             statement.setInt(4, monstro.getArmadura());
-            statement.setInt(5, monstro.getFraquezas());
-            statement.setInt(6, monstro.getHabilidade().getId());
             statement.setLong(7, monstro.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -74,7 +85,7 @@ public class MonstroDAO {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                Monstro monstro = new Monstro(rs.getString("nome"), rs.getInt("classe"));
+                Monstro monstro = new Monstro(rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"));
                 return monstro;
             }   
             else {
@@ -94,12 +105,12 @@ public class MonstroDAO {
             String sql = "SELECT * FROM monstro";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
-            List<Monstro> listaPersonagens = new ArrayList<Monstro>();
+            List<Monstro> listaMonstros = new ArrayList<Monstro>();
             while (rs.next()) {
-                Monstro monstro = new Monstro(rs.getString("nome"), rs.getInt("classe"));
-                listaPersonagens.add(monstro);
+                Monstro monstro = new Monstro(rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"));                
+                listaMonstros.add(monstro);
             }
-            return listaPersonagens;
+            return listaMonstros;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

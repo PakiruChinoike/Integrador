@@ -9,13 +9,13 @@ public class PersonagemDAO {
     private ConexaoMYSQL conexao;
 
     public PersonagemDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "root", "bd_comunicacao_java_mysql_2i_2023");
+		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "root", "CatacombsIntegrador");
 	}
 
     public void salvar(Personagem personagem) {
         try {
             this.conexao.abrirConexao();
-            String sql = "INSERT INTO personagem VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO personagem VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, personagem.getNome());
             statement.setInt(2, personagem.getClasse());
@@ -24,10 +24,7 @@ public class PersonagemDAO {
             statement.setInt(5, personagem.getPoder());
             statement.setInt(6, personagem.getExperiencia());
             statement.setLong(7, personagem.getEquipe().getId());
-            //setar habilidade
-            //setar inventario
-            statement.setLong(9, personagem.getAtributosId());
-            statement.setLong(10, personagem.getId());
+            statement.setLong(8, personagem.getAtributosId());
             statement.executeUpdate();
         } catch(SQLException e) {
             e.printStackTrace();
@@ -49,6 +46,22 @@ public class PersonagemDAO {
             statement.setInt(6, personagem.getExperiencia());
             statement.setLong(7, personagem.getId());
             statement.executeUpdate();
+
+            String sql2 = "UPDATE atributos SET agilidade=?, forca=?, inteligencia=? WHERE id_personagem=?";
+            PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
+            statement2.setInt(1, personagem.getAtributos(0));
+            statement2.setInt(2, personagem.getAtributos(1));
+            statement2.setInt(3, personagem.getAtributos(3));
+            statement2.setLong(4, personagem.getId());
+
+            String sql3 = "UPDATE fraquezas SET flamejante=?, congelante=?, eletrico=?, fisico=?, arcano=? WHERE id_personagem=?";
+            PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
+            statement3.setBoolean(1, personagem.getFraquezas(0));
+            statement3.setBoolean(2, personagem.getFraquezas(1));
+            statement3.setBoolean(3, personagem.getFraquezas(2));
+            statement3.setBoolean(4, personagem.getFraquezas(3));
+            statement3.setBoolean(5, personagem.getFraquezas(4));
+            statement3.setLong(6, personagem.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -79,6 +92,25 @@ public class PersonagemDAO {
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Personagem personagem = new Personagem(rs.getString("nome"), rs.getInt("classe"));
+
+            String sql2 = "SELECT COUNT(id_personagem_item) FROM personagem_item WHERE id_personagem=?";
+            PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
+            statement2.setLong(1, id);
+            ResultSet rs2 = statement2.executeQuery();
+
+            if (rs2.next()) {
+                personagem.addItem(Personagem_ItemDAO.buscarItem(id));
+            }
+            
+            String sql3 = "SELECT COUNT(id_personagem_habilidade) FROM personagem_habilidade WHERE id_personagem=?";
+            PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
+            statement3.setLong(1, id);
+            ResultSet rs3 = statement3.executeQuery();
+
+            if (rs3.next()) {
+                personagem.addHabilidade(Personagem_HabilidadeDAO.buscarHabilidade(id));
+            }
+
                 return personagem;
             }   
             else {

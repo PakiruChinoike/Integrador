@@ -67,8 +67,39 @@ public class ItemDAO{
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                Item item = new Item();
-                return item;
+                String sql2 = "SELECT * FROM habilidade WHERE id_habilidade=?";
+                PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
+                statement2.setLong(1, rs.getLong("id_habilidade"));
+                ResultSet rs2 = statement.executeQuery();
+                
+                if (rs2.next()) {
+                    Habilidade habilidade;
+
+                    int tipo = rs.getInt("tipo");
+                    switch (tipo) {
+                        case 0: {
+                            habilidade = new Ataque(rs.getLong("id_habilidade"), rs2.getString("nome"), rs2.getString("descricao"), rs2.getInt("max_roll"), rs2.getInt("min_roll"), rs2.getInt("tipo_dano"), rs2.getInt("atributo"));
+                            break;
+                        }
+                        case 1: {
+                            habilidade = new Resistencia(rs.getLong("id_habilidade"), rs2.getString("nome"), rs2.getString("descricao"), rs2.getInt("max_roll"), rs2.getInt("min_roll"), rs2.getInt("min_teste"), rs2.getInt("tipo_dano"), rs2.getInt("atributo"));
+                            break;
+                        }
+                        case 2: {
+                            habilidade = new Garantido(rs.getLong("id_habilidade"), rs2.getString("nome"), rs2.getString("descricao"), rs2.getInt("max_roll"), rs2.getInt("min_roll"), rs2.getInt("tipo_dano"));
+                            break;
+                        }
+                        default: {
+                            return null;
+                        }
+                    }
+
+                    Item item = new Item(rs.getString("nome"), rs.getInt("raridade"), habilidade);
+                    return item;
+                }
+                else {
+                    return null;
+                }
             }   
             else {
                 return null;

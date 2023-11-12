@@ -25,7 +25,7 @@ public abstract class Habilidade {
         this.atributo = 0;
     }
 
-    protected Habilidade(int id, String nome, String descricao, int tipo, int maxRoll, int minRoll, int minTeste, int tipoDano, int atributo) {
+    protected Habilidade(long id, String nome, String descricao, int tipo, int maxRoll, int minRoll, int minTeste, int tipoDano, int atributo) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;

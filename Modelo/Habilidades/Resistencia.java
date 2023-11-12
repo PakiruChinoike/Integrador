@@ -7,7 +7,7 @@ public class Resistencia extends Habilidade{
         super();
     }
 
-    public Resistencia(int id, String nome, String descricao, int maxRoll, int minRoll, int minTeste, int tipoDano, int atributo) {
+    public Resistencia(long id, String nome, String descricao, int maxRoll, int minRoll, int minTeste, int tipoDano, int atributo) {
         super(id, nome, descricao, 1, maxRoll, minRoll, minTeste, tipoDano, atributo);
     }
 

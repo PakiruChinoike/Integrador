@@ -7,7 +7,7 @@ public class Ataque extends Habilidade{
         super();
     }
 
-    public Ataque(int id, String nome, String descricao, int maxRoll, int minRoll, int tipoDano, int atributo) {
+    public Ataque(long id, String nome, String descricao, int maxRoll, int minRoll, int tipoDano, int atributo) {
         super(id, nome, descricao, 0, maxRoll, minRoll, 0, tipoDano, atributo);
     }
 

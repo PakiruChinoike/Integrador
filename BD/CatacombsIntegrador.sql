@@ -11,14 +11,12 @@ CREATE TABLE personagem(
     nivel TINYINT NOT NULL,
     experiencia SMALLINT NOT NULL,
     id_party BIGINT NOT NULL,
-    id_personagem_habilidade BIGINT NOT NULL,
-    id_personagem_item BIGINT NOT NULL,
     id_atributos BIGINT NOT NULL,
+    id_fraquezas BIGINT NOT NULL,
     PRIMARY KEY (id_personagem),
     FOREIGN KEY(id_party) REFERENCES party(id_party),
-    FOREIGN KEY(id_personagem_habilidade) REFERENCES personagem_habilidade(id_personagem_habilidade),
-    FOREIGN KEY (id_personagem_item) REFERENCES personagem_item(id_personagem_item),
-    FOREIGN KEY(id_atributos) REFERENCES atributos(id_atributos)
+    FOREIGN KEY(id_atributos) REFERENCES atributos(id_atributos),
+    FOREIGN KEY(id_fraquezas) REFERENCES fraquezas(id_fraquezas)
 );
 
 CREATE TABLE atributos(
@@ -32,6 +30,20 @@ CREATE TABLE atributos(
     FOREIGN KEY(id_personagem) REFERENCES personagem(id_personagem),
     FOREIGN KEY(id_monstro) REFERENCES monstro(id_monstro)
 );
+
+CREATE TABLE fraquezas(
+    id_fraquezas BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
+    flamejante BIT NOT NULL,
+    congelante BIT NOT NULL,
+    eletrico BIT NOT NULL,
+    fisico BIT NOT NULL,
+    arcano BIT NOT NULL,
+    id_personagem BIGINT,
+    id_monstro BIGINT, 
+    PRIMARY KEY(id_fraquezas),
+    FOREIGN KEY(id_personagem) REFERENCES personagem(id_personagem),
+    FOREIGN KEY(id_monstro) REFERENCES monstro(id_monstro)
+)
 
 CREATE TABLE party(
     id_party BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
@@ -124,10 +136,8 @@ CREATE TABLE monstro(
     vida TINYINT NOT NULL,
     armadura TINYINT NOT NULL,
     fraquezas TINYINT NOT NULL,
-    id_monstro_habilidade BIGINT NOT NULL,
     id_atributos BIGINT NOT NULL,
     PRIMARY KEY(id_monstro),
-    FOREIGN KEY(id_monstro_habilidade) REFERENCES monstro_habilidade(id_monstro_habilidade),
     FOREIGN KEY(id_atributos) REFERENCES atributos(id_atributos)
 );
 

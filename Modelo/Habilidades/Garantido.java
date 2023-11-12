@@ -7,7 +7,7 @@ public class Garantido extends Habilidade{
         super();
     }
 
-    public Garantido(int id, String nome, String descricao, int maxRoll, int minRoll, int tipoDano) {
+    public Garantido(long id, String nome, String descricao, int maxRoll, int minRoll, int tipoDano) {
         super(id, nome, descricao, 2, maxRoll, minRoll, 0, tipoDano, 0);
     }
 
