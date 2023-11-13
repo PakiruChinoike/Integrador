@@ -1,27 +1,29 @@
-personagem(id_personagem, poder, xp, nivel, hp, nome, classe, #id_atributos, #id_item, #id_party)
+personagem(id_personagem, nome, classe, vida, armadura, poder, nivel, experiencia, #id_party)
 
-atributos(id_atributos, agilidade, forca, inteligencia)
+atributos(id_atributos, agilidade, forca, inteligencia, #id_personagem, #id_monstro)
 
-item(id_item, raridade, nome, xp, #id_inventario)
+fraquezas(id_fraquezas, flamejante, congelante, eletrico, fisico, arcano, #id_personagem, #id_monstro)
 
-personagem_item(id_personagem_item, raridade, nome, xp,#id_item #id_inventario )
+equipe(id_equipe, #id_personagem, #id_personagem2, #id_personagem3);
 
-habilidade(id_habilidade, nivel, classe, min_teste, max_roll, min_roll, tipo, descricao, nome, tipo_dano, atributo, #id_inventario_item)
+habilidade(id_habilidade, nome, tipo, descricao, max_roll, min_roll, min_teste, tipo_dano, atributo)
 
-item_habilidade(id_item_habilidade, #id_habilidade, #id_item)
+personagem_habilidade(id_habilidade, #id_personagem, #id_habilidadde)
 
-monstro(id_monstro, atributos, armadura, dificuldade, vida, fraquezas, nome, #id_atributos)
+item(id_item, nome, raridade, #id_habilidade)
 
-habilidade_monstro(id_habilidade_monstro, nome, fraquezas, vida, dificuldade, armadura, atributos, #id_habilidade)
+personagem_item(id_personagem_item, #id_personagem, #id_item)
 
-sala(id_sala, tipo, nome, #id_fase)
+sala(id_sala, nome, tipo, dificuldade, descricao, #id_recompensa)
 
-sala_monstro(id_sala_monstro, #id_sala #id_monstro)
+fase(id_fase, nome, num_sala, #id_chefe, #id_equipe)
 
-recompensa(id_recompensa, tipo, xp, raridade #id_item, #id_habilidade)
+sala_fase(id_sala_fase, #id_sala, #id_fase)
 
-sala_recompensa(id_sala_recompensa, #id_sala, #id_recompensa)
+recompensa(id_recompensa, tipo, experiencia, raridade, #id_item, id_habilidade)
 
-party(id_party)
+monstro(id_monstro, nome, dificuldade, vida, armadura)
 
-fase(id_fase, num_sala, nome, #id_party)
+monstro_habilidade(id_monstro_habilidade, #id_monstro, #id_habilidade)
+
+monstro_sala(id_monstro_sala, #id_monstro, #id_sala)

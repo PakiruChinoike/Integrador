@@ -10,9 +10,9 @@ CREATE TABLE personagem(
     poder TINYINT NOT NULL,
     nivel TINYINT NOT NULL,
     experiencia SMALLINT NOT NULL,
-    id_party BIGINT NOT NULL,
+    id_equipe BIGINT NOT NULL,
     PRIMARY KEY (id_personagem),
-    FOREIGN KEY(id_party) REFERENCES party(id_party)
+    FOREIGN KEY(id_equipe) REFERENCES equipe(id_equipe)
 );
 
 CREATE TABLE atributos(
@@ -41,11 +41,15 @@ CREATE TABLE fraquezas(
     FOREIGN KEY(id_monstro) REFERENCES monstro(id_monstro)
 )
 
-CREATE TABLE party(
-    id_party BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
-    id_personagem BIGINT UNIQUE NOT NULL,
-    PRIMARY KEY(id_party),
-    FOREIGN KEY(id_personagem) REFERENCES personagem(id_personagem)
+CREATE TABLE equipe(
+    id_equipe BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
+    id_personagem BIGINT NOT NULL,
+    id_personagem2 BIGINT NOT NULL,
+    id_personagem3 BIGINT NOT NULL,
+    PRIMARY KEY(id_equipe),
+    FOREIGN KEY(id_personagem) REFERENCES personagem(id_personagem),
+    FOREIGN KEY(id_personagem2) REFERENCES personagem(id_personagem),
+    FOREIGN KEY(id_personagem3) REFERENCES personagem(id_personagem)
 );
 
 CREATE TABLE habilidade(
@@ -55,7 +59,7 @@ CREATE TABLE habilidade(
     descricao VARCHAR(200) NOT NULL,
     max_roll TINYINT,
     min_roll TINYINT,
-    min_test TINYINT,
+    min_teste TINYINT,
     tipo_dano TINYINT,
     atributo TINYINT,
     PRIMARY KEY(id_habilidade)
@@ -94,7 +98,6 @@ CREATE TABLE sala(
     tipo TINYINT NOT NULL,
     dificuldade TINYINT NOT NULL,
     descricao VARCHAR(500) NOT NULL,
-    id_inimigo BIGINT NOT NULL, 
     id_recompensa BIGINT NOT NULL,
     PRIMARY KEY(id_sala),
     FOREIGN KEY(id_inimigo) REFERENCES monstro(id_monstro),
@@ -107,11 +110,11 @@ CREATE TABLE fase(
     num_sala VARCHAR(30) NOT NULL,
     id_sala BIGINT UNIQUE NOT NULL,
     id_chefe BIGINT UNIQUE NOT NULL,
-    id_party BIGINT NOT NULL,
+    id_equipe BIGINT NOT NULL,
     PRIMARY KEY(id_fase),
     FOREIGN KEY(id_sala) REFERENCES sala(id_sala),
     FOREIGN KEY(id_chefe) REFERENCES monstro(id_monstro),
-    FOREIGN KEY(id_party) REFERENCES party(id_party) 
+    FOREIGN KEY(id_equipe) REFERENCES equipe(id_equipe) 
 );
 
 CREATE TABLE recompensa(
@@ -133,7 +136,6 @@ CREATE TABLE monstro(
     vida TINYINT NOT NULL,
     armadura TINYINT NOT NULL,
     PRIMARY KEY(id_monstro),
-    FOREIGN KEY(id_atributos) REFERENCES atributos(id_atributos)
 );
 
 CREATE TABLE monstro_habilidade(
