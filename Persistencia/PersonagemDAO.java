@@ -37,7 +37,7 @@ public class PersonagemDAO {
             statement2.setInt(1, personagem.getAtributos(0));
             statement2.setInt(2, personagem.getAtributos(1));
             statement2.setInt(3, personagem.getAtributos(2));
-            statement2.setLong(4, personagem.getId());
+            statement2.setLong(4, id_personagem);
 
             String sql3 = "INSERT INTO fraquezas VALUES(null, ?, ?, ?, ?, ?, ?, null)";
             PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
@@ -46,12 +46,12 @@ public class PersonagemDAO {
             statement3.setBoolean(3, personagem.getFraquezas(2));
             statement3.setBoolean(4, personagem.getFraquezas(3));
             statement3.setBoolean(5, personagem.getFraquezas(4));
-            statement3.setLong(6, personagem.getId());
+            statement3.setLong(6, id_personagem);
 
             for (int i = 0; i<personagem.getHabilidades().size(); i++) {
                 String sql4 = "INSERT INTO personagem_habilidade VALUES(null, ?, ?)"; 
                 PreparedStatement statement4 = this.conexao.getConexao().prepareStatement(sql4);
-                statement4.setLong(1, personagem.getId());
+                statement4.setLong(1, id_personagem);
                 statement4.setLong(2, personagem.getHabilidade(i).getId());
                 statement4.executeUpdate();
             }
@@ -59,7 +59,7 @@ public class PersonagemDAO {
             for (int i = 0; i<personagem.getItens().size(); i++) {
                 String sql5 = "INSERT INTO personagem_item VALUES(null, ?, ?)"; 
                 PreparedStatement statement5 = this.conexao.getConexao().prepareStatement(sql5);
-                statement5.setLong(1, personagem.getId());
+                statement5.setLong(1, id_personagem);
                 statement5.setLong(2, personagem.getItem(i).getId());
                 statement5.executeUpdate();
             }
