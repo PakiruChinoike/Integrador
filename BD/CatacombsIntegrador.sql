@@ -11,12 +11,8 @@ CREATE TABLE personagem(
     nivel TINYINT NOT NULL,
     experiencia SMALLINT NOT NULL,
     id_party BIGINT NOT NULL,
-    id_atributos BIGINT NOT NULL,
-    id_fraquezas BIGINT NOT NULL,
     PRIMARY KEY (id_personagem),
-    FOREIGN KEY(id_party) REFERENCES party(id_party),
-    FOREIGN KEY(id_atributos) REFERENCES atributos(id_atributos),
-    FOREIGN KEY(id_fraquezas) REFERENCES fraquezas(id_fraquezas)
+    FOREIGN KEY(id_party) REFERENCES party(id_party)
 );
 
 CREATE TABLE atributos(
@@ -96,6 +92,7 @@ CREATE TABLE sala(
     id_sala BIGINT NOT NULL UNIQUE AUTO_INCREMENT, 
     nome VARCHAR(30) NOT NULL,
     tipo TINYINT NOT NULL,
+    dificuldade TINYINT NOT NULL,
     descricao VARCHAR(500) NOT NULL,
     id_inimigo BIGINT NOT NULL, 
     id_recompensa BIGINT NOT NULL,
@@ -135,8 +132,6 @@ CREATE TABLE monstro(
     dificuldade TINYINT NOT NULL,
     vida TINYINT NOT NULL,
     armadura TINYINT NOT NULL,
-    fraquezas TINYINT NOT NULL,
-    id_atributos BIGINT NOT NULL,
     PRIMARY KEY(id_monstro),
     FOREIGN KEY(id_atributos) REFERENCES atributos(id_atributos)
 );
@@ -148,4 +143,13 @@ CREATE TABLE monstro_habilidade(
     PRIMARY KEY(id_monstro_habilidade),
     FOREIGN KEY(id_monstro) REFERENCES monstro(id_monstro),
     FOREIGN KEY(id_habilidade) REFERENCES habilidade(id_habilidade)
+);
+
+CREATE TABLE monstro_sala(
+    id_monstro_sala BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
+    id_monstro BIGINT NOT NULL,
+    id_sala BIGINT NOT NULL,
+    PRIMARY KEY(id_monstro_habilidade),
+    FOREIGN KEY(id_monstro) REFERENCES monstro(id_monstro),
+    FOREIGN KEY(id_sala) REFERENCES sala(id_sala)
 );

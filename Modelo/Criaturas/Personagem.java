@@ -42,6 +42,10 @@ public class Personagem extends Criatura{
             return id;
         }
 
+        public void setId(long id) {
+            this.id = id;
+        }
+
         public int getClasse() {
             String nomeClasse = classe.getNome();
             switch(nomeClasse) {
@@ -88,8 +92,12 @@ public class Personagem extends Criatura{
             this.equipe = equipe;
         }
 
-        public List<Item> getListaItens() {
+        public List<Item> getItens() {
             return listaItens;
+        }
+
+        public Item getItem(int index) {
+            return listaItens.get(index);
         }
 
         public String addItem(Item item) {

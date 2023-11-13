@@ -22,18 +22,17 @@ public class Sala{
         this.inimigos = new ArrayList<Monstro>();
     }
 
-    public Sala(int id, int tipo, int dificuldade, String nome, String descricao, Recompensa recompesa) {
+    public Sala(long id, int tipo, int dificuldade, String nome, String descricao) {
         this.id = id;
         this.tipo = tipo;
         this.dificuldade = dificuldade;
         this.nome = nome;
         this.descricao = descricao;
-        this.recompensa = recompesa;
 
         this.inimigos = new ArrayList<Monstro>();
     }
 
-    public Sala(int id, int tipo, int dificuldade, String nome, String descricao, Recompensa recompesa, List<Monstro> inimigos) {
+    public Sala(long id, int tipo, int dificuldade, String nome, String descricao, Recompensa recompesa, List<Monstro> inimigos) {
         this.id = id;
         this.tipo = tipo;
         this.dificuldade = dificuldade;
@@ -59,6 +58,10 @@ public class Sala{
 
     public Recompensa getRecompensa() {
         return recompensa;
+    }
+
+    public void setRecompensa(Recompensa recompensa) {
+        this.recompensa = recompensa;
     }
 
     public int getTipo() {

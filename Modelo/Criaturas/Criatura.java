@@ -123,10 +123,6 @@ public class Criatura {
         }
     }
 
-    public int getAtributosId() {
-        return atributos.get(4);
-    }
-
     public boolean setAtributos(List<Integer> atributos) {
         if(this.atributos.isEmpty()) {
             this.atributos.addAll(atributos);

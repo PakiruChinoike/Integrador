@@ -12,7 +12,7 @@ public class PersonagemDAO {
 		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "root", "CatacombsIntegrador");
 	}
 
-    public void salvar(Personagem personagem) {
+    public long salvar(Personagem personagem) {
         try {
             this.conexao.abrirConexao();
             String sql = "INSERT INTO personagem VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -22,12 +22,53 @@ public class PersonagemDAO {
             statement.setInt(3, personagem.getVida());
             statement.setInt(4, personagem.getArmadura());
             statement.setInt(5, personagem.getPoder());
-            statement.setInt(6, personagem.getExperiencia());
-            statement.setLong(7, personagem.getEquipe().getId());
-            statement.setLong(8, personagem.getAtributosId());
+            statement.setInt(6, personagem.getNivel());
+            statement.setInt(7, personagem.getExperiencia());
+            statement.setLong(8, personagem.getEquipe().getId());
             statement.executeUpdate();
+
+            String sql0 = "SELECT id_personagem FROM personagem ORDER BY id_personagem DESC LIMIT 1";
+            PreparedStatement statement0 = this.conexao.getConexao().prepareStatement(sql0);
+            ResultSet rs0 = statement0.executeQuery();
+            long id_personagem = rs0.getLong("id_personagem");
+
+            String sql2 = "INSERT INTO atributos VALUES(null, ?, ?, ?, ?, null)";
+            PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
+            statement2.setInt(1, personagem.getAtributos(0));
+            statement2.setInt(2, personagem.getAtributos(1));
+            statement2.setInt(3, personagem.getAtributos(2));
+            statement2.setLong(4, personagem.getId());
+
+            String sql3 = "INSERT INTO fraquezas VALUES(null, ?, ?, ?, ?, ?, ?, null)";
+            PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
+            statement3.setBoolean(1, personagem.getFraquezas(0));
+            statement3.setBoolean(2, personagem.getFraquezas(1));
+            statement3.setBoolean(3, personagem.getFraquezas(2));
+            statement3.setBoolean(4, personagem.getFraquezas(3));
+            statement3.setBoolean(5, personagem.getFraquezas(4));
+            statement3.setLong(6, personagem.getId());
+
+            for (int i = 0; i<personagem.getHabilidades().size(); i++) {
+                String sql4 = "INSERT INTO personagem_habilidade VALUES(null, ?, ?)"; 
+                PreparedStatement statement4 = this.conexao.getConexao().prepareStatement(sql4);
+                statement4.setLong(1, personagem.getId());
+                statement4.setLong(2, personagem.getHabilidade(i).getId());
+                statement4.executeUpdate();
+            }
+
+            for (int i = 0; i<personagem.getItens().size(); i++) {
+                String sql5 = "INSERT INTO personagem_item VALUES(null, ?, ?)"; 
+                PreparedStatement statement5 = this.conexao.getConexao().prepareStatement(sql5);
+                statement5.setLong(1, personagem.getId());
+                statement5.setLong(2, personagem.getItem(i).getId());
+                statement5.executeUpdate();
+            }
+
+            return id_personagem;
+
         } catch(SQLException e) {
             e.printStackTrace();
+            return (Long)null;
         } finally {
             this.conexao.fecharConexao();
         }
@@ -53,6 +94,7 @@ public class PersonagemDAO {
             statement2.setInt(2, personagem.getAtributos(1));
             statement2.setInt(3, personagem.getAtributos(3));
             statement2.setLong(4, personagem.getId());
+            statement2.executeUpdate();
 
             String sql3 = "UPDATE fraquezas SET flamejante=?, congelante=?, eletrico=?, fisico=?, arcano=? WHERE id_personagem=?";
             PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
@@ -62,6 +104,24 @@ public class PersonagemDAO {
             statement3.setBoolean(4, personagem.getFraquezas(3));
             statement3.setBoolean(5, personagem.getFraquezas(4));
             statement3.setLong(6, personagem.getId());
+            statement3.executeUpdate();
+
+            for (int i = 0; i<personagem.getHabilidades().size(); i++) {
+                String sql4 = "UPDATE personagem_habilidade SET id_habilidade=? WHERE id_personagem=?";
+                PreparedStatement statement4 = this.conexao.getConexao().prepareStatement(sql4);
+                statement4.setLong(1, personagem.getHabilidade(i).getId()); 
+                statement4.setLong(2, personagem.getId());
+                statement4.executeUpdate();
+            }
+
+            for (int i = 0; i<personagem.getItens().size(); i++) {
+                String sql5 = "UPDATE personagem_item SET id_item=? WHERE id_personagem=?";
+                PreparedStatement statement5 = this.conexao.getConexao().prepareStatement(sql5);
+                statement5.setLong(1, personagem.getItem(i).getId());
+                statement5.setLong(2, personagem.getId());
+                statement5.executeUpdate();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -93,22 +153,54 @@ public class PersonagemDAO {
             if (rs.next()) {
                 Personagem personagem = new Personagem(rs.getString("nome"), rs.getInt("classe"));
 
-            String sql2 = "SELECT COUNT(id_personagem_item) FROM personagem_item WHERE id_personagem=?";
-            PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
-            statement2.setLong(1, id);
-            ResultSet rs2 = statement2.executeQuery();
+                String sql2 = "SELECT COUNT(id_personagem_item) FROM personagem_item WHERE id_personagem=?";
+                PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
+                statement2.setLong(1, id);
+                ResultSet rs2 = statement2.executeQuery();
 
             if (rs2.next()) {
                 personagem.addItem(Personagem_ItemDAO.buscarItem(id));
             }
             
-            String sql3 = "SELECT COUNT(id_personagem_habilidade) FROM personagem_habilidade WHERE id_personagem=?";
-            PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
-            statement3.setLong(1, id);
-            ResultSet rs3 = statement3.executeQuery();
+                String sql3 = "SELECT COUNT(id_personagem_habilidade) FROM personagem_habilidade WHERE id_personagem=?";
+                PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
+                statement3.setLong(1, id);
+                ResultSet rs3 = statement3.executeQuery();
 
             if (rs3.next()) {
                 personagem.addHabilidade(Personagem_HabilidadeDAO.buscarHabilidade(id));
+            }
+
+                String sql4 = "SELECT * FROM atributos WHERE id_personagem=?";
+                PreparedStatement statement4 = this.conexao.getConexao().prepareStatement(sql4);
+                statement4.setLong(1, id);
+                ResultSet rs4 = statement4.executeQuery();
+
+                List<Integer> listaAtributos = new ArrayList<Integer>();
+
+            if (rs4.next()) {
+                listaAtributos.add(rs4.getInt("agilidade"));
+                listaAtributos.add(rs4.getInt("forca"));
+                listaAtributos.add(rs4.getInt("inteligencia"));
+
+                personagem.setAtributos(listaAtributos);
+            }
+
+                String sql5 = "SELECT * FROM fraquezas WHERE id_personagem=?";
+                PreparedStatement statement5 = this.conexao.getConexao().prepareStatement(sql5);
+                statement5.setLong(1, id);
+                ResultSet rs5 = statement5.executeQuery();
+
+                List<Boolean> listaFraquezas = new ArrayList<Boolean>();
+
+            if (rs5.next()) {
+                listaFraquezas.add(rs5.getBoolean("flamejante"));
+                listaFraquezas.add(rs5.getBoolean("congelante"));
+                listaFraquezas.add(rs5.getBoolean("eletrico"));
+                listaFraquezas.add(rs5.getBoolean("fisico"));
+                listaFraquezas.add(rs5.getBoolean("arcano"));
+
+                personagem.setFraquezas(listaFraquezas);
             }
 
                 return personagem;

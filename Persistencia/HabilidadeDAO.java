@@ -9,13 +9,13 @@ public class HabilidadeDAO {
     private ConexaoMYSQL conexao;
 
     public HabilidadeDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "root", "bd_comunicacao_java_mysql_2i_2023");
+		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "Bufalovictor!8", "CatacombsIntegrador");
 	}
 
-    public void salvar(Habilidade habilidade) {
+    public long salvar(Habilidade habilidade) {
         try {
             this.conexao.abrirConexao();
-            String sql = "INSERT INTO habilidade VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO habilidade VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, habilidade.getNome());
             statement.setInt(2, habilidade.getTipo());
@@ -23,11 +23,19 @@ public class HabilidadeDAO {
             statement.setInt(4, habilidade.getMaxRoll());
             statement.setInt(5, habilidade.getMinRoll());
             statement.setInt(6, habilidade.getMinTeste());
-            statement.setInt(6, habilidade.getTipoDano());
-            statement.setLong(7, habilidade.getAtributo());
+            statement.setInt(7, habilidade.getTipoDano());
+            statement.setLong(8, habilidade.getAtributo());
             statement.executeUpdate();
+
+            String sql0 = "SELECT id_habilidade FROM habilidade ORDER BY id_habilidade DESC LIMIT 1";
+            PreparedStatement statement0 = this.conexao.getConexao().prepareStatement(sql0);
+            ResultSet rs0 = statement0.executeQuery();
+            long id_habilidade = rs0.getLong("id_habilidade");
+            return id_habilidade;
+
         } catch(SQLException e) {
             e.printStackTrace();
+            return (Long)null;
         } finally {
             this.conexao.fecharConexao();
         }
