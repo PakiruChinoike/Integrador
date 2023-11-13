@@ -36,3 +36,15 @@ Dificuldade:
 4 até 7 - Até 7 monstros, recompensas raras
 8 e 9 - até 9 monstros, recompensas épicas
 10 - chefe final, recompensas lendárias
+
+
+
+
+
+
+
+// TO-DO LIST
+--Adicionar dados no banco (Criar inimigos: esqueleto, zumbi, lobisomem, lich; Criar habilidades: guerreiro, ladino e mago; Criar itens: armas melhores, armadura melhor; Criar recompensas: xp e nivel, habilidades extra); 
+--Debuggar a Persistência;
+--Fazer a Apresentação;
+--Debuggar a Apresentação.
