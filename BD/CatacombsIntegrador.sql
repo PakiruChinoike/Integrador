@@ -100,7 +100,6 @@ CREATE TABLE sala(
     descricao VARCHAR(500) NOT NULL,
     id_recompensa BIGINT NOT NULL,
     PRIMARY KEY(id_sala),
-    FOREIGN KEY(id_inimigo) REFERENCES monstro(id_monstro),
     FOREIGN KEY(id_recompensa) REFERENCES recompensa(id_recompensa)
 );
 
