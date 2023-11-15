@@ -4,10 +4,10 @@ import java.sql.SQLException;
 
 public class Personagem_HabilidadeDAO{
 
-    private static ConexaoMYSQL conexao;
+    private ConexaoMYSQL conexao;
 
     public Personagem_HabilidadeDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "root", "CatacombsIntegrador");
+		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "Pipoka!821", "CatacombsIntegrador");
     }
 
     public void salvar(Personagem personagem, Habilidade habilidade) {
@@ -39,11 +39,11 @@ public class Personagem_HabilidadeDAO{
         }
     }
 
-    public static long buscarPersonagem(long id) {
+    public long buscarPersonagem(long id) {
         try {
-            conexao.abrirConexao();
+            this.conexao.abrirConexao();
             String sql = "SELECT id_personagem FROM personagem_habilidade WHERE id_personagem_habilidade=?";
-            PreparedStatement statement = conexao.getConexao().prepareStatement(sql);
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -61,9 +61,9 @@ public class Personagem_HabilidadeDAO{
         }
     }
 
-    public static Habilidade buscarHabilidade(long id) {
+    public Habilidade buscarHabilidade(long id) {
         try {
-            conexao.abrirConexao();
+            this.conexao.abrirConexao();
             String sql = "SELECT id_habilidade FROM personagem_habilidade WHERE id_personagem=?";
             PreparedStatement statement = conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
@@ -72,7 +72,7 @@ public class Personagem_HabilidadeDAO{
                 long id_habilidade = rs.getLong("id_habilidade");
                 
                 String sql2 = "SELECT * FROM  WHERE id_habilidade=?";
-                PreparedStatement statement2 = conexao.getConexao().prepareStatement(sql2);
+                PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
                 statement.setLong(1, id_habilidade);
                 ResultSet rs2 = statement2.executeQuery();
 

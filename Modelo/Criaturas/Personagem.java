@@ -12,8 +12,6 @@ public class Personagem extends Criatura{
 
         private int poder;
 
-        private Equipe equipe;
-
         public Personagem(String nome, int classe, int armadura, int vida, int nivel, int poder) {
             super(nome, vida, armadura, nivel);
             this.poder = poder;
@@ -32,10 +30,12 @@ public class Personagem extends Criatura{
             super.setHabilidades(this.classe.getListaHabilidades());
 
             this.listaItens = new ArrayList<Item>();
+            this.experiencia = 0;
 
             super.setArmadura((5+super.getAtributos(0)+super.getNivel()));
             super.setVida((10+super.getAtributos(1))*super.getNivel());
             this.poder = ((10+super.getAtributos(2)+super.getNivel()));
+
         }
 
         public long getId() {
@@ -82,14 +82,6 @@ public class Personagem extends Criatura{
 
         public void setPoder(int poder) {
             this.poder = poder;
-        }
-
-        public Equipe getEquipe() {
-            return equipe;
-        }
-
-        public void setEquipe(Equipe equipe) {
-            this.equipe = equipe;
         }
 
         public List<Item> getItens() {

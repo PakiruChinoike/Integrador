@@ -93,8 +93,10 @@ public class SalaDAO {
                 statement3.setLong(1, id);
                 ResultSet rs3 = statement3.executeQuery();
 
+                Monstro_SalaDAO monstro_SalaDAO = new Monstro_SalaDAO();
+
                 while (rs3.next()) {
-                    Monstro monstro = Monstro_SalaDAO.buscarMonstro(id);
+                    Monstro monstro = monstro_SalaDAO.buscarMonstro(id);
 
                     sala.addInimigos(monstro);
                 }

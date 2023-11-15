@@ -4,10 +4,10 @@ import java.sql.SQLException;
 
 public class Personagem_ItemDAO{
 
-    private static ConexaoMYSQL conexao;
+    private ConexaoMYSQL conexao;
 
     public Personagem_ItemDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "root", "CatacombsIntegrador");
+		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "Pipoka!821", "CatacombsIntegrador");
     }
 
     public void salvar(Personagem personagem, Item item) {
@@ -39,11 +39,11 @@ public class Personagem_ItemDAO{
         }
     }
 
-    public static long buscarPersonagem(long id) {
+    public long buscarPersonagem(long id) {
         try {
-            conexao.abrirConexao();
+            this.conexao.abrirConexao();
             String sql = "SELECT id_personagem FROM personagem_item WHERE id_item=?";
-            PreparedStatement statement = conexao.getConexao().prepareStatement(sql);
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -61,24 +61,24 @@ public class Personagem_ItemDAO{
         }
     }
 
-    public static Item buscarItem(long id) {
+    public Item buscarItem(long id) {
         try {
-            conexao.abrirConexao();
+            this.conexao.abrirConexao();
             String sql = "SELECT id_item FROM personagem_item WHERE id_personagem=?";
-            PreparedStatement statement = conexao.getConexao().prepareStatement(sql);
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 long id_item = rs.getLong("id_item");
                 
                 String sql2 = "SELECT * FROM item WHERE id_item=?";
-                PreparedStatement statement2 = conexao.getConexao().prepareStatement(sql2);
+                PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
                 statement.setLong(1, id_item);
                 ResultSet rs2 = statement.executeQuery();
 
                 if(rs2.next()) {
                     String sql3 = "SELECT * FROM habilidade WHERE id_habilidade=?";
-                    PreparedStatement statement3 = conexao.getConexao().prepareStatement(sql3);
+                    PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
                     statement2.setLong(1, rs.getLong("id_habilidade"));
                     ResultSet rs3 = statement.executeQuery();
                     

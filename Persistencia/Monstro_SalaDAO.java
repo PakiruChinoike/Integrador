@@ -4,10 +4,10 @@ import java.sql.SQLException;
 
 public class Monstro_SalaDAO{
 
-    private static ConexaoMYSQL conexao;
+    private ConexaoMYSQL conexao;
 
     public Monstro_SalaDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "root", "CatacombsIntegrador");
+		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "Pipoka!821", "CatacombsIntegrador");
     }
 
     public void salvar(Monstro monstro, Sala sala) {
@@ -39,11 +39,11 @@ public class Monstro_SalaDAO{
         }
     }
 
-    public static Monstro buscarMonstro(long id) {
+    public Monstro buscarMonstro(long id) {
         try {
-            conexao.abrirConexao();
+            this.conexao.abrirConexao();
             String sql = "SELECT id_monstro FROM monstro_sala WHERE id_sala=?";
-            PreparedStatement statement = conexao.getConexao().prepareStatement(sql);
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
 

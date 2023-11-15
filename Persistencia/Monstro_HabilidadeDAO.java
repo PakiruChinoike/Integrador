@@ -4,10 +4,10 @@ import java.sql.SQLException;
 
 public class Monstro_HabilidadeDAO{
 
-    private static ConexaoMYSQL conexao;
+    private ConexaoMYSQL conexao;
 
     public Monstro_HabilidadeDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "root", "CatacombsIntegrador");
+		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "Pipoka!821", "CatacombsIntegrador");
     }
 
     public void salvar(Monstro monstro, Habilidade habilidade) {
@@ -39,11 +39,11 @@ public class Monstro_HabilidadeDAO{
         }
     }
 
-    public static long buscarMonstro(long id) {
+    public long buscarMonstro(long id) {
         try {
-            conexao.abrirConexao();
+            this.conexao.abrirConexao();
             String sql = "SELECT id_monstro FROM monstro_habilidade WHERE id_monstro_habilidade=?";
-            PreparedStatement statement = conexao.getConexao().prepareStatement(sql);
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -61,23 +61,23 @@ public class Monstro_HabilidadeDAO{
         }
     }
 
-    public static Habilidade buscarHabilidade(long id) {
+    public Habilidade buscarHabilidade(long id) {
         try {
-            conexao.abrirConexao();
+            this.conexao.abrirConexao();
             String sql = "SELECT id_habilidade FROM monstro_habilidade WHERE id_monstro=?";
-            PreparedStatement statement = conexao.getConexao().prepareStatement(sql);
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 long id_habilidade = rs.getLong("id_habilidade");
                 
-                String sql2 = "SELECT * FROM  WHERE id_habilidade=?";
+                String sql2 = "SELECT * FROM habilidade WHERE id_habilidade=?";
                 PreparedStatement statement2 = conexao.getConexao().prepareStatement(sql2);
-                statement.setLong(1, id_habilidade);
+                statement2.setLong(1, id_habilidade);
                 ResultSet rs2 = statement2.executeQuery();
 
                 if(rs2.next()) {
-                    int tipo = rs.getInt("tipo");
+                    int tipo = rs2.getInt("tipo");
                         switch (tipo) {
                             case 0: {
                                 Habilidade habilidade = new Ataque(id_habilidade, rs2.getString("nome"), rs2.getString("descricao"), rs2.getInt("max_roll"), rs2.getInt("min_roll"), rs2.getInt("tipo_dano"), rs2.getInt("atributo"));

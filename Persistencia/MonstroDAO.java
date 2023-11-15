@@ -9,7 +9,7 @@ public class MonstroDAO {
     private ConexaoMYSQL conexao;
 
     public MonstroDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "root", "CatacombsIntegrador");
+		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "Pipoka!821", "CatacombsIntegrador");
 	}
 
     public long salvar(Monstro monstro) {
@@ -18,24 +18,27 @@ public class MonstroDAO {
             String sql = "INSERT INTO monstro VALUES(null, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, monstro.getNome());
-            statement.setInt(2, monstro.getNivel());
-            statement.setInt(3, monstro.getVida());
-            statement.setInt(4, monstro.getArmadura());
+            statement.setInt(2, monstro.getVida());
+            statement.setInt(3, monstro.getArmadura());
+            statement.setInt(4, monstro.getNivel());
             statement.executeUpdate();
 
             String sql0 = "SELECT id_monstro FROM monstro ORDER BY id_monstro DESC LIMIT 1";
             PreparedStatement statement0 = this.conexao.getConexao().prepareStatement(sql0);
             ResultSet rs0 = statement0.executeQuery();
-            long id_monstro = rs0.getLong("id_monstro");
 
-            String sql2 = "INSET INTO atributos VALUES(null, ?, ?, ?, null, ?)";
+            if (rs0.next()) {
+                long id_monstro = rs0.getLong("id_monstro");
+
+            String sql2 = "INSERT INTO atributos VALUES(null, ?, ?, ?, null, ?)";
             PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
             statement2.setInt(1, monstro.getAtributos(0));
             statement2.setInt(2, monstro.getAtributos(1));
-            statement2.setInt(3, monstro.getAtributos(3));
+            statement2.setInt(3, monstro.getAtributos(2));
             statement2.setLong(4, id_monstro);
+            statement2.executeUpdate();
 
-            String sql3 = "INSET INTO fraquezas VALUES(null, ?, ?, ?, ?, ?, null, ?)";
+            String sql3 = "INSERT INTO fraquezas VALUES(null, ?, ?, ?, ?, ?, null, ?)";
             PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
             statement3.setBoolean(1, monstro.getFraquezas(0));
             statement3.setBoolean(2, monstro.getFraquezas(1));
@@ -43,6 +46,7 @@ public class MonstroDAO {
             statement3.setBoolean(4, monstro.getFraquezas(3));
             statement3.setBoolean(5, monstro.getFraquezas(4));
             statement3.setLong(6, id_monstro);
+            statement3.executeUpdate();
 
             for (int i = 0; i<monstro.getHabilidades().size(); i++) {
                 String sql4 = "INSERT INTO monstro_habilidade VALUES(null, ?, ?)";
@@ -53,6 +57,10 @@ public class MonstroDAO {
             }
 
             return id_monstro;
+        }
+        else {
+            return (Long)null;
+        }
 
         } catch(SQLException e) {
             e.printStackTrace();
@@ -136,8 +144,10 @@ public class MonstroDAO {
                 statement2.setLong(1, id);
                 ResultSet rs2 = statement2.executeQuery();
 
+                Monstro_HabilidadeDAO monstro_habilidadeDao = new Monstro_HabilidadeDAO();
+
                 if (rs2.next()) {
-                    monstro.addHabilidade(Monstro_HabilidadeDAO.buscarHabilidade(id));
+                    monstro.addHabilidade(monstro_habilidadeDao.buscarHabilidade(id));
                 }
 
                 String sql3 = "SELECT * FROM atributos WHERE id_monstro=?";
