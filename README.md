@@ -12,6 +12,11 @@ Atributos:
 1 - Força
 2 - Inteligência
 
+Classes:
+1 - Guerreiro
+2 - Ladino 
+3 - Mago
+
 Raridade: 
 0 - Comum
 1 - Raro

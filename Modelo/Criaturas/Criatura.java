@@ -11,6 +11,7 @@ public class Criatura {
     private List<Integer> atributos;
     private List<Habilidade> habilidades;
 
+    //METODO QUE CRIA UMA CRIATURA A PARTIR DE UM NOME 
     public Criatura(String nome) {
         this.nome = nome;
         this.vida = 10;
@@ -21,6 +22,7 @@ public class Criatura {
         this.habilidades = new ArrayList<Habilidade>();
     }
 
+    //METODO QUE DEFINE O NIVEL, VIDA E ARMADURA DA CRIATURA
     public Criatura(String nome, int vida, int armadura, int nivel) {
         this.nome = nome;
         this.vida = vida;
@@ -31,6 +33,7 @@ public class Criatura {
         this.habilidades = new ArrayList<Habilidade>();
     }
 
+    //METODO QUE DEFINE AS FRAQUEZAS DA CRIATURA 
     public Criatura(String nome, List<Boolean> fraquezas, List<Integer> atributos) {
         this.nome = nome;
         this.vida = 10;
@@ -43,6 +46,7 @@ public class Criatura {
         this.habilidades = new ArrayList<Habilidade>();
     }
 
+    //METODO QUE DEFINE TODOS ATRIBUTOS E FRAQUEZAS DA CRIATURA
     public Criatura(String nome, int vida, int armadura, int nivel, List<Boolean> fraquezas, List<Integer> atributos, List<Habilidade> habilidades) {
         this.nome = nome;
         this.vida = vida;
@@ -109,6 +113,7 @@ public class Criatura {
         }
     }
 
+    //DEFINE 
     public void setFraquezas(int index, boolean fraqueza) {
         fraquezas.set(index, fraqueza);
     }

@@ -12,6 +12,7 @@ public class Personagem extends Criatura{
 
         private int poder;
 
+        //CONSTRUTOR COM TODOS OS PARÂMETROS 
         public Personagem(String nome, int classe, int armadura, int vida, int nivel, int poder) {
             super(nome, vida, armadura, nivel);
             this.poder = poder;
@@ -21,13 +22,12 @@ public class Personagem extends Criatura{
             this.listaItens = new ArrayList<Item>();
         }
 
+        //CONSTRUTOR BÁSICO, ONDE O JOGADOR SELECIONA UM NOME E UMA CLASSE PARA O PERSONAGEM
         public Personagem(String nome, int classe) {
             super(nome);
             this.classe = new Classe(classe);
             
             super.setAtributos(this.classe.getPadrao());
-            super.setFraquezas(this.classe.getListaFraquezas());
-            super.setHabilidades(this.classe.getListaHabilidades());
 
             this.listaItens = new ArrayList<Item>();
             this.experiencia = 0;
@@ -35,7 +35,6 @@ public class Personagem extends Criatura{
             super.setArmadura((5+super.getAtributos(0)+super.getNivel()));
             super.setVida((10+super.getAtributos(1))*super.getNivel());
             this.poder = ((10+super.getAtributos(2)+super.getNivel()));
-
         }
 
         public long getId() {
@@ -46,13 +45,14 @@ public class Personagem extends Criatura{
             this.id = id;
         }
 
+        //RETORNA O VALOR INTEIRO RELATIVO A CLASSE
         public int getClasse() {
             String nomeClasse = classe.getNome();
             switch(nomeClasse) {
-                case "Ladino": {
+                case "Guerreiro": {
                     return 1;
                 }
-                case "Guerreiro": {
+                case "Ladino": {
                     return 2;
                 }
                 case "Mago": {
@@ -101,6 +101,7 @@ public class Personagem extends Criatura{
             return super.getNome() + " é um " + classe.getNome() + " de nível " + super.getNivel();
         }
 
+        //RECEBE UM ATRIBUTO AUMENTAR E O AUMENTA EM UM, DEFINE O NIVEL DO PERSONAGEM E O AUMENTA 
         public void subirNivel(int atributoAumentar) {
             super.setNivel(super.getNivel()+1);
             this.experiencia = 0;
