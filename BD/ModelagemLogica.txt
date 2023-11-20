@@ -1,4 +1,4 @@
-personagem(id_personagem, nome, classe, vida, armadura, poder, nivel, experiencia, #id_party)
+personagem(id_personagem, nome, classe, vida, armadura, poder, nivel, experiencia, #id_atributos, #id_party, #id_fraquezas)
 
 atributos(id_atributos, agilidade, forca, inteligencia, #id_personagem, #id_monstro)
 
@@ -8,7 +8,7 @@ equipe(id_equipe, #id_personagem, #id_personagem2, #id_personagem3);
 
 habilidade(id_habilidade, nome, tipo, descricao, max_roll, min_roll, min_teste, tipo_dano, atributo)
 
-personagem_habilidade(id_habilidade, #id_personagem, #id_habilidadde)
+personagem_habilidade(id_personagem_habilidade, #id_personagem, #id_habilidadde)
 
 item(id_item, nome, raridade, #id_habilidade)
 
