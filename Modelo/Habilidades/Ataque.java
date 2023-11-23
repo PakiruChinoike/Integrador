@@ -39,7 +39,7 @@ public class Ataque extends Habilidade{
     }
 
     //METODO PARA O PERSONAGEM USAR A HABILIDADE EM ALVO UNICO 
-    public String usaHabilidade(Personagem usuario, List<Criatura> inimigos, int alvo) {
+    public String usaHabilidade(Criatura usuario, List<Criatura> inimigos, int alvo) {
         int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
         int damage = rolagemDano(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
         if (testeAtaque(hit, inimigos.get(alvo).getArmadura())) {
@@ -53,35 +53,7 @@ public class Ataque extends Habilidade{
     }
 
     //METODO PARA O PERSONAGEM USAR A HABILIDADE EM AREA  
-    public String usaHabilidade(Personagem usuario, List<Criatura> inimigos) {
-        int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
-        int acertos = 0;
-        for (int i = 0; i<inimigos.size(); i++) {
-            int damage = rolagemDano(inimigos.get(i).getFraquezas(super.getTipoDano()));
-            if (testeAtaque(hit, inimigos.get(i).getArmadura())) {
-                causaDano(damage, inimigos.get(i));
-                acertos++;
-            }
-        }
-        return usuario.getNome() + " acertou " + acertos + " inimigos.";
-    }
-
-    //METODO PARA O MONSTRO USAR A HABILIDADE EM ALVO UNICO 
-    public String usaHabilidade(Monstro usuario, List<Criatura> inimigos, int alvo) {
-        int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
-        int damage = rolagemDano(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
-        if (testeAtaque(hit, inimigos.get(alvo).getArmadura())) {
-            int vidaAtual = causaDano(damage, inimigos.get(alvo));
-            return usuario.getNome() + " acertou " + inimigos.get(alvo).getNome() + " com um " + hit + " causando "
-            + damage + " de dano, e o deixando com " + vidaAtual + " pontos de vida.";
-        }
-        else {
-            return usuario.getNome() + " errou " + super.getNome();
-        }        
-    }
-
-    //METODO PARA O MONTRO USAR UMA HABILIDADE EM AREA 
-    public String usaHabilidade(Monstro usuario, List<Criatura> inimigos) {
+    public String usaHabilidade(Criatura usuario, List<Criatura> inimigos) {
         int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
         int acertos = 0;
         for (int i = 0; i<inimigos.size(); i++) {

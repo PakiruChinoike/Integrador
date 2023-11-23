@@ -34,7 +34,7 @@ public class Garantido extends Habilidade{
         return vidaAtual;
     }
 
-    public String usaHabilidade(Personagem usuario, List<Criatura> inimigos, int alvo) {
+    public String usaHabilidade(Criatura usuario, List<Criatura> inimigos, int alvo) {
         if(inimigos.get(0) instanceof Monstro) {
             int damage = rolagemValor(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
             int vidaAtual = causaDano(damage, inimigos.get(alvo));
@@ -49,13 +49,6 @@ public class Garantido extends Habilidade{
         else {
             return null;
         }
-    }
-
-    public String usaHabilidade(Monstro usuario, List<Criatura> inimigos, int alvo) {
-        int damage = rolagemValor(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
-        int vidaAtual = causaDano(damage, inimigos.get(alvo));
-        return usuario.getNome() + " acertou " + inimigos.get(alvo).getNome() + " causando "
-        + damage + " de dano, e o deixando com " + vidaAtual + " pontos de vida.";
     }
 
     public String usaHabilidade(Personagem usuario, List<Criatura> aliados) {

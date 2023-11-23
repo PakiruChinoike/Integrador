@@ -28,6 +28,8 @@ public class Personagem extends Criatura{
             this.classe = new Classe(classe);
             
             super.setAtributos(this.classe.getPadrao());
+            super.setFraquezas(this.classe.getListaFraquezas());
+            super.setHabilidades(this.classe.getListaHabilidades());
 
             this.listaItens = new ArrayList<Item>();
             this.experiencia = 0;

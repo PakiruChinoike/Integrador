@@ -1,22 +1,21 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.Math;
 
 public class Classe {
     
     private String nome;
     private List<Integer> padrao;
     private List<Habilidade> listaHabilidades;
-    private List<Boolean> fraquezas;
+    private List<Boolean> listaFraquezas;
 
     //CONSTRUTOR VAZIO QUE RECEBE O TIPO DA CLASSE 
     public Classe(int tipo) {
 
         padrao = new ArrayList<Integer>(3);
         listaHabilidades = new ArrayList<Habilidade>(4);
-        fraquezas = new ArrayList<Boolean>(5);
+        listaFraquezas = new ArrayList<Boolean>(5);
         for (int i = 0; i<5; i++) {
-            fraquezas.add(false);
+            listaFraquezas.add(i, false);
         }
 
         //DEFINE OS ATRIBUTOS BASE DE CADA CLASSE
@@ -27,7 +26,7 @@ public class Classe {
                 padrao.add(3);
                 padrao.add(1);
 
-                fraquezas.set(0, true);
+                listaFraquezas.set(0, true);
                 break;
             }
             case 2: {
@@ -36,7 +35,7 @@ public class Classe {
                 padrao.add(2);
                 padrao.add(1);
                 
-                fraquezas.set(1, true);
+                listaFraquezas.set(1, true);
                 break;
             }
             case 3: {
@@ -45,7 +44,7 @@ public class Classe {
                 padrao.add(1);
                 padrao.add(3);
 
-                fraquezas.set(2, true);
+                listaFraquezas.set(2, true);
                 break;
             }
         }
@@ -64,11 +63,11 @@ public class Classe {
     }
 
     public List<Boolean> getListaFraquezas() {
-        return fraquezas;
+        return listaFraquezas;
     }
 
     public boolean getFraqueza(int index) {
-        return fraquezas.get(index);
+        return listaFraquezas.get(index);
     }
 
 }

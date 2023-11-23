@@ -37,7 +37,7 @@ public abstract class Habilidade {
         this.atributo = atributo;
     }
 
-    public abstract String usaHabilidade(Personagem usuario, List<Criatura> inimigos, int alvo);
+    public abstract String usaHabilidade(Criatura usuario, List<Criatura> inimigos, int alvo);
 
     public long getId() {
         return id;
