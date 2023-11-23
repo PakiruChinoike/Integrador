@@ -11,11 +11,13 @@ public class Resistencia extends Habilidade{
         super(id, nome, descricao, 1, maxRoll, minRoll, minTeste, tipoDano, atributo);
     }
 
+
     protected int rolagemResistencia(int nivel, int atributo) {
         int teste = ((int)(Math.random() * 20) + nivel) + atributo;
         return teste;
     }
 
+    //METODO QUE DEFINE QUANTO DE DANO O PERSONAGEM
     protected int rolagemDano(boolean isFraco) {
         int damage = (int)(Math.random() * super.getMaxRoll()) + super.getMinRoll();
         if(isFraco) {
@@ -24,6 +26,7 @@ public class Resistencia extends Habilidade{
         return damage;
     }
 
+    //METODO QUE CAUSA O DANO NO PERSONAGEM 
     protected int causaDano(int damage, Criatura inimigo) {
         int vidaAtual = inimigo.setVida((inimigo.getVida())-damage);
         return vidaAtual;

@@ -8,9 +8,8 @@ public class Classe {
     private List<Integer> padrao;
     private List<Habilidade> listaHabilidades;
     private List<Boolean> fraquezas;
-    private int idAtrib;
 
-    //
+    //CONSTRUTOR VAZIO QUE RECEBE O TIPO DA CLASSE 
     public Classe(int tipo) {
 
         padrao = new ArrayList<Integer>(3);
@@ -20,6 +19,7 @@ public class Classe {
             fraquezas.add(false);
         }
 
+        //DEFINE OS ATRIBUTOS BASE DE CADA CLASSE
         switch(tipo) {
             case 1: {
                 this.nome = "Guerreiro";

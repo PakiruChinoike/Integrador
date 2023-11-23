@@ -25,6 +25,7 @@ public class Fase{
         return nome;
     }
 
+    //METODO QUE DEFINE QUAL SALA ESTA ATUALMENTE 
     public String prossegueSala() {
         salaAtual++;
         return listaSalas.get(salaAtual).entraSala(party);

@@ -113,7 +113,7 @@ public class Criatura {
         }
     }
 
-    //DEFINE 
+    //METODO DEFINE AS FRAQUEZAS DA CRIATURA 
     public void setFraquezas(int index, boolean fraqueza) {
         fraquezas.set(index, fraqueza);
     }
@@ -148,6 +148,7 @@ public class Criatura {
         return habilidades.get(index);
     }
 
+    //METODO QUE ADICIONA HABILIDADES CASO A LISTA DE HABILIDADES ESTEJA VAZIA 
     public boolean setHabilidades(List<Habilidade> habilidades) {
         if (this.habilidades.isEmpty()) {
             this.habilidades.addAll(habilidades);
@@ -162,6 +163,7 @@ public class Criatura {
         habilidades.set(index, habilidade);
     }
 
+    //METODO QUE ADICIONA UMA HABILIDADE 
     public void addHabilidade(Habilidade habilidade) {
         habilidades.add(habilidade);
     }

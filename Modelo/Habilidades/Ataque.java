@@ -38,6 +38,7 @@ public class Ataque extends Habilidade{
         return vidaAtual;
     }
 
+    //METODO PARA O PERSONAGEM USAR A HABILIDADE EM ALVO UNICO 
     public String usaHabilidade(Personagem usuario, List<Criatura> inimigos, int alvo) {
         int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
         int damage = rolagemDano(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
@@ -51,6 +52,7 @@ public class Ataque extends Habilidade{
         }
     }
 
+    //METODO PARA O PERSONAGEM USAR A HABILIDADE EM AREA  
     public String usaHabilidade(Personagem usuario, List<Criatura> inimigos) {
         int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
         int acertos = 0;
@@ -64,6 +66,7 @@ public class Ataque extends Habilidade{
         return usuario.getNome() + " acertou " + acertos + " inimigos.";
     }
 
+    //METODO PARA O MONSTRO USAR A HABILIDADE EM ALVO UNICO 
     public String usaHabilidade(Monstro usuario, List<Criatura> inimigos, int alvo) {
         int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
         int damage = rolagemDano(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
@@ -77,6 +80,7 @@ public class Ataque extends Habilidade{
         }        
     }
 
+    //METODO PARA O MONTRO USAR UMA HABILIDADE EM AREA 
     public String usaHabilidade(Monstro usuario, List<Criatura> inimigos) {
         int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
         int acertos = 0;

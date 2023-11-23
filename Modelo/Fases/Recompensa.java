@@ -68,6 +68,7 @@ public class Recompensa{
         return habilidade;
     }
 
+    //METODO QUE TRANSFORMA TODAS AS RECOMPENSAS EM STRING
     public String toString() {
         String toString = experiencia + " de experiencia";
         if (getItem()!=null) {
