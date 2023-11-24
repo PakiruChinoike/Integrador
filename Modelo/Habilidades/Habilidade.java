@@ -12,6 +12,7 @@ public abstract class Habilidade {
     private int minTeste;
     private int tipoDano;
     private int atributo;
+    private int custo;
 
     public Habilidade() {
         this.id = 0;
@@ -23,9 +24,10 @@ public abstract class Habilidade {
         this.minTeste = 0;
         this.tipoDano = 0;
         this.atributo = 0;
+        this.custo = 0;
     }
 
-    protected Habilidade(long id, String nome, String descricao, int tipo, int maxRoll, int minRoll, int minTeste, int tipoDano, int atributo) {
+    protected Habilidade(long id, String nome, String descricao, int tipo, int maxRoll, int minRoll, int minTeste, int tipoDano, int atributo, int custo) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
@@ -35,6 +37,7 @@ public abstract class Habilidade {
         this.minTeste = minTeste;
         this.tipoDano = tipoDano;
         this.atributo = atributo;
+        this.custo = custo;
     }
 
     public abstract String usaHabilidade(Criatura usuario, List<Criatura> inimigos, int alvo);
@@ -75,6 +78,10 @@ public abstract class Habilidade {
         return atributo;
     }
 
+    public int getCusto() {
+        return custo;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -111,5 +118,8 @@ public abstract class Habilidade {
         this.atributo = atributo;
     }
 
+    public void setCusto(int custo) {
+        this.custo = custo;
+    }
 
 }

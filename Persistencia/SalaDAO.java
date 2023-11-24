@@ -9,7 +9,7 @@ public class SalaDAO {
     private ConexaoMYSQL conexao;
 
     public SalaDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "root", "bd_comunicacao_java_mysql_2i_2023");
+		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "Pipoka!821", "CatacombsIntegrador");
     }
 
     public void salvar(Sala sala) {

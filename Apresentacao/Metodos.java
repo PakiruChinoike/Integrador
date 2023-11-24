@@ -2,28 +2,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public abstract class Metodos {
+public class Metodos {
+
+    private static Scanner keyboardInt = new Scanner(System.in);
+    private static Scanner keyboardString = new Scanner(System.in);
 
     public static List<Personagem> criarPersonagens(int n) {
-        Scanner keyboardLine = new Scanner(System.in);
-        Scanner keyboardInt = new Scanner(System.in);
-
         List<Personagem> listaPersonagens = new ArrayList<>();
 
         for (int i = 0; i<n; i++) {
             System.out.println("Decida o nome do Personagem:");
-            String nome = keyboardLine.nextLine();
+            String nome = keyboardString.nextLine();
 
-            System.out.printf("Decida a classe do seu Personagem:%n1 - Guerreiro%n2 - Ladino%n3 - Mago%n");
-            int classe = keyboardInt.nextInt();
+            System.out.printf("Decida a classe do seu Personagem:%n1 - Ladino%n2 - Guerreiro%n3 - Mago%n");
+            int classe = keyboardInt.nextInt()-1;
 
             Personagem personagem = new Personagem(nome, classe);
 
             listaPersonagens.add(personagem);
         }
-
-        keyboardLine.close();
-        keyboardInt.close();
         
         return listaPersonagens;
     }
@@ -37,9 +34,6 @@ public abstract class Metodos {
             if(combatentes.get(i).getVida()>0) {
                 return true;
             }
-            else {
-                return false;
-            }
         }
         return false;
     }
@@ -50,21 +44,54 @@ public abstract class Metodos {
 
         for(int i = 0; ; i++) {
             if(i%2==0) {
-                System.out.println(ativa(equipe1.get(num1), equipe2, 0, 0));
+                if (num1>=equipe1.size()) {
+                    num1 = 0;
+                }
+                Criatura atual = equipe1.get(num1);
+
+                System.out.printf(atual.getNome() + " qual será a sua ação?%n");
+                for(int j = 0; j<atual.getHabilidades().size(); j++) {
+                    System.out.printf(j+1 + " - " + atual.getHabilidade(j).getNome() + "%n");
+                }
+                int hab = keyboardInt.nextInt()-1;
+
+                System.out.printf(atual.getNome() + " qual será o seu alvo?%n"); 
+                for(int j = 0; j<equipe2.size(); j++) {
+                    System.out.printf(j+1 + " - " + equipe2.get(j).getNome() + "%n");
+                }
+                int alvo = keyboardInt.nextInt()-1;
+
+                System.out.println(ativa(atual, equipe2, hab, alvo));
                 num1++;
                 if(!isLutando(equipe2)) {
-                    System.out.println("A primeira equipe venceu!");
+                    return "A primeira equipe venceu!";
                 }
             }
             else {
-                System.out.println(ativa(equipe2.get(num2), equipe1, 0, 0));
+                if (num2>=equipe2.size()){
+                    num2 = 0;
+                }
+                Criatura atual = equipe2.get(num2);
+
+                System.out.printf(atual.getNome() + " qual será a sua ação?%n");
+                for(int j = 0; j<atual.getHabilidades().size(); j++) {
+                    System.out.printf(j+1 + " - " + atual.getHabilidade(j).getNome() + "%n");
+                }
+                int hab = keyboardInt.nextInt()-1;
+
+                System.out.printf(atual.getNome() + " qual será o seu alvo?%n"); 
+                for(int j = 0; j<equipe1.size(); j++) {
+                    System.out.printf(j+1 + " - " + equipe1.get(j).getNome() + "%n");
+                }
+                int alvo = keyboardInt.nextInt()-1;
+
+                System.out.println(ativa(equipe2.get(num2), equipe1, hab, alvo));
                 num2++;
                 if(!isLutando(equipe1)) {
-                    System.out.println("A segunda equipe venceu!");
+                    return "A segunda equipe venceu!";
                 }
             }
         }
-
     }
 
 }

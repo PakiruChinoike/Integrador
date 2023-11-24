@@ -5,36 +5,15 @@ public class Main {
 
     public static void main(String[] args) {
     
-    Personagem personagem = new Personagem("Pakiru", 1); 
-    Monstro monstro = new Monstro("Esqueleto", 10, 10, 5);
-    Habilidade ataque = new Ataque(1, "Espadada", "Espada", 10, 2, 4, 1);
-    
-    monstro.setFraquezas(personagem.getFraquezas());
-    monstro.setAtributos(personagem.getAtributos());
+    List<Criatura> equipe1 = new ArrayList<>(); 
+    List<Criatura> equipe2 = new ArrayList<>();
 
-    personagem.addHabilidade(ataque);
-    monstro.addHabilidade(ataque);
+    List<Criatura> listaPersonagens = new ArrayList<>();
+    listaPersonagens.addAll(Metodos.criarPersonagens(2));
+    equipe1.add(listaPersonagens.get(0));
+    equipe2.add(listaPersonagens.get(1));
 
-    List<Criatura> listaMonstro = new ArrayList<Criatura>();
-    listaMonstro.add(monstro);
-
-    List<Criatura> listaPersonagem = new ArrayList<Criatura>();
-    listaPersonagem.add(personagem);
-
-    while (personagem.getVida()>0 || monstro.getVida()>0) {
-        System.out.println(personagem.getHabilidade(0).usaHabilidade(personagem, listaMonstro, 0));
-        System.out.println(monstro.getHabilidade(0).usaHabilidade(monstro, listaPersonagem, 0));
-        if (monstro.getVida()<=0) {
-            System.out.println(personagem.getNome() + " venceu!");
-            break;
-        }
-        if (personagem.getVida()<=0) {
-            System.out.println(monstro.getNome() + " venceu!");
-            break;
-        }
-    }
-    
-    
+    System.out.println(Metodos.realizarCombate(equipe1, equipe2));
     }
 
 }

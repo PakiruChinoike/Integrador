@@ -69,6 +69,7 @@ CREATE TABLE habilidade(
     min_teste TINYINT,
     tipo_dano TINYINT,
     atributo TINYINT,
+    custo TINYINT NOT NULL,
     PRIMARY KEY(id_habilidade)
 );
 

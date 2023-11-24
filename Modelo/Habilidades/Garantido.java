@@ -7,8 +7,8 @@ public class Garantido extends Habilidade{
         super();
     }
 
-    public Garantido(long id, String nome, String descricao, int maxRoll, int minRoll, int tipoDano) {
-        super(id, nome, descricao, 2, maxRoll, minRoll, 0, tipoDano, 0);
+    public Garantido(long id, String nome, String descricao, int maxRoll, int minRoll, int tipoDano, int custo) {
+        super(id, nome, descricao, 2, maxRoll, minRoll, 0, tipoDano, 0, custo);
     }
 
     protected int rolagemValor() {
@@ -35,20 +35,20 @@ public class Garantido extends Habilidade{
     }
 
     public String usaHabilidade(Criatura usuario, List<Criatura> inimigos, int alvo) {
-        if(inimigos.get(0) instanceof Monstro) {
+        // if(inimigos.get(0) instanceof Monstro) {
             int damage = rolagemValor(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
             int vidaAtual = causaDano(damage, inimigos.get(alvo));
             return usuario.getNome() + " acertou " + inimigos.get(alvo).getNome() + " causando "
             + damage + " de dano, e o deixando com " + vidaAtual + " pontos de vida.";
-        }else if(inimigos.get(0) instanceof Personagem) {
-            int cura = rolagemValor();
-            int vidaAtual = causaCura(cura, inimigos.get(alvo));
-            return usuario.getNome() + " curou " + inimigos.get(alvo).getNome() + " " + cura + " pontos de vida, " + 
-            " o deixando com " + vidaAtual;
-        }
-        else {
-            return null;
-        }
+        // }else if(inimigos.get(0) instanceof Personagem) {
+        //     int cura = rolagemValor();
+        //     int vidaAtual = causaCura(cura, inimigos.get(alvo));
+        //     return usuario.getNome() + " curou " + inimigos.get(alvo).getNome() + " " + cura + " pontos de vida, " + 
+        //     " o deixando com " + vidaAtual;
+        // }
+        // else {
+        //     return null;
+        // }
     }
 
     public String usaHabilidade(Personagem usuario, List<Criatura> aliados) {

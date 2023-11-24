@@ -34,7 +34,7 @@ public class Personagem extends Criatura{
             this.listaItens = new ArrayList<Item>();
             this.experiencia = 0;
 
-            super.setArmadura((5+super.getAtributos(0)+super.getNivel()));
+            super.setArmadura((10+super.getAtributos(0)+super.getNivel()));
             super.setVida((10+super.getAtributos(1))*super.getNivel());
             this.poder = ((10+super.getAtributos(2)+super.getNivel()));
         }
@@ -51,10 +51,10 @@ public class Personagem extends Criatura{
         public int getClasse() {
             String nomeClasse = classe.getNome();
             switch(nomeClasse) {
-                case "Guerreiro": {
+                case "Ladino": {
                     return 1;
                 }
-                case "Ladino": {
+                case "Guerreiro": {
                     return 2;
                 }
                 case "Mago": {

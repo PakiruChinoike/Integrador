@@ -88,15 +88,15 @@ public class HabilidadeDAO {
                 int tipo = rs.getInt("tipo");
                 switch (tipo) {
                     case 0: {
-                        Habilidade habilidade = new Ataque(id, rs.getString("nome"), rs.getString("descricao"), rs.getInt("max_roll"), rs.getInt("min_roll"), rs.getInt("tipo_dano"), rs.getInt("atributo"));
+                        Habilidade habilidade = new Ataque(id, rs.getString("nome"), rs.getString("descricao"), rs.getInt("max_roll"), rs.getInt("min_roll"), rs.getInt("tipo_dano"), rs.getInt("atributo"), rs.getInt("custo"));
                         return habilidade;
                     }
                     case 1: {
-                        Habilidade habilidade = new Resistencia(id, rs.getString("nome"), rs.getString("descricao"), rs.getInt("max_roll"), rs.getInt("min_roll"), rs.getInt("min_teste"), rs.getInt("tipo_dano"), rs.getInt("atributo"));
+                        Habilidade habilidade = new Resistencia(id, rs.getString("nome"), rs.getString("descricao"), rs.getInt("max_roll"), rs.getInt("min_roll"), rs.getInt("min_teste"), rs.getInt("tipo_dano"), rs.getInt("atributo"), rs.getInt("custo"));
                         return habilidade;
                     }
                     case 2: {
-                        Habilidade habilidade = new Garantido(id, rs.getString("nome"), rs.getString("descricao"), rs.getInt("max_roll"), rs.getInt("min_roll"), rs.getInt("tipo_dano"));
+                        Habilidade habilidade = new Garantido(id, rs.getString("nome"), rs.getString("descricao"), rs.getInt("max_roll"), rs.getInt("min_roll"), rs.getInt("tipo_dano"), rs.getInt("custo"));
                         return habilidade;
                     }
                     default: {

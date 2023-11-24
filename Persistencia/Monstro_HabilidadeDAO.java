@@ -71,34 +71,10 @@ public class Monstro_HabilidadeDAO{
             if (rs.next()) {
                 long id_habilidade = rs.getLong("id_habilidade");
                 
-                String sql2 = "SELECT * FROM habilidade WHERE id_habilidade=?";
-                PreparedStatement statement2 = conexao.getConexao().prepareStatement(sql2);
-                statement2.setLong(1, id_habilidade);
-                ResultSet rs2 = statement2.executeQuery();
+                HabilidadeDAO habilidadeDAO = new HabilidadeDAO();
+                Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
 
-                if(rs2.next()) {
-                    int tipo = rs2.getInt("tipo");
-                        switch (tipo) {
-                            case 0: {
-                                Habilidade habilidade = new Ataque(id_habilidade, rs2.getString("nome"), rs2.getString("descricao"), rs2.getInt("max_roll"), rs2.getInt("min_roll"), rs2.getInt("tipo_dano"), rs2.getInt("atributo"));
-                                return habilidade;
-                            }
-                            case 1: {
-                                Habilidade habilidade = new Resistencia(id_habilidade, rs2.getString("nome"), rs2.getString("descricao"), rs2.getInt("max_roll"), rs2.getInt("min_roll"), rs2.getInt("min_teste"), rs2.getInt("tipo_dano"), rs2.getInt("atributo"));
-                                return habilidade;
-                            }
-                            case 2: {
-                                Habilidade habilidade = new Garantido(id_habilidade, rs2.getString("nome"), rs2.getString("descricao"), rs2.getInt("max_roll"), rs2.getInt("min_roll"), rs2.getInt("tipo_dano"));
-                                return habilidade;
-                            }
-                            default: {
-                                return null;
-                            }
-                        }
-                    }
-                    else {
-                        return null;
-                    }
+                return habilidade;
             }   
             else {
                 return null;
