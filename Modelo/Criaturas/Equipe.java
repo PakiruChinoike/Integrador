@@ -4,36 +4,36 @@ import java.util.List;
 public class Equipe {
     
     private long id;
-    private List<Personagem> personagens;
+    private List<Criatura> criaturas;
 
-    //UM CONSTRUTOR QUE CRIA UMA EQUIPE DE APENAS UM PERSONAGEM
-    public Equipe(int id, Personagem personagem) {
+    //UM CONSTRUTOR QUE CRIA UMA EQUIPE DE APENAS UMA CRIATURA
+    public Equipe(int id, Criatura criatura) {
         this.id = id;
-        this.personagens = new ArrayList<Personagem>(3);
-        this.personagens.add(personagem);
+        this.criaturas = new ArrayList<Criatura>(3);
+        this.criaturas.add(criatura);
     }
 
     //UM 
-    public Equipe(int id, ArrayList<Personagem> personagens) {
+    public Equipe(int id, ArrayList<Criatura> criaturas) {
         this.id = id;
-        this.personagens = new ArrayList<Personagem>(3);
-        this.personagens.addAll(personagens);
+        this.criaturas = new ArrayList<Criatura>(3);
+        this.criaturas.addAll(criaturas);
     }
 
     public long getId() {
         return id;
     }
 
-    public Personagem getPersonagem(int index) {
-        return personagens.get(index);
+    public Criatura getCriatura(int index) {
+        return criaturas.get(index);
     }
 
-    public void addPersonagem(Personagem personagem) {
-        this.personagens.add(personagem);
+    public void addCriatura(Criatura criatura) {
+        this.criaturas.add(criatura);
     }
 
-    public void removerPersonagem(Personagem personagem) {
-        this.personagens.remove(personagem);
+    public void removerCriatura(Criatura criatura) {
+        this.criaturas.remove(criatura);
     }
 
 }

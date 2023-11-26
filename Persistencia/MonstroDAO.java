@@ -139,14 +139,14 @@ public class MonstroDAO {
             if (rs.next()) {
                 Monstro monstro = new Monstro(rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"));
 
-                String sql2 = "SELECT COUNT(id_monstro_habilidade) FROM monstro_habilidade WHERE id_monstro=?";
+                String sql2 = "SELECT * FROM monstro_habilidade WHERE id_monstro=?";
                 PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
                 statement2.setLong(1, id);
                 ResultSet rs2 = statement2.executeQuery();
 
                 Monstro_HabilidadeDAO monstro_habilidadeDao = new Monstro_HabilidadeDAO();
 
-                if (rs2.next()) {
+                while (rs2.next()) {
                     monstro.addHabilidade(monstro_habilidadeDao.buscarHabilidade(id));
                 }
 

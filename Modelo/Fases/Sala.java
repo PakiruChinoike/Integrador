@@ -80,10 +80,10 @@ public class Sala{
         return inimigos;
     }
 
-    public String entraSala(Equipe party) {
-        return party.getPersonagem(0).getNome() + ", " + party.getPersonagem(1).getNome() + " e " + party.getPersonagem(2).getNome() +
-        "entram na sala adiante. " + descricao;
-    }
+    // public String entraSala(Equipe party) {
+    //     return party.getPersonagem(0).getNome() + ", " + party.getPersonagem(1).getNome() + " e " + party.getPersonagem(2).getNome() +
+    //     "entram na sala adiante. " + descricao;
+    // }
 
     public String isDerrotado() {
         if(inimigos.isEmpty()) {

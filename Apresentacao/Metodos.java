@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.lang.Math;
 
 public class Metodos {
 
@@ -25,11 +26,11 @@ public class Metodos {
         return listaPersonagens;
     }
 
-    private static String ativa(Criatura usuario, List<Criatura> inimigos, int numHab, int alvo) {
+    private static String ativa(Criatura usuario, Equipe inimigos, int numHab, int alvo) {
         return usuario.getHabilidade(numHab).usaHabilidade(usuario, inimigos, alvo);
     }
 
-    private static boolean isLutando(List<Criatura> combatentes) {
+    private static boolean isLutando(Equipe combatentes) {
         for(int i = 0; i<combatentes.size(); i++) {
             if(combatentes.get(i).getVida()>0) {
                 return true;
@@ -38,7 +39,58 @@ public class Metodos {
         return false;
     }
 
-    public static String realizarCombate(List<Criatura> equipe1, List<Criatura> equipe2) {
+    public static int menuHabilidades(Criatura atual) {
+        System.out.printf(atual.getNome() + " qual será a sua ação?%n");
+        for(int j = 0; j<atual.getHabilidades().size(); j++) {
+            System.out.printf(j+1 + " - " + atual.getHabilidade(j).getNome() + "%n");
+        }
+
+        return keyboardInt.nextInt()-1;
+    }
+
+    public static int menuAlvos(Criatura atual, Equipe equipeAlvo) {
+        System.out.printf(atual.getNome() + " qual será o seu alvo?%n0 - Trocar equipe alvo%n"); 
+        for(int j = 0; j<equipeAlvo.size(); j++) {
+            System.out.printf(j+1 + " - " + equipeAlvo.get(j).getNome() + "%n");
+        }
+        int selecao = keyboardInt.nextInt();
+
+        return selecao;
+    }
+
+    public static int menuEquipes(Criatura atual, Equipe aliados, Equipe inimigos) {
+        System.out.printf("Qual será a equipe alvo?%n1 - Inimigos%n2 - Aliados%n");
+        int selecao = 0;
+
+        while (selecao==0) {
+            if(keyboardInt.nextInt()==1) {
+                selecao = menuAlvos(atual, inimigos);
+            }
+            else {
+                selecao = menuAlvos(atual, aliados);
+            }
+        }
+
+        return selecao-1;
+    }
+
+    public static void turnoJogador(Criatura atual, Equipe aliados, Equipe inimigos) {
+        int hab = menuHabilidades(atual);
+
+        int selecao = menuEquipes(atual, aliados, inimigos);
+
+        System.out.println(ativa(atual, inimigos, hab, selecao));
+    }
+
+    public static void turnoMonstro(Criatura atual, Equipe jogadores, Equipe monstros) {
+        int hab = ((int)(Math.random() * (atual.getHabilidades().size())));
+
+        int selecao = ((int)(Math.random() * (jogadores.size())));
+
+        System.out.println(ativa(atual, jogadores, hab, selecao));
+    }
+
+    public static String realizarCombate(Equipe equipe1, Equipe equipe2) {
         int num1 = 0;
         int num2 = 0;
 
@@ -49,20 +101,9 @@ public class Metodos {
                 }
                 Criatura atual = equipe1.get(num1);
 
-                System.out.printf(atual.getNome() + " qual será a sua ação?%n");
-                for(int j = 0; j<atual.getHabilidades().size(); j++) {
-                    System.out.printf(j+1 + " - " + atual.getHabilidade(j).getNome() + "%n");
-                }
-                int hab = keyboardInt.nextInt()-1;
-
-                System.out.printf(atual.getNome() + " qual será o seu alvo?%n"); 
-                for(int j = 0; j<equipe2.size(); j++) {
-                    System.out.printf(j+1 + " - " + equipe2.get(j).getNome() + "%n");
-                }
-                int alvo = keyboardInt.nextInt()-1;
-
-                System.out.println(ativa(atual, equipe2, hab, alvo));
+                turnoJogador(atual, equipe1, equipe2);
                 num1++;
+
                 if(!isLutando(equipe2)) {
                     return "A primeira equipe venceu!";
                 }
@@ -73,22 +114,45 @@ public class Metodos {
                 }
                 Criatura atual = equipe2.get(num2);
 
-                System.out.printf(atual.getNome() + " qual será a sua ação?%n");
-                for(int j = 0; j<atual.getHabilidades().size(); j++) {
-                    System.out.printf(j+1 + " - " + atual.getHabilidade(j).getNome() + "%n");
-                }
-                int hab = keyboardInt.nextInt()-1;
-
-                System.out.printf(atual.getNome() + " qual será o seu alvo?%n"); 
-                for(int j = 0; j<equipe1.size(); j++) {
-                    System.out.printf(j+1 + " - " + equipe1.get(j).getNome() + "%n");
-                }
-                int alvo = keyboardInt.nextInt()-1;
-
-                System.out.println(ativa(equipe2.get(num2), equipe1, hab, alvo));
+                turnoJogador(atual, equipe2, equipe1);
                 num2++;
+                
                 if(!isLutando(equipe1)) {
                     return "A segunda equipe venceu!";
+                }
+            }
+        }
+    }
+
+    public static String realizarEncontro(Equipe aliados, Equipe inimigos) {
+        int num1 = 0;
+        int num2 = 0;
+
+        for(int i = 0; ; i++) {
+            if(i%2==0) {
+                if (num1>=aliados.size()) {
+                    num1 = 0;
+                }
+                Criatura atual = aliados.get(num1);
+
+                turnoJogador(atual, aliados, inimigos);
+                num1++;
+
+                if(!isLutando(inimigos)) {
+                    return "Com sucesso, vocês derrotam o último dos monstros e podem prosseguir!";
+                }
+            }
+            else {
+                if (num2>=inimigos.size()) {
+                    num2 = 0;
+                }
+                Criatura atual = inimigos.get(num2);
+
+                turnoMonstro(atual, aliados, inimigos);
+                num2++;
+
+                if(!isLutando(aliados)) {
+                    return "Os monstros venceram e vocês foram derrotados...";
                 }
             }
         }
