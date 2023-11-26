@@ -10,6 +10,7 @@ CREATE TABLE personagem(
     poder TINYINT NOT NULL,
     nivel TINYINT NOT NULL,
     experiencia SMALLINT NOT NULL,
+    equipe SMALLINT, 
     PRIMARY KEY (id_personagem)
 );
 
@@ -30,6 +31,7 @@ CREATE TABLE monstro(
     vida TINYINT NOT NULL,
     armadura TINYINT NOT NULL,
 	nivel TINYINT NOT NULL,
+    equipe SMALLINT,
     PRIMARY KEY(id_monstro)
 );
 

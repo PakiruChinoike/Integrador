@@ -15,7 +15,7 @@ public class PersonagemDAO {
     public long salvar(Personagem personagem) {
         try {
             this.conexao.abrirConexao();
-            String sql = "INSERT INTO personagem VALUES(null, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO personagem VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, personagem.getNome());
             statement.setInt(2, personagem.getClasse());
@@ -24,6 +24,7 @@ public class PersonagemDAO {
             statement.setInt(5, personagem.getPoder());
             statement.setInt(6, personagem.getNivel());
             statement.setInt(7, personagem.getExperiencia());
+            statement.setInt(8, personagem.getEquipe());
             statement.executeUpdate();
 
             String sql0 = "SELECT id_personagem FROM personagem ORDER BY id_personagem DESC LIMIT 1";
@@ -83,7 +84,7 @@ public class PersonagemDAO {
     public void editar(Personagem personagem) {
         try {
             this.conexao.abrirConexao();
-            String sql = "UPDATE personagem SET nome=?, classe=?, vida=?, armadura=?, poder=?, nivel=?, experiencia=? WHERE id_personagem=?";
+            String sql = "UPDATE personagem SET nome=?, classe=?, vida=?, armadura=?, poder=?, nivel=?, experiencia=?, equipe=? WHERE id_personagem=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, personagem.getNome());
             statement.setInt(2, personagem.getClasse());
@@ -91,7 +92,8 @@ public class PersonagemDAO {
             statement.setInt(4, personagem.getArmadura());
             statement.setInt(5, personagem.getPoder());
             statement.setInt(6, personagem.getExperiencia());
-            statement.setLong(7, personagem.getId());
+            statement.setInt(7, personagem.getEquipe());
+            statement.setLong(8, personagem.getId());
             statement.executeUpdate();
 
             String sql2 = "UPDATE atributos SET agilidade=?, forca=?, inteligencia=? WHERE id_personagem=?";
@@ -159,7 +161,7 @@ public class PersonagemDAO {
             if (rs.next()) {
                 Personagem personagem = new Personagem(rs.getString("nome"), rs.getInt("classe"));
 
-                String sql2 = "SELECT COUNT(id_personagem_item) FROM personagem_item WHERE id_personagem=?";
+                String sql2 = "SELECT * FROM personagem_item WHERE id_personagem=?";
                 PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
                 statement2.setLong(1, id);
                 ResultSet rs2 = statement2.executeQuery();
@@ -167,16 +169,16 @@ public class PersonagemDAO {
                 Personagem_ItemDAO personagem_ItemDAO = new Personagem_ItemDAO();
                 Personagem_HabilidadeDAO personagem_HabilidadeDAO = new Personagem_HabilidadeDAO();
 
-            if (rs2.next()) {
+            while (rs2.next()) {
                 personagem.addItem(personagem_ItemDAO.buscarItem(id));
             }
             
-                String sql3 = "SELECT COUNT(id_personagem_habilidade) FROM personagem_habilidade WHERE id_personagem=?";
+                String sql3 = "SELECT * FROM personagem_habilidade WHERE id_personagem=?";
                 PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
                 statement3.setLong(1, id);
                 ResultSet rs3 = statement3.executeQuery();
 
-            if (rs3.next()) {
+            while (rs3.next()) {
                 personagem.addHabilidade(personagem_HabilidadeDAO.buscarHabilidade(id));
             }
 

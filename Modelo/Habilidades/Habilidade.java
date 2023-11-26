@@ -40,7 +40,7 @@ public abstract class Habilidade {
         this.custo = custo;
     }
 
-    public abstract String usaHabilidade(Criatura usuario, List<Criatura> inimigos, int alvo);
+    public abstract String usaHabilidade(Criatura usuario, Equipe inimigos, int alvo);
 
     public long getId() {
         return id;

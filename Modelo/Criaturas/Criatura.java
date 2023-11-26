@@ -10,6 +10,7 @@ public class Criatura {
     private List<Boolean> fraquezas;
     private List<Integer> atributos;
     private List<Habilidade> habilidades;
+    private int equipe;
 
     //METODO QUE CRIA UMA CRIATURA A PARTIR DE UM NOME 
     public Criatura(String nome) {
@@ -20,10 +21,11 @@ public class Criatura {
         this.fraquezas = new ArrayList<Boolean>(5);
         this.atributos = new ArrayList<Integer>(4);
         this.habilidades = new ArrayList<Habilidade>();
+        this.equipe = 0;
     }
 
     //METODO QUE DEFINE O NIVEL, VIDA E ARMADURA DA CRIATURA
-    public Criatura(String nome, int vida, int armadura, int nivel) {
+    public Criatura(String nome, int vida, int armadura, int nivel, int equipe) {
         this.nome = nome;
         this.vida = vida;
         this.armadura = armadura;
@@ -31,9 +33,10 @@ public class Criatura {
         this.fraquezas = new ArrayList<Boolean>(5);
         this.atributos = new ArrayList<Integer>(4);
         this.habilidades = new ArrayList<Habilidade>();
+        this.equipe = equipe;
     }
 
-    //METODO QUE DEFINE AS FRAQUEZAS DA CRIATURA 
+    //METODO QUE DEFINE AS FRAQUEZAS E ATRIBUTOS DA CRIATURA 
     public Criatura(String nome, List<Boolean> fraquezas, List<Integer> atributos) {
         this.nome = nome;
         this.vida = 10;
@@ -44,10 +47,11 @@ public class Criatura {
         this.atributos = new ArrayList<Integer>(4);
         this.atributos.addAll(atributos);
         this.habilidades = new ArrayList<Habilidade>();
+        this.equipe = 0;
     }
 
-    //METODO QUE DEFINE TODOS ATRIBUTOS E FRAQUEZAS DA CRIATURA
-    public Criatura(String nome, int vida, int armadura, int nivel, List<Boolean> fraquezas, List<Integer> atributos, List<Habilidade> habilidades) {
+    //METODO QUE DEFINE TODOS OS VALORES DA CRIATURA
+    public Criatura(String nome, int vida, int armadura, int nivel, List<Boolean> fraquezas, List<Integer> atributos, List<Habilidade> habilidades, Equipe equipe) {
         this.nome = nome;
         this.vida = vida;
         this.armadura = armadura;
@@ -58,6 +62,7 @@ public class Criatura {
         this.atributos.addAll(atributos);
         this.habilidades = new ArrayList<Habilidade>();
         this.habilidades.addAll(habilidades);
+        this.equipe = 0;
     }
 
     public String getNome() {
@@ -166,6 +171,14 @@ public class Criatura {
     //METODO QUE ADICIONA UMA HABILIDADE 
     public void addHabilidade(Habilidade habilidade) {
         habilidades.add(habilidade);
+    }
+
+    public int getEquipe() {
+        return equipe;
+    }
+
+    public void setEquipe(int equipe) {
+        this.equipe = equipe;
     }
 
 }

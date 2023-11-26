@@ -30,13 +30,22 @@ public class Metodos {
         return usuario.getHabilidade(numHab).usaHabilidade(usuario, inimigos, alvo);
     }
 
-    private static boolean isLutando(Equipe combatentes) {
-        for(int i = 0; i<combatentes.size(); i++) {
-            if(combatentes.get(i).getVida()>0) {
-                return true;
-            }
+    private static boolean isLutando(Criatura combatente) {
+        if(combatente.getVida()>0) {
+            return true;
         }
-        return false;
+        else {
+            return false;
+        }
+    }
+
+    private static boolean isLutando(Equipe combatentes) {
+        boolean isLutando = true;
+
+        for(int i = 0; i<combatentes.size(); i++) {
+            isLutando = isLutando(combatentes.get(i));
+        }
+        return isLutando;
     }
 
     public static int menuHabilidades(Criatura atual) {
@@ -53,33 +62,35 @@ public class Metodos {
         for(int j = 0; j<equipeAlvo.size(); j++) {
             System.out.printf(j+1 + " - " + equipeAlvo.get(j).getNome() + "%n");
         }
-        int selecao = keyboardInt.nextInt();
-
-        return selecao;
+        return keyboardInt.nextInt()-1;
     }
 
-    public static int menuEquipes(Criatura atual, Equipe aliados, Equipe inimigos) {
+    public static Equipe menuEquipes(Criatura atual, Equipe aliados, Equipe inimigos) {
         System.out.printf("Qual será a equipe alvo?%n1 - Inimigos%n2 - Aliados%n");
-        int selecao = 0;
+        int selecao = keyboardInt.nextInt();
 
-        while (selecao==0) {
-            if(keyboardInt.nextInt()==1) {
-                selecao = menuAlvos(atual, inimigos);
+        switch (selecao) {
+            case 1: {
+                return inimigos;
             }
-            else {
-                selecao = menuAlvos(atual, aliados);
+            case 2: {
+                return aliados;
+            }
+            default: {
+                return null;
             }
         }
-
-        return selecao-1;
+        
     }
 
     public static void turnoJogador(Criatura atual, Equipe aliados, Equipe inimigos) {
         int hab = menuHabilidades(atual);
 
-        int selecao = menuEquipes(atual, aliados, inimigos);
+        Equipe equipeAlvo = menuEquipes(atual, aliados, inimigos);
 
-        System.out.println(ativa(atual, inimigos, hab, selecao));
+        int selecao = menuAlvos(atual, equipeAlvo);
+
+        System.out.println(ativa(atual, equipeAlvo, hab, selecao));
     }
 
     public static void turnoMonstro(Criatura atual, Equipe jogadores, Equipe monstros) {

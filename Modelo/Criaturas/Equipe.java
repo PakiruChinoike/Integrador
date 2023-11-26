@@ -11,21 +11,30 @@ public class Equipe {
         this.id = id;
         this.criaturas = new ArrayList<Criatura>(3);
         this.criaturas.add(criatura);
+        criatura.setEquipe(id);
     }
 
     //UM 
-    public Equipe(int id, ArrayList<Criatura> criaturas) {
+    public Equipe(int id, List<Criatura> criaturas) {
         this.id = id;
         this.criaturas = new ArrayList<Criatura>(3);
         this.criaturas.addAll(criaturas);
+
+        for(int i = 0; i<criaturas.size(); i++) {
+            criaturas.get(i).setEquipe(id);
+        }
     }
 
     public long getId() {
         return id;
     }
 
-    public Criatura getCriatura(int index) {
+    public Criatura get(int index) {
         return criaturas.get(index);
+    }
+
+    public int size() {
+        return criaturas.size();
     }
 
     public void addCriatura(Criatura criatura) {
