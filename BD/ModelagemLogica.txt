@@ -1,4 +1,4 @@
-personagem(id_personagem, nome, classe, vida, armadura, poder, nivel, experiencia, #id_atributos, #id_party, #id_fraquezas)
+personagem(id_personagem, nome, classe, vida, armadura, poder, nivel, experiencia, equipe)
 
 atributos(id_atributos, agilidade, forca, inteligencia, #id_personagem, #id_monstro)
 
@@ -22,7 +22,7 @@ sala_fase(id_sala_fase, #id_sala, #id_fase)
 
 recompensa(id_recompensa, tipo, experiencia, raridade, #id_item, id_habilidade)
 
-monstro(id_monstro, nome, dificuldade, vida, armadura)
+monstro(id_monstro, nome, dificuldade, vida, armadura, equipe)
 
 monstro_habilidade(id_monstro_habilidade, #id_monstro, #id_habilidade)
 
