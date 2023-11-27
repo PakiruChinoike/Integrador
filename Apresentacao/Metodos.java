@@ -242,7 +242,7 @@ public class Metodos {
             return true;
         }
         else {
-            System.out.printf("As portas das catacumbas se fecham de uma vez por todas...%nTalvez... Elas nunca fossem ser abertas.%n");
+            System.out.printf("As portas das catacumbas se fecham novamente..%nTalvez... Elas nunca fossem ser abertas.%n");
             return false;
         }
     }
@@ -255,5 +255,16 @@ public class Metodos {
             }
         }
     }
+
+    // public static void inicializacao() {
+    //     swtich(escolha) {
+    //         case 1: {
+    //             realizaTentativa(null);
+    //         }
+    //         case 0: {
+    //             modoDev;
+    //         }
+    //     }
+    // }
 
 }

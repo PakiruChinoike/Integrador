@@ -1,4 +1,3 @@
-import java.util.List;
 import java.lang.Math;
 
 public class Resistencia extends Habilidade{

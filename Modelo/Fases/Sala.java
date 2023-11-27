@@ -76,6 +76,10 @@ public class Sala{
         inimigos.add(inimigo);
     }
 
+    public void addInimigos(List<Criatura> inimigos) {
+        inimigos.addAll(inimigos);
+    }
+
     public List<Criatura> getInimigos() {
         return inimigos;
     }

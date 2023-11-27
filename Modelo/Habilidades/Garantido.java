@@ -1,5 +1,4 @@
 import java.lang.Math;
-import java.util.List;
 
 public class Garantido extends Habilidade{
 

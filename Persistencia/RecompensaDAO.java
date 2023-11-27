@@ -7,7 +7,7 @@ public class RecompensaDAO {
 private ConexaoMYSQL conexao;
 
     public RecompensaDAO(){
-        this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "1237353h", "CatacombsIntegrador");
+        this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "alunoinfo", "CatacombsIntegrador");
     }
 
     public long salvar(Recompensa recompensa) {
@@ -46,7 +46,6 @@ private ConexaoMYSQL conexao;
         }
         catch (SQLException e) {
             e.printStackTrace();
-            return (Long)null;
         }
         finally {
             this.conexao.fecharConexao();
@@ -86,7 +85,40 @@ private ConexaoMYSQL conexao;
             if(rs.next()) {
                 Recompensa recompensa = new Recompensa(rs.getInt("tipo"), rs.getInt("raridade"), rs.getInt("experiencia"));
                 recompensa.setId(rs.getLong("id_recompensa"));
+
+                switch (rs.getInt("tipo")) {
+                    case 1: {
+                        ItemDAO itemDAO = new ItemDAO();
+                        recompensa.setItem(itemDAO.buscar(rs.getLong("id_item")));
+                        return recompensa;
+                    }
+                    case 2: {
+                        HabilidadeDAO habilidadeDAO = new HabilidadeDAO();
+                        recompensa.setHabilidade(habilidadeDAO.buscar(rs.getLong("id_habilidade")));
+                        return recompensa;
+                    }
+                    case 3: {
+                        ItemDAO itemDAO = new ItemDAO();
+                        HabilidadeDAO habilidadeDAO = new HabilidadeDAO();
+                        recompensa.setItem(itemDAO.buscar(rs.getLong("id_item")));
+                        recompensa.setHabilidade(habilidadeDAO.buscar(rs.getLong("id_habilidade")));
+                        return recompensa;
+                    }
+                    default: {
+                        return recompensa;
+                    }
+                }
             }
+            else {
+                return null;
+            }
+        } 
+        catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        finally {
+            conexao.fecharConexao();
         }
     }
 
