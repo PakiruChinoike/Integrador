@@ -32,7 +32,7 @@ public class Resistencia extends Habilidade{
         return vidaAtual;
     }
 
-    public String usaHabilidade(Criatura usuario, List<Criatura> inimigos, int alvo) {
+    public String usaHabilidade(Criatura usuario, Equipe inimigos, int alvo) {
         int teste = rolagemResistencia(inimigos.get(alvo).getNivel(), inimigos.get(alvo).getAtributos(super.getAtributo()));
         int damage = rolagemDano(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
         if (teste<(super.getMinTeste())) {
@@ -46,7 +46,7 @@ public class Resistencia extends Habilidade{
         }
     }
 
-    public String usaHabilidade(Criatura usuario, List<Criatura> inimigos) {
+    public String usaHabilidade(Criatura usuario, Equipe inimigos) {
         int acertos = 0;
         for (int i = 0; i<inimigos.size(); i++) {
             int teste = rolagemResistencia(inimigos.get(i).getNivel(), inimigos.get(i).getAtributos(super.getAtributo()));

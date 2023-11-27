@@ -18,7 +18,7 @@ INSERT INTO habilidade VALUES(11, "Revigoração Divina", 2, "Uma benção que c
 
 
 /*INSERE NO BANCO OS MONSTROS DA SALA 1*/
-INSERT INTO monstro VALUES(1, "Hidra Esquelética", 40, 12, 3);
+INSERT INTO monstro VALUES(1, "Hidra Esquelética", 40, 12, 3, 0);
 INSERT INTO atributos VALUES(null, 4, 1, 1, null, 1);
 INSERT INTO fraquezas VALUES(null, 0, 0, 1, 1, 0, null, 1);
 INSERT INTO habilidade VALUES(101, "Chibatada", 0, "Um corte com a cauda da hidra", 8, 3, null, 3, 0, null); 
@@ -29,7 +29,7 @@ INSERT INTO monstro_habilidade VALUES(null, 1, 102);
 INSERT INTO monstro_habilidade VALUES(null, 1, 103);
 
 
-INSERT INTO monstro VALUES(2, "Elemental de Rocha", 60, 9, 3);
+INSERT INTO monstro VALUES(2, "Elemental de Rocha", 60, 9, 3, 0);
 INSERT INTO atributos VALUES(null, 1, 5, 0, null, 2);
 INSERT INTO fraquezas VALUES(null, 0, 1, 0, 0, 1, null, 2);
 INSERT INTO habilidade VALUES(201, "Punho Sísmico", 0, "Um soco potente", 10, 10, null, 3, 0, null);

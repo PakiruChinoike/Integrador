@@ -7,9 +7,12 @@ public class Criatura {
     private int vida;
     private int armadura;
     private int nivel;
+    private int experiencia;
     private List<Boolean> fraquezas;
     private List<Integer> atributos;
     private List<Habilidade> habilidades;
+    private List<Item> itens;
+    private long equipe;
 
     //METODO QUE CRIA UMA CRIATURA A PARTIR DE UM NOME 
     public Criatura(String nome) {
@@ -17,23 +20,27 @@ public class Criatura {
         this.vida = 10;
         this.armadura = 10;
         this.nivel = 1;
+        this.experiencia = 0;
         this.fraquezas = new ArrayList<Boolean>(5);
         this.atributos = new ArrayList<Integer>(4);
         this.habilidades = new ArrayList<Habilidade>();
+        this.equipe = 0;
     }
 
     //METODO QUE DEFINE O NIVEL, VIDA E ARMADURA DA CRIATURA
-    public Criatura(String nome, int vida, int armadura, int nivel) {
+    public Criatura(String nome, int vida, int armadura, int nivel, int experiencia, long equipe) {
         this.nome = nome;
         this.vida = vida;
         this.armadura = armadura;
         this.nivel = nivel;
+        this.experiencia = experiencia;
         this.fraquezas = new ArrayList<Boolean>(5);
         this.atributos = new ArrayList<Integer>(4);
         this.habilidades = new ArrayList<Habilidade>();
+        this.equipe = equipe;
     }
 
-    //METODO QUE DEFINE AS FRAQUEZAS DA CRIATURA 
+    //METODO QUE DEFINE AS FRAQUEZAS E ATRIBUTOS DA CRIATURA 
     public Criatura(String nome, List<Boolean> fraquezas, List<Integer> atributos) {
         this.nome = nome;
         this.vida = 10;
@@ -44,20 +51,25 @@ public class Criatura {
         this.atributos = new ArrayList<Integer>(4);
         this.atributos.addAll(atributos);
         this.habilidades = new ArrayList<Habilidade>();
+        this.itens = new ArrayList<Item>();
+        this.equipe = 0;
     }
 
-    //METODO QUE DEFINE TODOS ATRIBUTOS E FRAQUEZAS DA CRIATURA
-    public Criatura(String nome, int vida, int armadura, int nivel, List<Boolean> fraquezas, List<Integer> atributos, List<Habilidade> habilidades) {
+    //METODO QUE DEFINE TODOS OS VALORES DA CRIATURA
+    public Criatura(String nome, int vida, int armadura, int nivel, int experiencia, List<Boolean> fraquezas, List<Integer> atributos, List<Habilidade> habilidades, long equipe) {
         this.nome = nome;
         this.vida = vida;
         this.armadura = armadura;
         this.nivel = nivel;
+        this.experiencia = experiencia;
         this.fraquezas = new ArrayList<Boolean>(5);
         this.fraquezas.addAll(fraquezas);
         this.atributos = new ArrayList<Integer>(4);
         this.atributos.addAll(atributos);
         this.habilidades = new ArrayList<Habilidade>();
         this.habilidades.addAll(habilidades);
+        this.itens = new ArrayList<Item>();
+        this.equipe = equipe;
     }
 
     public String getNome() {
@@ -93,6 +105,14 @@ public class Criatura {
     public int setNivel(int nivel) {
         this.nivel = nivel;
         return nivel;
+    }
+
+    public int getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(int experiencia) {
+        this.experiencia = experiencia;
     }
 
     public List<Boolean> getFraquezas() {
@@ -148,6 +168,10 @@ public class Criatura {
         return habilidades.get(index);
     }
 
+    public void setHabilidade(int index, Habilidade habilidade) {
+        habilidades.set(index, habilidade);
+    }
+
     //METODO QUE ADICIONA HABILIDADES CASO A LISTA DE HABILIDADES ESTEJA VAZIA 
     public boolean setHabilidades(List<Habilidade> habilidades) {
         if (this.habilidades.isEmpty()) {
@@ -159,13 +183,37 @@ public class Criatura {
         }
     }
 
-    public void setHabilidades(int index, Habilidade habilidade) {
-        habilidades.set(index, habilidade);
-    }
-
     //METODO QUE ADICIONA UMA HABILIDADE 
     public void addHabilidade(Habilidade habilidade) {
         habilidades.add(habilidade);
+    }
+
+    public void setItens(List<Item> itens) {
+        this.itens = itens;
+    }
+
+    public List<Item> getItens() {
+        return itens;
+    }
+
+    public Item getItem(int index) {
+        return itens.get(index);
+    }
+
+    public void addItem(Item item) {
+        itens.add(item);
+    }
+
+    public long getEquipe() {
+        return equipe;
+    }
+
+    public void setEquipe(long equipe) {
+        this.equipe = equipe;
+    }
+
+    public void addExperiencia(int experiencia) {
+        this.experiencia = this.experiencia + experiencia;
     }
 
 }

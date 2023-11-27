@@ -10,15 +10,19 @@ public class Teste {
         Monstro hidra = monstroDAO.buscar(1);
         Monstro elemental = monstroDAO.buscar(2);
 
-        List<Criatura> monstros = new ArrayList<>();
-        monstros.add(hidra);
-        monstros.add(elemental);
-        
-        List<Criatura> jogadores = new ArrayList<>();
-        jogadores.addAll(Metodos.criarPersonagens(3));
+        List<Criatura> listaMonstros = new ArrayList<>();
+        listaMonstros.add(hidra);
+        listaMonstros.add(elemental);
+
+        Equipe monstros = new Equipe(0, listaMonstros);
+
+
+        List<Criatura> listaJogadores = new ArrayList<>();
+        listaJogadores.addAll(Metodos.criarPersonagens(3));
+
+        Equipe jogadores = new Equipe(1, listaJogadores);
 
         Metodos.realizarEncontro(jogadores, monstros);
-
     }
 
 }

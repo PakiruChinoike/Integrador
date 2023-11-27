@@ -39,7 +39,7 @@ public class Ataque extends Habilidade{
     }
 
     //METODO PARA O PERSONAGEM USAR A HABILIDADE EM ALVO UNICO 
-    public String usaHabilidade(Criatura usuario, List<Criatura> inimigos, int alvo) {
+    public String usaHabilidade(Criatura usuario, Equipe inimigos, int alvo) {
         int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
         int damage = rolagemDano(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
         if (testeAtaque(hit, inimigos.get(alvo).getArmadura())) {
@@ -53,7 +53,7 @@ public class Ataque extends Habilidade{
     }
 
     //METODO PARA O PERSONAGEM USAR A HABILIDADE EM AREA  
-    public String usaHabilidade(Criatura usuario, List<Criatura> inimigos) {
+    public String usaHabilidade(Criatura usuario, Equipe inimigos) {
         int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
         int acertos = 0;
         for (int i = 0; i<inimigos.size(); i++) {

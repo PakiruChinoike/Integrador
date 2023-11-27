@@ -34,32 +34,21 @@ public class Garantido extends Habilidade{
         return vidaAtual;
     }
 
-    public String usaHabilidade(Criatura usuario, List<Criatura> inimigos, int alvo) {
-        // if(inimigos.get(0) instanceof Monstro) {
+    public String usaHabilidade(Criatura usuario, Equipe inimigos, int alvo) {
+        if(usuario.getEquipe() != inimigos.getId()) {
             int damage = rolagemValor(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
             int vidaAtual = causaDano(damage, inimigos.get(alvo));
             return usuario.getNome() + " acertou " + inimigos.get(alvo).getNome() + " causando "
             + damage + " de dano, e o deixando com " + vidaAtual + " pontos de vida.";
-        // }else if(inimigos.get(0) instanceof Personagem) {
-        //     int cura = rolagemValor();
-        //     int vidaAtual = causaCura(cura, inimigos.get(alvo));
-        //     return usuario.getNome() + " curou " + inimigos.get(alvo).getNome() + " " + cura + " pontos de vida, " + 
-        //     " o deixando com " + vidaAtual;
-        // }
-        // else {
-        //     return null;
-        // }
-    }
-
-    public String usaHabilidade(Personagem usuario, List<Criatura> aliados) {
-        int cura = rolagemValor();
-        for (int i = 0; i<aliados.size(); i++) {
-            causaCura(cura, aliados.get(i));
+        } else {
+             int cura = rolagemValor();
+             int vidaAtual = causaCura(cura, inimigos.get(alvo));
+             return usuario.getNome() + " curou " + inimigos.get(alvo).getNome() + " " + cura + " pontos de vida, " + 
+             "o deixando com " + vidaAtual;
         }
-        return usuario.getNome() + " curou " + cura + " pontos de vida de sua equipe.";
     }
 
-    public String usaHabilidade(Monstro usuario, List<Criatura> aliados ) {
+    public String usaHabilidade(Criatura usuario, Equipe aliados) {
         int cura = rolagemValor();
         for (int i = 0; i<aliados.size(); i++) {
             causaCura(cura, aliados.get(i));
