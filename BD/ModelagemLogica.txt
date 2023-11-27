@@ -22,7 +22,7 @@ sala_fase(id_sala_fase, #id_sala, #id_fase)
 
 recompensa(id_recompensa, tipo, experiencia, raridade, #id_item, id_habilidade)
 
-monstro(id_monstro, nome, dificuldade, vida, armadura, equipe)
+monstro(id_monstro, nome, dificuldade, vida, armadura, experiencia, equipe)
 
 monstro_habilidade(id_monstro_habilidade, #id_monstro, #id_habilidade)
 

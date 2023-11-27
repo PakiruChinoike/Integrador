@@ -8,7 +8,7 @@ public class Sala{
     private int dificuldade;
     private String nome;
     private String descricao;
-    private List<Monstro> inimigos;
+    private List<Criatura> inimigos;
     private Recompensa recompensa;
 
     public Sala() {
@@ -19,7 +19,7 @@ public class Sala{
         this.descricao = "";
         this.recompensa = new Recompensa();
 
-        this.inimigos = new ArrayList<Monstro>();
+        this.inimigos = new ArrayList<Criatura>();
     }
 
     public Sala(long id, int tipo, int dificuldade, String nome, String descricao) {
@@ -29,10 +29,10 @@ public class Sala{
         this.nome = nome;
         this.descricao = descricao;
 
-        this.inimigos = new ArrayList<Monstro>();
+        this.inimigos = new ArrayList<Criatura>();
     }
 
-    public Sala(long id, int tipo, int dificuldade, String nome, String descricao, Recompensa recompesa, List<Monstro> inimigos) {
+    public Sala(long id, int tipo, int dificuldade, String nome, String descricao, Recompensa recompesa, List<Criatura> inimigos) {
         this.id = id;
         this.tipo = tipo;
         this.dificuldade = dificuldade;
@@ -40,7 +40,7 @@ public class Sala{
         this.descricao = descricao;
         this.recompensa = recompesa;
 
-        this.inimigos = new ArrayList<Monstro>();
+        this.inimigos = new ArrayList<Criatura>();
         this.inimigos.addAll(inimigos);
     }
 
@@ -72,26 +72,16 @@ public class Sala{
         return descricao;
     }
 
-    public void addInimigos(Monstro inimigo) {
+    public void addInimigos(Criatura inimigo) {
         inimigos.add(inimigo);
     }
 
-    public List<Monstro> getInimigos() {
+    public List<Criatura> getInimigos() {
         return inimigos;
     }
 
-    // public String entraSala(Equipe party) {
-    //     return party.getPersonagem(0).getNome() + ", " + party.getPersonagem(1).getNome() + " e " + party.getPersonagem(2).getNome() +
-    //     "entram na sala adiante. " + descricao;
-    // }
-
-    public String isDerrotado() {
-        if(inimigos.isEmpty()) {
-            return "Todos os inimigos foram derrotados! A sua equipe recebeu: " + recompensa.toString();
-        }
-        else {
-            return null;
-        }
+    public Criatura getInimigo(int index) {
+        return inimigos.get(index);
     }
 
 }

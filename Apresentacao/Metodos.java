@@ -44,6 +44,9 @@ public class Metodos {
 
         for(int i = 0; i<combatentes.size(); i++) {
             isLutando = isLutando(combatentes.get(i));
+            if(!isLutando) {
+                combatentes.removerCriatura(combatentes.get(i));
+            }
         }
         return isLutando;
     }
@@ -57,8 +60,7 @@ public class Metodos {
         return keyboardInt.nextInt()-1;
     }
 
-    public static int menuAlvos(Criatura atual, Equipe equipeAlvo) {
-        System.out.printf(atual.getNome() + " qual será o seu alvo?%n0 - Trocar equipe alvo%n"); 
+    public static int menuAlvos(Equipe equipeAlvo) {; 
         for(int j = 0; j<equipeAlvo.size(); j++) {
             System.out.printf(j+1 + " - " + equipeAlvo.get(j).getNome() + "%n");
         }
@@ -88,7 +90,8 @@ public class Metodos {
 
         Equipe equipeAlvo = menuEquipes(atual, aliados, inimigos);
 
-        int selecao = menuAlvos(atual, equipeAlvo);
+        System.out.printf(atual.getNome() + " qual será o seu alvo?%n0 - Trocar equipe alvo%n");
+        int selecao = menuAlvos(equipeAlvo);
 
         System.out.println(ativa(atual, equipeAlvo, hab, selecao));
     }
@@ -165,6 +168,90 @@ public class Metodos {
                 if(!isLutando(aliados)) {
                     return "Os monstros venceram e vocês foram derrotados...";
                 }
+            }
+        }
+    }
+
+    public static void aumentaNivel(Criatura aliado) {
+        aliado.setNivel(aliado.getNivel()+1);
+        aliado.setExperiencia(aliado.getExperiencia()-1000);
+        System.out.printf(aliado.getNome() + " subiu para o nível " + aliado.getNivel());
+        System.out.printf("Escolha um atributo para aumentar.%n1 - Agilidade(" + aliado.getAtributos(0) + ")%n" +
+        "2 - Força(" + aliado.getAtributos(1) + ")%n" + 
+        "3 - Inteligência(" + aliado.getAtributos(2) + ")%n");
+        int escolha = keyboardInt.nextInt()-1;
+        switch (escolha) {
+            case 0: {
+                aliado.setAtributos(0, aliado.getAtributos(0)+1);
+                System.out.println("Agilidade aumentada com sucesso.");
+                break;
+            }
+            case 1: {
+                aliado.setAtributos(1, aliado.getAtributos(1)+1);
+                System.out.println("Força aumentada com sucesso.");
+                break;
+            }
+            case 2: {
+                aliado.setAtributos(2, aliado.getAtributos(2)+1);
+                System.out.println("Inteligência aumentada com sucesso.");
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+
+    public static void recebeRecompensa(Equipe aliados, Recompensa recompensa) {
+        System.out.printf("Após os terríveis monstros serem derrotados, adiante de vocês jazia um belo tesouro.%nAo abrí-lo, vocês se deparavam com: %n");
+        System.out.println(recompensa.toString());
+        for(int i = 0; i<aliados.size(); i++) {
+            aliados.get(i).addExperiencia(recompensa.getExperiencia());
+            if(aliados.get(i).getExperiencia()>1000) {
+                aumentaNivel(aliados.get(i));
+            }
+        }
+        if(recompensa.getHabilidade()!=null) {
+            System.out.println("Escolha um personagem para receber a seguinte habilidade: "); 
+            recompensa.getHabilidade().toString();
+
+            int selecao = menuAlvos(aliados);
+            aliados.get(selecao).addHabilidade(recompensa.getHabilidade());
+        }
+        if(recompensa.getItem()!=null) {
+            System.out.println("Escolha um personagem para receber o seguinte item: "); 
+            recompensa.getItem().toString();
+
+            int selecao = menuAlvos(aliados);
+            aliados.get(selecao).addItem(recompensa.getItem());
+        }
+    }
+
+    public static boolean entraSala(Equipe aliados, Sala sala) {
+        System.out.println(sala.getDescricao());
+        System.out.println("E diante de vocês..."); 
+        for (int i = 0; i<sala.getInimigos().size(); i++) {
+            System.out.println(sala.getInimigo(i).getNome());
+        }
+        Equipe inimigos = new Equipe(sala.getId(), sala.getInimigos());
+
+        System.out.println(realizarEncontro(aliados, inimigos));
+
+        if(isLutando(aliados)) {
+            recebeRecompensa(aliados, sala.getRecompensa());
+            return true;
+        }
+        else {
+            System.out.printf("As portas das catacumbas se fecham de uma vez por todas...%nTalvez... Elas nunca fossem ser abertas.%n");
+            return false;
+        }
+    }
+
+    public static void realizaTentativa(Fase fase) {
+        for(int i = 0; i<fase.getListaSalas().size(); i++) {
+            boolean sucesso = entraSala(fase.getEquipe(), fase.getSala(i));
+            if(!sucesso) {
+                break;
             }
         }
     }

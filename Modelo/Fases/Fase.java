@@ -6,29 +6,32 @@ public class Fase{
     private long id;
     private String nome;
     private List<Sala> listaSalas;
-    private int salaAtual;
-    private Equipe party;
+    private Equipe equipe;
 
-    // public Fase(String nome, List<Sala> listaSalas) {
-    //     this.nome = nome;
-    //     this.listaSalas = new ArrayList<Sala>();
-    //     this.listaSalas.addAll(listaSalas);
-    //     salaAtual = 0;
-    //     listaSalas.get(salaAtual).entraSala(party);
-    // }
+    public Fase(String nome, List<Sala> listaSalas) {
+        this.nome = nome;
+        this.listaSalas = new ArrayList<Sala>();
+        this.listaSalas.addAll(listaSalas);
+    }
 
-    // public long getId() {
-    //     return id;
-    // }
+    public long getId() {
+        return id;
+    }
 
-    // public String getNome() {
-    //     return nome;
-    // }
+    public String getNome() {
+        return nome;
+    }
 
-    // //METODO QUE DEFINE QUAL SALA ESTA ATUALMENTE 
-    // public String prossegueSala() {
-    //     salaAtual++;
-    //     return listaSalas.get(salaAtual).entraSala(party);
-    // }
+    public List<Sala> getListaSalas() {
+        return listaSalas;
+    }
+
+    public Sala getSala(int index) {
+        return listaSalas.get(index);
+    }
+
+    public Equipe getEquipe() {
+        return equipe;
+    }
 
 }

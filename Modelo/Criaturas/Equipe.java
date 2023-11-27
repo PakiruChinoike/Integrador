@@ -7,7 +7,7 @@ public class Equipe {
     private List<Criatura> criaturas;
 
     //UM CONSTRUTOR QUE CRIA UMA EQUIPE DE APENAS UMA CRIATURA
-    public Equipe(int id, Criatura criatura) {
+    public Equipe(long id, Criatura criatura) {
         this.id = id;
         this.criaturas = new ArrayList<Criatura>(3);
         this.criaturas.add(criatura);
@@ -15,7 +15,7 @@ public class Equipe {
     }
 
     //UM 
-    public Equipe(int id, List<Criatura> criaturas) {
+    public Equipe(long id, List<Criatura> criaturas) {
         this.id = id;
         this.criaturas = new ArrayList<Criatura>(3);
         this.criaturas.addAll(criaturas);
@@ -35,6 +35,14 @@ public class Equipe {
 
     public int size() {
         return criaturas.size();
+    }
+
+    public List<Criatura> getCriaturas() {
+        return criaturas;
+    }
+
+    public void setCriaturas(List<Criatura> criaturas) {
+        this.criaturas = criaturas;
     }
 
     public void addCriatura(Criatura criatura) {

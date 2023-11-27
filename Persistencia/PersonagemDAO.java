@@ -24,7 +24,7 @@ public class PersonagemDAO {
             statement.setInt(5, personagem.getPoder());
             statement.setInt(6, personagem.getNivel());
             statement.setInt(7, personagem.getExperiencia());
-            statement.setInt(8, personagem.getEquipe());
+            statement.setLong(8, personagem.getEquipe());
             statement.executeUpdate();
 
             String sql0 = "SELECT id_personagem FROM personagem ORDER BY id_personagem DESC LIMIT 1";
@@ -92,7 +92,7 @@ public class PersonagemDAO {
             statement.setInt(4, personagem.getArmadura());
             statement.setInt(5, personagem.getPoder());
             statement.setInt(6, personagem.getExperiencia());
-            statement.setInt(7, personagem.getEquipe());
+            statement.setLong(7, personagem.getEquipe());
             statement.setLong(8, personagem.getId());
             statement.executeUpdate();
 

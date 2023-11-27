@@ -31,6 +31,7 @@ CREATE TABLE monstro(
     vida TINYINT NOT NULL,
     armadura TINYINT NOT NULL,
 	nivel TINYINT NOT NULL,
+    experiencia SMALLINT,
     equipe SMALLINT,
     PRIMARY KEY(id_monstro)
 );

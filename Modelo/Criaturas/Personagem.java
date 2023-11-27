@@ -4,22 +4,15 @@ import java.util.List;
 public class Personagem extends Criatura{
     
         private long id;
-
-        private Classe classe;
-        private List<Item> listaItens;
-
-        private int experiencia;
-
         private int poder;
+        private Classe classe;
 
         //CONSTRUTOR COM TODOS OS PARÂMETROS 
-        public Personagem(String nome, int classe, int armadura, int vida, int nivel, int poder, int equipe) {
-            super(nome, vida, armadura, nivel, equipe);
+        public Personagem(String nome, int classe, int armadura, int vida, int nivel, int poder, int experiencia, int equipe) {
+            super(nome, vida, armadura, nivel, equipe, experiencia);
             this.poder = poder;
 
             this.classe = new Classe(classe);
-
-            this.listaItens = new ArrayList<Item>();
         }
 
         //CONSTRUTOR BÁSICO, ONDE O JOGADOR SELECIONA UM NOME E UMA CLASSE PARA O PERSONAGEM
@@ -30,9 +23,6 @@ public class Personagem extends Criatura{
             super.setAtributos(this.classe.getPadrao());
             super.setFraquezas(this.classe.getListaFraquezas());
             super.setHabilidades(this.classe.getListaHabilidades());
-
-            this.listaItens = new ArrayList<Item>();
-            this.experiencia = 0;
 
             super.setArmadura((10+super.getAtributos(0)+super.getNivel()));
             super.setVida((10+super.getAtributos(1))*super.getNivel());
@@ -70,33 +60,12 @@ public class Personagem extends Criatura{
             return classe.getNome();
         }
 
-        public int getExperiencia() {
-            return experiencia;
-        }
-
-        public void setExperiencia(int experiencia) {
-            this.experiencia = experiencia;
-        }
-
         public int getPoder() {
             return poder;
         }
 
         public void setPoder(int poder) {
             this.poder = poder;
-        }
-
-        public List<Item> getItens() {
-            return listaItens;
-        }
-
-        public Item getItem(int index) {
-            return listaItens.get(index);
-        }
-
-        public String addItem(Item item) {
-            listaItens.add(item);
-            return item.getNome() + " foi adicionado ao inventário de " + super.getNome();
         }
 
         public String toString() {
@@ -106,7 +75,6 @@ public class Personagem extends Criatura{
         //RECEBE UM ATRIBUTO AUMENTAR E O AUMENTA EM UM, DEFINE O NIVEL DO PERSONAGEM E O AUMENTA 
         public void subirNivel(int atributoAumentar) {
             super.setNivel(super.getNivel()+1);
-            this.experiencia = 0;
             super.setAtributos(atributoAumentar, (super.getAtributos(atributoAumentar))+1);
         }
 }

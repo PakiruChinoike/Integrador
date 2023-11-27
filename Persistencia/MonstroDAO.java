@@ -21,7 +21,7 @@ public class MonstroDAO {
             statement.setInt(2, monstro.getVida());
             statement.setInt(3, monstro.getArmadura());
             statement.setInt(4, monstro.getNivel());
-            statement.setInt(5, monstro.getEquipe());
+            statement.setLong(5, monstro.getEquipe());
             statement.executeUpdate();
 
             String sql0 = "SELECT id_monstro FROM monstro ORDER BY id_monstro DESC LIMIT 1";
@@ -80,7 +80,7 @@ public class MonstroDAO {
             statement.setInt(2, monstro.getNivel());
             statement.setInt(3, monstro.getVida());
             statement.setInt(4, monstro.getArmadura());
-            statement.setInt(5, monstro.getEquipe());
+            statement.setLong(5, monstro.getEquipe());
             statement.setLong(6, monstro.getId());
             statement.executeUpdate();
 
@@ -139,7 +139,7 @@ public class MonstroDAO {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                Monstro monstro = new Monstro(rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"), rs.getInt("equipe"));
+                Monstro monstro = new Monstro(rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"), rs.getInt("experiencia"), rs.getLong("equipe"));
 
                 String sql2 = "SELECT * FROM monstro_habilidade WHERE id_monstro=?";
                 PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
@@ -205,7 +205,7 @@ public class MonstroDAO {
             ResultSet rs = statement.executeQuery();
             List<Monstro> listaMonstros = new ArrayList<Monstro>();
             while (rs.next()) {
-                Monstro monstro = new Monstro(rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"), rs.getInt("equipe"));                
+                Monstro monstro = new Monstro(rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"), rs.getInt("experiencia"), rs.getLong("equipe"));                
                 listaMonstros.add(monstro);
             }
             return listaMonstros;
