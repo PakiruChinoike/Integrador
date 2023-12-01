@@ -37,6 +37,9 @@ INSERT INTO habilidade VALUE(202, "Terremoto", 1, "Um tremor de terra que afeta 
 INSERT INTO monstro_habilidade VALUES(null, 2, 201);
 INSERT INTO monstro_habilidade VALUES(null, 2, 202);
 
+/*INSERE NO BANCO AS RECOMPENSAS*/
+
+
 
 /*    id_monstro BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
     nome VARCHAR(30) NOT NULL,

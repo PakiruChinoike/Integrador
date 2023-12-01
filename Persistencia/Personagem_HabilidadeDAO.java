@@ -7,7 +7,7 @@ public class Personagem_HabilidadeDAO{
     private ConexaoMYSQL conexao;
 
     public Personagem_HabilidadeDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "Pipoka!821", "CatacombsIntegrador");
+		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "alunoinfo", "CatacombsIntegrador");
     }
 
     public void salvar(Personagem personagem, Habilidade habilidade) {

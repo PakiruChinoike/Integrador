@@ -4,7 +4,7 @@ atributos(id_atributos, agilidade, forca, inteligencia, #id_personagem, #id_mons
 
 fraquezas(id_fraquezas, flamejante, congelante, eletrico, fisico, arcano, #id_personagem, #id_monstro)
 
-equipe(id_equipe, #id_personagem, #id_personagem2, #id_personagem3);
+equipe(id_equipe, #id_personagem, #id_personagem2, #id_personagem3)
 
 habilidade(id_habilidade, nome, tipo, descricao, max_roll, min_roll, min_teste, tipo_dano, atributo)
 

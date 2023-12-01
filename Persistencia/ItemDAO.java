@@ -9,7 +9,7 @@ public class ItemDAO{
     private ConexaoMYSQL conexao;
 
     public ItemDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "Pipoka!821", "CatacombsIntegrador");
+		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "alunoinfo", "CatacombsIntegrador");
     }
 
     public long salvar(Item item) {

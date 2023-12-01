@@ -6,6 +6,11 @@ public class Equipe {
     private long id;
     private List<Criatura> criaturas;
 
+    public Equipe() {
+        this.id = 0;
+        this.criaturas = new ArrayList<Criatura>();
+    }
+
     //UM CONSTRUTOR QUE CRIA UMA EQUIPE DE APENAS UMA CRIATURA
     public Equipe(long id, Criatura criatura) {
         this.id = id;
@@ -35,6 +40,10 @@ public class Equipe {
 
     public int size() {
         return criaturas.size();
+    }
+
+    public void addAll(List<Criatura> criaturas) {
+        this.criaturas.addAll(criaturas);
     }
 
     public List<Criatura> getCriaturas() {
