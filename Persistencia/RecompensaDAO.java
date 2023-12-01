@@ -61,5 +61,25 @@ public void editar(Recompensa recompensa) {
           statement.setInt(2, recompensa.getExperiencia());
           statement.setInt(3, recompensa.getRaridade());
           statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.conexao.fecharConexao();
+        }
+}
+public void excluir(long id) {
+        try {
+            this.conexao.abrirConexao();
+            String sql = "DELETE FROM recompensa WHERE id_recompensa =?";
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.conexao.fecharConexao();
+        }
     }
+
 }
