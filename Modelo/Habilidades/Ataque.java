@@ -1,5 +1,4 @@
 import java.lang.Math;
-import java.util.List;
 
 public class Ataque extends Habilidade{
 
@@ -44,7 +43,7 @@ public class Ataque extends Habilidade{
         int damage = rolagemDano(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
         if (testeAtaque(hit, inimigos.get(alvo).getArmadura())) {
             int vidaAtual = causaDano(damage, inimigos.get(alvo));
-            return usuario.getNome() + " acertou " + inimigos.get(alvo).getNome() + " com um " + hit + " causando "
+            return usuario.getNome() + " acertou " + super.getDescricao() + " em " + inimigos.get(alvo).getNome() + " com um " + hit + " causando "
             + damage + " de dano, e o deixando com " + vidaAtual + " pontos de vida.";
         }
         else {
@@ -63,7 +62,7 @@ public class Ataque extends Habilidade{
                 acertos++;
             }
         }
-        return usuario.getNome() + " acertou " + acertos + " inimigos.";
+        return usuario.getNome() + " acertou " + acertos + " inimigos com " + super.getDescricao();
     }
 
 }

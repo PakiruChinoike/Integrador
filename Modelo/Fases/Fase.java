@@ -34,4 +34,8 @@ public class Fase{
         return equipe;
     }
 
+    public void setEquipe(Equipe equipe) {
+        this.equipe = equipe;
+    }
+
 }

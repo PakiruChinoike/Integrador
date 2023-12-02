@@ -7,7 +7,7 @@ public class RecompensaDAO {
 private ConexaoMYSQL conexao;
 
     public RecompensaDAO(){
-        this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "alunoinfo", "CatacombsIntegrador");
+        this.conexao = new ConexaoMYSQL();
     }
 
     public long salvar(Recompensa recompensa) {

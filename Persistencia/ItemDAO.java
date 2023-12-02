@@ -9,17 +9,18 @@ public class ItemDAO{
     private ConexaoMYSQL conexao;
 
     public ItemDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "alunoinfo", "CatacombsIntegrador");
+		this.conexao = new ConexaoMYSQL();
     }
 
     public long salvar(Item item) {
         try {
             this.conexao.abrirConexao();
-            String sql = "INSERT INTO item VALUES(null, ?, ?, ?)";
+            String sql = "INSERT INTO item VALUES(null, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, item.getNome());
             statement.setInt(2, item.getRaridade());
-            statement.setLong(3, item.getHabilidade().getId());
+            statement.setInt(3, item.getUsos());
+            statement.setLong(4, item.getHabilidade().getId());
             statement.executeUpdate();
 
             String sql0 = "SELECT id_item FROM item ORDER BY id_item DESC LIMIT 1";
@@ -39,12 +40,13 @@ public class ItemDAO{
     public void editar(Item item) {
         try {
             this.conexao.abrirConexao();
-            String sql = "UPDATE item SET nome=?, raridade=?, id_habilidade=? WHERE id_item=?";
+            String sql = "UPDATE item SET nome=?, raridade=?, usos=?, id_habilidade=? WHERE id_item=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, item.getNome());
             statement.setInt(2, item.getRaridade());
-            statement.setLong(3, item.getHabilidade().getId());
-            statement.setLong(4, item.getId());
+            statement.setInt(3, item.getUsos());
+            statement.setLong(4, item.getHabilidade().getId());
+            statement.setLong(5, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,7 +87,7 @@ public class ItemDAO{
                     HabilidadeDAO habilidadeDao = new HabilidadeDAO();
                     Habilidade habilidade = habilidadeDao.buscar(rs2.getLong("id_habilidade"));
 
-                    Item item = new Item(rs.getString("nome"), rs.getInt("raridade"), habilidade);
+                    Item item = new Item(rs.getString("nome"), rs.getInt("raridade"), rs.getInt("usos"), habilidade);
                     return item;
                 }
                 else {
@@ -120,7 +122,7 @@ public class ItemDAO{
                     HabilidadeDAO habilidadeDao = new HabilidadeDAO();
                     Habilidade habilidade = habilidadeDao.buscar(rs2.getLong("id_habilidade"));
 
-                    Item item = new Item(rs.getString("nome"), rs.getInt("raridade"), habilidade);
+                    Item item = new Item(rs.getString("nome"), rs.getInt("raridade"), rs.getInt("usos"), habilidade);
                     listaItens.add(item);
                 }
             }

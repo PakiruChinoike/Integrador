@@ -36,7 +36,7 @@ public class Resistencia extends Habilidade{
         int damage = rolagemDano(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
         if (teste<(super.getMinTeste())) {
             int vidaAtual = causaDano(damage, inimigos.get(alvo));
-            return usuario.getNome() + " utilizou " + super.getNome() + " em " + inimigos.get(alvo).getNome() + 
+            return usuario.getNome() + " utilizou " + super.getDescricao() + " em " + inimigos.get(alvo).getNome() + 
             " que falhou em resistir ao efeito, sofrendo " + damage + " de dano, e ficando com " + 
             vidaAtual + " pontos de vida.";
         }
@@ -55,7 +55,7 @@ public class Resistencia extends Habilidade{
                 acertos++;
             }
         }
-        return acertos + " alvos falharam na resistência do efeito de " + usuario.getNome();
+        return acertos + " alvos sofreram com " + super.getDescricao() + " de " + usuario.getNome();
     }
 
 }

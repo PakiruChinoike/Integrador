@@ -7,7 +7,7 @@ public class Personagem_ItemDAO{
     private ConexaoMYSQL conexao;
 
     public Personagem_ItemDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "alunoinfo", "CatacombsIntegrador");
+		this.conexao = new ConexaoMYSQL();
     }
 
     public void salvar(Personagem personagem, Item item) {
@@ -104,7 +104,7 @@ public class Personagem_ItemDAO{
                             }
                         }
     
-                        Item item = new Item(rs3.getString("nome"), rs3.getInt("raridade"), habilidade);
+                        Item item = new Item(rs3.getString("nome"), rs3.getInt("raridade"), rs3.getInt("usos"), habilidade);
                         return item;
                     }
                     else {

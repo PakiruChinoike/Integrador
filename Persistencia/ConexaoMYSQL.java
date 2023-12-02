@@ -11,6 +11,15 @@ public class ConexaoMYSQL {
     private String nomeBd;
     private Connection conexao;
 
+    public ConexaoMYSQL() {
+        super();
+        this.ip = "localhost";
+        this.porta = "3306";
+        this.login = "root";
+        this.senha = "Pipoka!821";
+        this.nomeBd = "CatacombsIntegrador";
+    }
+
     public ConexaoMYSQL(String ip, String porta, String login, String senha, String nomeBd) {
         super();
         this.ip = ip;

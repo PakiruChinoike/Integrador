@@ -9,7 +9,7 @@ public class PersonagemDAO {
     private ConexaoMYSQL conexao;
 
     public PersonagemDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "alunoinfo", "CatacombsIntegrador");
+		this.conexao = new ConexaoMYSQL();
 	}
 
     public long salvar(Personagem personagem) {

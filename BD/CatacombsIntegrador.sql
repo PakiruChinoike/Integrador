@@ -80,6 +80,7 @@ CREATE TABLE item(
     id_item BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
     nome VARCHAR(30) NOT NULL,
     raridade TINYINT NOT NULL,
+    usos TINYINT NOT NULL,
     id_habilidade BIGINT NOT NULL,
     PRIMARY KEY(id_item),
     FOREIGN KEY (id_habilidade) REFERENCES habilidade(id_habilidade)

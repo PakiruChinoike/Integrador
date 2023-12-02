@@ -37,7 +37,7 @@ public class Garantido extends Habilidade{
         if(usuario.getEquipe() != inimigos.getId()) {
             int damage = rolagemValor(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
             int vidaAtual = causaDano(damage, inimigos.get(alvo));
-            return usuario.getNome() + " acertou " + inimigos.get(alvo).getNome() + " causando "
+            return usuario.getNome() + " acertou " + super.getDescricao() + " em " + inimigos.get(alvo).getNome() + " causando "
             + damage + " de dano, e o deixando com " + vidaAtual + " pontos de vida.";
         } else {
              int cura = rolagemValor();

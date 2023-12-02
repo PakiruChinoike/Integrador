@@ -7,7 +7,7 @@ public class Monstro_SalaDAO{
     private ConexaoMYSQL conexao;
 
     public Monstro_SalaDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "alunoinfo", "CatacombsIntegrador");
+		this.conexao = new ConexaoMYSQL();
     }
 
     public void salvar(Monstro monstro, Sala sala) {

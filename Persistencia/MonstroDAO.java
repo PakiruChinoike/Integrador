@@ -9,7 +9,7 @@ public class MonstroDAO {
     private ConexaoMYSQL conexao;
 
     public MonstroDAO() {
-		this.conexao = new ConexaoMYSQL("localhost", "3306", "root", "alunoinfo", "CatacombsIntegrador");
+		this.conexao = new ConexaoMYSQL();
 	}
 
     public long salvar(Monstro monstro) {
