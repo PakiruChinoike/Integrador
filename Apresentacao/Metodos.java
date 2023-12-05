@@ -8,6 +8,15 @@ public class Metodos {
     private static Scanner keyboardInt = new Scanner(System.in);
     private static Scanner keyboardString = new Scanner(System.in);
 
+    private static EquipeDAO equipeDAO = new EquipeDAO();
+    private static FaseDAO faseDAO = new FaseDAO();
+    private static HabilidadeDAO habilidadeDAO = new HabilidadeDAO();
+    private static ItemDAO itemDAO = new ItemDAO();
+    private static MonstroDAO monstroDAO = new MonstroDAO();
+    private static PersonagemDAO personagemDAO = new PersonagemDAO();
+    private static RecompensaDAO recompensaDAO = new RecompensaDAO();
+    private static SalaDAO salaDAO = new SalaDAO();
+
     public static List<Personagem> criarPersonagens(int n) {
         List<Personagem> listaPersonagens = new ArrayList<>();
 
@@ -26,12 +35,25 @@ public class Metodos {
         return listaPersonagens;
     }
 
-    private static String ativa(Criatura usuario, Equipe inimigos, int numHab, int alvo) {
-        return usuario.getHabilidade(numHab).usaHabilidade(usuario, inimigos, alvo);
+    private static String ativa(Criatura usuario, Equipe inimigos, Acao acao, int alvo) {
+        if (acao instanceof Habilidade) {
+            return ((Habilidade)acao).usaHabilidade(usuario, inimigos, alvo);
+        }
+        else if (acao instanceof Item) {
+            ((Item)acao).gastaUso();
+            if (((Item)acao).getUsos()==0) {
+                usuario.removerItem(((Item)acao));
+            }
+            return ((Item)acao).usaItem(usuario, inimigos, alvo);
+        }
+        else {
+            return null;
+        }
     }
 
     private static boolean isLutando(Equipe combatentes, Criatura combatente) {
         if(combatente.getVida()>0) {
+            System.out.println(combatente.getNome() + " mantém-se vivo.");
             return true;
         }
         else {
@@ -62,18 +84,32 @@ public class Metodos {
         return false;
     }
 
-    public static int menuHabilidades(Criatura atual) {
+    public static Acao menuAcoes(Criatura atual) {
         System.out.printf(atual.getNome() + " qual será a sua ação?%n");
-        for(int j = 0; j<atual.getHabilidades().size(); j++) {
-            System.out.printf(j+1 + " - " + atual.getHabilidade(j).getNome() + "%n");
+        if (atual.getItens().size()>0) {
+            System.out.println("0 - Itens");
+        }
+        for(int i = 0; i<atual.getHabilidades().size(); i++) {
+            System.out.printf(i+1 + " - " + atual.getHabilidade(i).getNome() + " (" + atual.getHabilidade(i).getCusto() + ")%n");
         }
 
-        return keyboardInt.nextInt()-1;
+        int acao = keyboardInt.nextInt();
+        if (acao>0) {
+            return atual.getHabilidade(acao-1);
+        }
+        else {
+            System.out.printf("Escolha o item a ser usado: %n"); 
+            for(int i = 0; i<atual.getItens().size(); i++) {
+                System.out.printf(i+1 + " - " + atual.getItem(i).getNome() + " (" + atual.getItem(i).getUsos() + ")%n");
+            }                
+            acao = keyboardInt.nextInt();
+            return atual.getItem(acao);
+        }
     }
 
     public static int menuAlvos(Equipe equipeAlvo) {; 
-        for(int j = 0; j<equipeAlvo.size(); j++) {
-            System.out.printf(j+1 + " - " + equipeAlvo.get(j).getNome() + "%n");
+        for(int i = 0; i<equipeAlvo.size(); i++) {
+            System.out.printf(i+1 + " - " + equipeAlvo.get(i).getNome() + "%n");
         }
         return keyboardInt.nextInt();
     }
@@ -96,29 +132,35 @@ public class Metodos {
         
     }
 
+    public static void menuItem() {
+
+    }
+
     public static void turnoJogador(Criatura atual, Equipe aliados, Equipe inimigos) {
-        int hab = menuHabilidades(atual);
-        int selecao = 0;
+        Acao acao = menuAcoes(atual);
 
+        int alvo = 0;
 
-        while (selecao==0) {
+        while (alvo==0) {
         Equipe equipeAlvo = menuEquipes(atual, aliados, inimigos);
 
         System.out.printf(atual.getNome() + " qual será o seu alvo?%n0 - Trocar equipe alvo%n");
-        selecao = menuAlvos(equipeAlvo);
+        alvo = menuAlvos(equipeAlvo);
 
-        if (selecao>0) {
-            System.out.println(ativa(atual, equipeAlvo, hab, selecao-1));
+        if (alvo>0) {
+            System.out.println(ativa(atual, equipeAlvo, acao, alvo-1));
         }
         }
     }
 
     public static void turnoMonstro(Criatura atual, Equipe jogadores, Equipe monstros) {
-        int hab = ((int)(Math.random() * (atual.getHabilidades().size())));
+        int escolha = ((int)(Math.random() * (atual.getHabilidades().size())));
+
+        Habilidade habilidade = atual.getHabilidade(escolha);
 
         int selecao = ((int)(Math.random() * (jogadores.size())));
 
-        System.out.println(ativa(atual, jogadores, hab, selecao));
+        System.out.println(ativa(atual, jogadores, habilidade, selecao));
     }
 
     public static String realizarCombate(Equipe equipe1, Equipe equipe2) {
@@ -193,7 +235,7 @@ public class Metodos {
         aliado.setNivel(aliado.getNivel()+1);
         aliado.setExperiencia(aliado.getExperiencia()-1000);
         System.out.printf(aliado.getNome() + " subiu para o nível " + aliado.getNivel());
-        System.out.printf("Escolha um atributo para aumentar.%n1 - Agilidade(" + aliado.getAtributos(0) + ")%n" +
+        System.out.printf("%nEscolha um atributo para aumentar.%n1 - Agilidade(" + aliado.getAtributos(0) + ")%n" +
         "2 - Força(" + aliado.getAtributos(1) + ")%n" + 
         "3 - Inteligência(" + aliado.getAtributos(2) + ")%n");
         int escolha = keyboardInt.nextInt()-1;
@@ -224,21 +266,19 @@ public class Metodos {
         System.out.println(recompensa.toString());
         for(int i = 0; i<aliados.size(); i++) {
             aliados.get(i).addExperiencia(recompensa.getExperiencia());
-            if(aliados.get(i).getExperiencia()>1000) {
+            if(aliados.get(i).getExperiencia()>=1000) {
                 aumentaNivel(aliados.get(i));
             }
         }
         if(recompensa.getHabilidade()!=null) {
-            System.out.println("Escolha um personagem para receber a seguinte habilidade: "); 
-            recompensa.getHabilidade().toString();
+            System.out.printf("Escolha um personagem para receber a seguinte habilidade: %n" + recompensa.getHabilidade().toString()); 
 
             int selecao = menuAlvos(aliados)-1;
             aliados.get(selecao).addHabilidade(recompensa.getHabilidade());
             System.out.println(aliados.get(selecao).getNome() + " recebeu " + recompensa.getHabilidade().getNome());
         }
         if(recompensa.getItem()!=null) {
-            System.out.println("Escolha um personagem para receber o seguinte item: "); 
-            recompensa.getItem().toString();
+            System.out.printf("Escolha um personagem para receber o seguinte item: %n" + recompensa.getItem().toString()); 
 
             int selecao = menuAlvos(aliados)-1;
             aliados.get(selecao).addItem(recompensa.getItem());
@@ -272,18 +312,892 @@ public class Metodos {
             if(!sucesso) {
                 break;
             }
+            else {
+                System.out.printf("Vocês prosseguem para a próxima sala... %n");
+            }
+        }
+        System.out.printf("E quando o último golpe era desferido contra o corpo do lich, as Catacumbas começavam a colapsar.%n" + 
+        "Os nossos heróis correm de lá o mais rápido que conseguem, mas nem todos são capazes de escapar com vida. %n" +
+        "O mar de monstros, destroços e armadilhas no meio do caminho, permite que apenas um de nossos heróis sobrevivam..." + 
+        "Ao olhar para trás, este via as portas das Catacumbas selando-se, para nunca mais serem abertas.");
+    }
+
+    public static void inicializacao() {
+        System.out.printf("Bem-vindo ao The Catacombs!%n Digite qualquer inteiro para iniciar.%n");
+
+        int escolha = keyboardInt.nextInt();
+        switch(escolha) {
+            case 0: {
+                modoDev();
+            }
+            default: {
+                modoCampanha();
+            }
         }
     }
 
-    // public static void inicializacao() {
-    //     swtich(escolha) {
-    //         case 1: {
-    //             realizaTentativa(null);
-    //         }
-    //         case 0: {
-    //             modoDev;
-    //         }
-    //     }
-    // }
+    public static void modoCampanha() {
+        System.out.printf("%nVocê e o seu grupo de aventureiros nasceram numa cidade no pé de uma das maiores montanhas do continente." + 
+        "%nVocê, e todos que viveram naquela vila, conheciam sobre os portões selados numa caverna dentro de uma montanha." + 
+        "%nAs histórias que seus avós contavam diziam sobre um antigo lich soberano, que ali fora selado." +
+        "%nA paz, porém, estava começando a romper." + 
+        "%nMonstros começaram a surgir na vila e atacar aqueles que você chamava de família. Só havia uma resposta para isso: " + 
+        "%nInvadir aquelas Catacumbas, e acabar com o lich, de uma vez por todas.");
+        System.out.printf("%nCrie o seu personagem, e o de seus amigos.%n"); 
+
+        List<Criatura> listaJogadores = new ArrayList<>();
+        listaJogadores.addAll(Metodos.criarPersonagens(3));
+
+        for (int i = 0; i<listaJogadores.size(); i++) {
+            Personagem personagem = ((Personagem)listaJogadores.get(i));
+            personagem.setId(personagemDAO.salvar(personagem));
+        }
+
+        Equipe jogadores = new Equipe(10, listaJogadores);
+        jogadores.setId(equipeDAO.salvar(jogadores));
+
+        for (int i = 0; i<jogadores.size(); i++) {
+            jogadores.get(i).setEquipe(jogadores.getId());
+        }
+
+        System.out.printf("%nSelecione, a seguir, a Fase da qual deseja participar:" + 
+        "%n(OBS: Fases além da de ID=1 são Fases personalizadas que devem ser criadas no Modo Dev.)%n");
+
+        int escolha = keyboardInt.nextInt();
+
+        Fase fase = faseDAO.buscar(escolha);
+
+        realizaTentativa(fase);
+    }
+
+    public static void modoDev() {
+        System.out.printf("%n--Bem-vindo ao Modo Dev--" + 
+        "%nAqui pode ser realizado o CRUD de todas as tabelas no Banco de Dados." + 
+        "%n1 - Habilidade%n2 - Item%n3 - Personagem%n4 - Monstro%n5 - Recompensa%n6 - Sala%n7 - Fase%n");
+
+        int escolha = keyboardInt.nextInt();
+
+        switch (escolha) {
+            case 1: {
+                habilidadeCRUD();
+                break;
+            }
+            case 2: {
+                itemCRUD();
+                break;
+            }
+            case 3: {
+                personagemCRUD();
+                break;
+            }
+            case 4: {
+                monstroCRUD();
+                break;
+            }
+            case 5: {
+                recompensaCRUD();
+                break;
+            }
+            case 6: {
+                salaCRUD();
+                break;
+            }
+            case 7: {
+                faseCRUD();
+            }
+            default: {
+                System.out.println("Valor inválido.");
+                break;
+            }
+        }
+    }
+
+    public static void habilidadeCRUD() {
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+
+        int escolha = keyboardInt.nextInt();
+
+        switch (escolha) {
+            case 1: {
+                //CREATE
+
+                System.out.printf("%nDefina um nome, uma descrição, um tipo, um valor máximo de dano/cura, um valor mínimo de dano/cura, um valor mínimo para o teste de resistência, um tipo de dano, um atributo de resistência/ataque e um custo de Poder.%n");
+                String nome = keyboardString.nextLine();
+                String descricao = keyboardString.nextLine();
+                int tipo = keyboardInt.nextInt();
+                int maxRoll = keyboardInt.nextInt();
+                int minRoll = keyboardInt.nextInt();
+                int minTeste = keyboardInt.nextInt();
+                int tipoDano = keyboardInt.nextInt();
+                int atributo = keyboardInt.nextInt();
+                int custo = keyboardInt.nextInt();
+
+                Habilidade habilidade;
+
+                switch (tipo) {
+                    case 0: {
+                        habilidade = new Ataque(1, nome, descricao, maxRoll, minRoll, tipoDano, atributo, custo);
+                        habilidade.setId(habilidadeDAO.salvar(habilidade));
+
+                        System.out.println("Habilidade de ID=" + habilidade.getId() + " criada com sucesso.");
+                        break;
+                    }
+                    case 1: {
+                        habilidade = new Resistencia(1, nome, descricao, maxRoll, minRoll, minTeste, tipoDano, atributo, custo);
+                        habilidade.setId(habilidadeDAO.salvar(habilidade));
+
+                        System.out.println("Habilidade de ID=" + habilidade.getId() + " criada com sucesso.");
+                        break;
+                    }
+                    case 2: {
+                        habilidade = new Garantido(1, nome, descricao, maxRoll, minRoll, tipoDano, custo);
+                        habilidade.setId(habilidadeDAO.salvar(habilidade));
+
+                        System.out.println("Habilidade de ID=" + habilidade.getId() + " criada com sucesso.");
+                        break;
+                    }
+                    default: {
+                        System.out.println("Valor de Tipo inválido.");
+                        break;
+                    }
+                }
+                break;
+            }
+            case 2: {
+                //READ
+
+                System.out.printf("Defina um valor de ID para ser buscado.");
+
+                long id = keyboardInt.nextLong();
+                Habilidade habilidade = habilidadeDAO.buscar(id);
+
+                System.out.println(habilidade.toString());
+                break;
+            }
+            case 3: {
+                //UPDATE
+
+                System.out.printf("%nEscolha o ID da habilidade a ser atualizada.%nEntão defina um nome, uma descrição, um tipo, um valor máximo de dano/cura, um valor mínimo de dano/cura, um valor mínimo para o teste de resistência, um tipo de dano, um atributo de resistência/ataque e um custo de Poder da sua atualização.%n");
+                long id = keyboardInt.nextLong();
+                String nome = keyboardString.nextLine();
+                String descricao = keyboardString.nextLine();
+                int tipo = keyboardInt.nextInt();
+                int maxRoll = keyboardInt.nextInt();
+                int minRoll = keyboardInt.nextInt();
+                int minTeste = keyboardInt.nextInt();
+                int tipoDano = keyboardInt.nextInt();
+                int atributo = keyboardInt.nextInt();
+                int custo = keyboardInt.nextInt();
+
+                Habilidade habilidade;
+
+                switch (tipo) {
+                    case 0: {
+                        habilidade = new Ataque(id, nome, descricao, maxRoll, minRoll, tipoDano, atributo, custo);
+                        habilidadeDAO.editar(habilidade);
+
+                        System.out.println("Habilidade de ID=" + habilidade.getId() + " atualizada com sucesso.");
+                        break;
+                    }
+                    case 1: {
+                        habilidade = new Resistencia(id, nome, descricao, maxRoll, minRoll, minTeste, tipoDano, atributo, custo);
+                        habilidadeDAO.editar(habilidade);
+
+                        System.out.println("Habilidade de ID=" + habilidade.getId() + " atualizada com sucesso.");
+                        break;
+                    }
+                    case 2: {
+                        habilidade = new Garantido(id, nome, descricao, maxRoll, minRoll, tipoDano, custo);
+                        habilidadeDAO.editar(habilidade);
+
+                        System.out.println("Habilidade de ID=" + habilidade.getId() + " atualizada com sucesso.");
+                        break;
+                    }
+                    default: {
+                        System.out.println("Valor de Tipo inválido.%n");
+                        break;
+                    }
+                }
+                break;
+            }
+            case 4: {
+                //DELETE
+
+                System.out.printf("%nDefina o ID da habilidade que deseja excluir.%n");
+
+                long id = keyboardInt.nextLong();
+                habilidadeDAO.excluir(id);
+
+                System.out.println("Habilidade de ID=" + id + " excluída com sucesso.");
+                break;
+            }
+            default: {
+                System.out.println("Valor inválido.");
+                break;
+            }
+        }
+    }
+
+    public static void itemCRUD() {
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+
+        int escolha = keyboardInt.nextInt();
+
+        switch (escolha) {
+            case 1: {
+                //CREATE
+
+                System.out.printf("%nDefina um nome, uma quantidade de usos e o ID de uma habilidade.%n");
+
+                String nome = keyboardString.nextLine();
+                int usos = keyboardInt.nextInt();
+                long id_habilidade = keyboardInt.nextLong();
+                Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
+
+                Item item = new Item(1, nome, usos, habilidade);
+                item.setId(itemDAO.salvar(item));
+
+                System.out.println("Item de ID=" + item.getId() + " criado com sucesso.");
+                break;
+            }
+            case 2: {
+                //READ
+
+                System.out.printf("%nDefina o ID do item a ser buscado.");
+
+                long id = keyboardInt.nextLong();
+
+                Item item = itemDAO.buscar(id);
+                System.out.println(item.toString());
+                break;
+            }
+            case 3: {
+                //UPDATE 
+
+                System.out.printf("%nEscolha o ID do item a ser atualizado.%nEntão defina um nome, uma quantidade de usos e o ID de uma habilidade para a atualização.%n");
+
+                long id = keyboardInt.nextLong();
+                String nome = keyboardString.nextLine();
+                int usos = keyboardInt.nextInt();
+                long id_habilidade = keyboardInt.nextLong();
+                Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
+
+                Item item = new Item(id, nome, usos, habilidade);
+                itemDAO.editar(item);
+
+                System.out.println("Item de ID=" + item.getId() + " atualizado com sucesso.");
+                break;
+            }
+            case 4: {
+                //DELETE
+
+                System.out.printf("%Defina o ID do item que deseja excluir.");
+
+                long id = keyboardInt.nextLong();
+                itemDAO.excluir(id);
+
+                System.out.println("Item de ID=" + id + " excluído com sucesso.");
+                break;
+            }
+            default: {
+                System.out.println("Valor inválido.");
+                break;
+            }
+        }
+    }
+
+    public static void personagemCRUD() {
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+
+        int escolha = keyboardInt.nextInt();
+
+        switch (escolha) {
+            case 1: {
+                //CREATE
+
+                System.out.printf("%nDefina o nome, a classe, a vida, a armadura, o poder, o nível, a experiência e o ID da equipe do personagem.");
+                String nome = keyboardString.nextLine();
+                int classe = keyboardInt.nextInt();
+                int vida = keyboardInt.nextInt();
+                int armadura = keyboardInt.nextInt();
+                int poder = keyboardInt.nextInt();
+                int nivel = keyboardInt.nextInt();
+                int experiencia = keyboardInt.nextInt();
+                long equipe = keyboardInt.nextLong();
+
+                Personagem personagem = new Personagem(1, nome, classe, armadura, vida, nivel, poder, experiencia, equipe);
+
+                System.out.printf("%nDefina os valores de agilidade, força e inteligência do personagem.");
+                int agilidade = keyboardInt.nextInt();
+                int forca = keyboardInt.nextInt();
+                int inteligencia = keyboardInt.nextInt();
+
+                personagem.setAtributos(0, agilidade);
+                personagem.setAtributos(1, forca);
+                personagem.setAtributos(2, inteligencia);
+
+                System.out.printf("%nDefina as fraquezas do personagem."); 
+                boolean flamejante = keyboardString.nextBoolean();
+                boolean congelante = keyboardString.nextBoolean();
+                boolean eletrico = keyboardString.nextBoolean();
+                boolean fisico = keyboardString.nextBoolean();
+                boolean arcano = keyboardString.nextBoolean();
+
+                personagem.setFraquezas(0, flamejante);
+                personagem.setFraquezas(1, congelante);
+                personagem.setFraquezas(2, eletrico);
+                personagem.setFraquezas(3, fisico);
+                personagem.setFraquezas(4, arcano);
+
+                System.out.printf("%nDefina quantas habilidades o personagem possui, e então, o ID de cada uma delas.");
+                int num_hab = keyboardInt.nextInt();
+                for (int i = 0; i<num_hab; i++) {
+                    int id_habilidade = keyboardInt.nextInt();
+                    Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
+
+                    personagem.addHabilidade(habilidade);
+                }
+                
+                System.out.printf("%nDefina quantos itens o personagem possui, e então, o ID de cada um deles.");
+                int num_item = keyboardInt.nextInt();
+                for (int i = 0; i<num_item; i++) {
+                    int id_item = keyboardInt.nextInt();
+                    Item item = itemDAO.buscar(id_item);
+
+                    personagem.addItem(item);
+                }
+
+                personagem.setId(personagemDAO.salvar(personagem));
+
+                System.out.println("Personagem de ID=" + personagem.getId() + " criado com sucesso.");
+                break;
+            }
+            case 2: {
+                //READ
+
+                System.out.printf("%nDefina o ID do personagem a ser buscado.");
+
+                long id = keyboardInt.nextLong();
+
+                Personagem personagem = personagemDAO.buscar(id);
+                System.out.println(personagem.toString());
+                break;
+            }
+            case 3: {
+                //UPDATE
+
+                System.out.printf("%nEscolha o ID do personagem a ser atualizado. Então defina o nome, a classe, a vida, a armadura, o poder, o nível, a experiência e o ID da equipe do personagem atualizado.");
+                long id = keyboardInt.nextLong();
+                String nome = keyboardString.nextLine();
+                int classe = keyboardInt.nextInt();
+                int vida = keyboardInt.nextInt();
+                int armadura = keyboardInt.nextInt();
+                int poder = keyboardInt.nextInt();
+                int nivel = keyboardInt.nextInt();
+                int experiencia = keyboardInt.nextInt();
+                long equipe = keyboardInt.nextLong();
+
+                Personagem personagem = new Personagem(id, nome, classe, armadura, vida, nivel, poder, experiencia, equipe);
+
+                System.out.printf("%nDefina os valores de agilidade, força e inteligência do personagem.");
+                int agilidade = keyboardInt.nextInt();
+                int forca = keyboardInt.nextInt();
+                int inteligencia = keyboardInt.nextInt();
+
+                personagem.setAtributos(0, agilidade);
+                personagem.setAtributos(1, forca);
+                personagem.setAtributos(2, inteligencia);
+
+                System.out.printf("%nDefina as fraquezas do personagem."); 
+                boolean flamejante = keyboardString.nextBoolean();
+                boolean congelante = keyboardString.nextBoolean();
+                boolean eletrico = keyboardString.nextBoolean();
+                boolean fisico = keyboardString.nextBoolean();
+                boolean arcano = keyboardString.nextBoolean();
+
+                personagem.setFraquezas(0, flamejante);
+                personagem.setFraquezas(1, congelante);
+                personagem.setFraquezas(2, eletrico);
+                personagem.setFraquezas(3, fisico);
+                personagem.setFraquezas(4, arcano);
+
+                System.out.printf("%nDefina quantas habilidades o personagem possui, e então, o ID de cada uma delas.");
+                int num_hab = keyboardInt.nextInt();
+                for (int i = 0; i<num_hab; i++) {
+                    int id_habilidade = keyboardInt.nextInt();
+                    Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
+
+                    personagem.addHabilidade(habilidade);
+                }
+                
+                System.out.printf("%nDefina quantos itens o personagem possui, e então, o ID de cada um deles.");
+                int num_item = keyboardInt.nextInt();
+                for (int i = 0; i<num_item; i++) {
+                    int id_item = keyboardInt.nextInt();
+                    Item item = itemDAO.buscar(id_item);
+
+                    personagem.addItem(item);
+                }
+
+                personagemDAO.editar(personagem);
+
+                System.out.println("Personagem de ID=" + personagem.getId() + " atualizado com sucesso.");
+                break;
+            }
+            case 4: {
+                //DELETE
+
+                System.out.printf("%Defina o ID do personagem que deseja excluir.");
+
+                long id = keyboardInt.nextLong();
+                personagemDAO.excluir(id);
+
+                System.out.println("Personagem de ID=" + id + " excluído com sucesso.");
+                break;
+            }
+            default: {
+                System.out.println("Valor inválido.");
+                break;
+            }
+        }
+    }
+
+    public static void monstroCRUD() {
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+
+        int escolha = keyboardInt.nextInt();
+
+        switch (escolha) {
+            case 1: {
+                //CREATE
+
+                System.out.printf("Defina o nome, a vida, a armadura, o nivel e o ID da equipe do monstro.");
+                String nome = keyboardString.nextLine();
+                int vida = keyboardInt.nextInt();
+                int armadura = keyboardInt.nextInt();
+                int nivel = keyboardInt.nextInt();
+                long equipe = keyboardInt.nextLong();
+
+                Monstro monstro = new Monstro(1, nome, vida, armadura, nivel, 0, equipe);
+
+                System.out.printf("%nDefina os valores de agilidade, força e inteligência do monstro.");
+                int agilidade = keyboardInt.nextInt();
+                int forca = keyboardInt.nextInt();
+                int inteligencia = keyboardInt.nextInt();
+
+                monstro.setAtributos(0, agilidade);
+                monstro.setAtributos(1, forca);
+                monstro.setAtributos(2, inteligencia);
+
+                System.out.printf("%nDefina as fraquezas do monstro."); 
+                boolean flamejante = keyboardString.nextBoolean();
+                boolean congelante = keyboardString.nextBoolean();
+                boolean eletrico = keyboardString.nextBoolean();
+                boolean fisico = keyboardString.nextBoolean();
+                boolean arcano = keyboardString.nextBoolean();
+
+                monstro.setFraquezas(0, flamejante);
+                monstro.setFraquezas(1, congelante);
+                monstro.setFraquezas(2, eletrico);
+                monstro.setFraquezas(3, fisico);
+                monstro.setFraquezas(4, arcano);
+
+                System.out.printf("%nDefina quantas habilidades o monstro possui, e então, o ID de cada uma delas.");
+                int num_hab = keyboardInt.nextInt();
+                for (int i = 0; i<num_hab; i++) {
+                    int id_habilidade = keyboardInt.nextInt();
+                    Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
+
+                    monstro.addHabilidade(habilidade);
+                }
+
+                monstro.setId(monstroDAO.salvar(monstro));
+
+                System.out.println("Monstro de ID=" + monstro.getId() + " criado com sucesso.");
+                break;
+            }
+            case 2: {
+                //READ
+
+                System.out.printf("%nDefina o ID do monstro a ser buscado.");
+
+                long id = keyboardInt.nextLong();
+
+                Monstro monstro = monstroDAO.buscar(id);
+                System.out.println(monstro.toString());
+                break;
+            }
+            case 3: {
+                //UPDATE
+
+                System.out.printf("Escolha o ID do monstro a ser atualizado. Então, defina o nome, a vida, a armadura, o nivel e o ID da equipe do monstro atualizado.");
+                long id = keyboardInt.nextLong();
+                String nome = keyboardString.nextLine();
+                int vida = keyboardInt.nextInt();
+                int armadura = keyboardInt.nextInt();
+                int nivel = keyboardInt.nextInt();
+                long equipe = keyboardInt.nextLong();
+
+                Monstro monstro = new Monstro(id, nome, vida, armadura, nivel, 0, equipe);
+
+                System.out.printf("%nDefina os valores de agilidade, força e inteligência do monstro.");
+                int agilidade = keyboardInt.nextInt();
+                int forca = keyboardInt.nextInt();
+                int inteligencia = keyboardInt.nextInt();
+
+                monstro.setAtributos(0, agilidade);
+                monstro.setAtributos(1, forca);
+                monstro.setAtributos(2, inteligencia);
+
+                System.out.printf("%nDefina as fraquezas do monstro."); 
+                boolean flamejante = keyboardString.nextBoolean();
+                boolean congelante = keyboardString.nextBoolean();
+                boolean eletrico = keyboardString.nextBoolean();
+                boolean fisico = keyboardString.nextBoolean();
+                boolean arcano = keyboardString.nextBoolean();
+
+                monstro.setFraquezas(0, flamejante);
+                monstro.setFraquezas(1, congelante);
+                monstro.setFraquezas(2, eletrico);
+                monstro.setFraquezas(3, fisico);
+                monstro.setFraquezas(4, arcano);
+
+                System.out.printf("%nDefina quantas habilidades o monstro possui, e então, o ID de cada uma delas.");
+                int num_hab = keyboardInt.nextInt();
+                for (int i = 0; i<num_hab; i++) {
+                    int id_habilidade = keyboardInt.nextInt();
+                    Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
+
+                    monstro.addHabilidade(habilidade);
+                }
+
+                monstroDAO.editar(monstro);
+
+                System.out.println("Monstro de ID=" + monstro.getId() + " atualizado com sucesso.");
+                break;
+            }
+            case 4: {
+                //DELETE
+
+                System.out.printf("%Defina o ID do monstro que deseja excluir.");
+
+                long id = keyboardInt.nextLong();
+                monstroDAO.excluir(id);
+
+                System.out.println("Monstro de ID=" + id + " excluído com sucesso.");
+                break;
+            }
+            default: {
+                System.out.println("Valor inválido.");
+                break;
+            }
+        }
+    }
+
+    public static void recompensaCRUD() {
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+
+        int escolha = keyboardInt.nextInt();
+
+        switch (escolha) {
+            case 1: {
+                //CREATE
+
+                System.out.printf("Defina o tipo, a raridade, a experiência concedida, o ID do item concedido e o ID da habilidade concedida.");
+                int tipo = keyboardInt.nextInt();
+                int raridade = keyboardInt.nextInt();
+                int experiencia = keyboardInt.nextInt();
+                long id_item = keyboardInt.nextLong();
+                long id_habilidade = keyboardInt.nextLong();
+
+                switch (tipo) {
+                    case 0: {
+                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia);
+                        recompensa.setId(recompensaDAO.salvar(recompensa));
+
+                        System.out.println("Recompensa de ID=" + recompensa.getId() + " criada com sucesso.");
+                        break;
+                    }
+                    case 1: {
+                        Item item = itemDAO.buscar(id_item);
+                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia, item);
+                        recompensa.setId(recompensaDAO.salvar(recompensa));
+
+                        System.out.println("Recompensa de ID=" + recompensa.getId() + " criada com sucesso.");
+                        break;
+                    }
+                    case 2: {
+                        Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
+                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia, habilidade);
+                        recompensa.setId(recompensaDAO.salvar(recompensa));
+
+                        System.out.println("Recompensa de ID=" + recompensa.getId() + " criada com sucesso.");
+                        break;
+                    }
+                    case 3: {
+                        Item item = itemDAO.buscar(id_item);
+                        Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
+                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia, item, habilidade);
+                        recompensa.setId(recompensaDAO.salvar(recompensa));
+
+                        System.out.println("Recompensa de ID=" + recompensa.getId() + " criada com sucesso.");
+                        break;
+                    }
+                    default: {
+                        System.out.println("Valor de tipo inválido.");
+                        break;
+                    }
+                }
+                break;
+            }
+            case 2: {
+                //READ
+
+                System.out.printf("%nDefina o ID do recompensa a ser buscado.");
+
+                long id = keyboardInt.nextLong();
+
+                Recompensa recompensa = recompensaDAO.buscar(id);
+                System.out.println(recompensa.toString());
+                break;
+            }
+            case 3: {
+                //UPDATE
+                System.out.printf("Escolha o ID da recompensa a ser atualizada. Então defina o tipo, a raridade, a experiência concedida, o ID do item concedido e o ID da habilidade concedida da atualização.");
+                long id = keyboardInt.nextLong();
+                int tipo = keyboardInt.nextInt();
+                int raridade = keyboardInt.nextInt();
+                int experiencia = keyboardInt.nextInt();
+                long id_item = keyboardInt.nextLong();
+                long id_habilidade = keyboardInt.nextLong();
+
+                switch (tipo) {
+                    case 0: {
+                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia);
+                        recompensa.setId(id);
+                        recompensaDAO.editar(recompensa);
+
+                        System.out.println("Recompensa de ID=" + id + " atualizada com sucesso.");
+                        break;
+                    }
+                    case 1: {
+                        Item item = itemDAO.buscar(id_item);
+                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia, item);
+                        recompensa.setId(id);
+                        recompensaDAO.editar(recompensa);
+
+                        System.out.println("Recompensa de ID=" + id + " atualizada com sucesso.");
+                        break;
+                    }
+                    case 2: {
+                        Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
+                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia, habilidade);
+                        recompensa.setId(id);
+                        recompensaDAO.editar(recompensa);
+
+                        System.out.println("Recompensa de ID=" + id + " atualizada com sucesso.");
+                        break;
+                    }
+                    case 3: {
+                        Item item = itemDAO.buscar(id_item);
+                        Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
+                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia, item, habilidade);
+                        recompensa.setId(id);
+                        recompensaDAO.editar(recompensa);
+
+                        System.out.println("Recompensa de ID=" + id + " atualizada com sucesso.");
+                        break;
+                    }
+                    default: {
+                        System.out.println("Valor de tipo inválido.");
+                        break;
+                    }
+                }
+                break;
+            }
+            case 4: {
+                //DELETE
+
+                System.out.printf("%Defina o ID do recompensa que deseja excluir.");
+
+                long id = keyboardInt.nextLong();
+                recompensaDAO.excluir(id);
+
+                System.out.println("Recompensa de ID=" + id + " excluído com sucesso.");
+                break;
+            }
+            default: {
+                System.out.println("Valor inválido.");
+                break;
+            }
+        }
+    }
+
+    public static void salaCRUD() {
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+
+        int escolha = keyboardInt.nextInt();
+
+        switch (escolha) {
+            case 1: {
+                //CREATE
+
+                System.out.printf("Defina o nome, a descrição, a dificuldade da sala e o ID da sua recompensa.");
+                String nome = keyboardString.nextLine();
+                String descricao = keyboardString.nextLine();
+                int dificuldade = keyboardInt.nextInt();
+                long id_recompensa = keyboardInt.nextLong();
+                Recompensa recompensa = recompensaDAO.buscar(id_recompensa);
+
+                Sala sala = new Sala(1, dificuldade, nome, descricao);
+                sala.setRecompensa(recompensa);
+
+                System.out.printf("Defina quantos monstros existem na sala, e então o ID de cada um deles."); 
+                int num_monstros = keyboardInt.nextInt();
+                for (int i = 0; i<num_monstros; i++) {
+                    long id_monstro = keyboardInt.nextLong();
+                    Monstro monstro = monstroDAO.buscar(id_monstro);
+
+                    sala.addInimigos(monstro);
+                }
+
+                sala.setId(salaDAO.salvar(sala));
+
+                System.out.println("Sala de ID=" + sala.getId() + " criada com sucesso.");
+                break;
+            }
+            case 2: {
+                //READ
+
+                System.out.printf("%nDefina o ID da sala a ser buscada.");
+
+                long id = keyboardInt.nextLong();
+
+                Sala sala = salaDAO.buscar(id);
+                System.out.println(sala.toString());
+                break;
+            }
+            case 3: {
+                //UPDATE
+
+                System.out.printf("Escolha o ID da sala a ser atualizada. Então defina o nome, a descrição, a dificuldade da sala e o ID da sua recompensa da atualização.");
+                long id = keyboardInt.nextLong();
+                String nome = keyboardString.nextLine();
+                String descricao = keyboardString.nextLine();
+                int dificuldade = keyboardInt.nextInt();
+                long id_recompensa = keyboardInt.nextLong();
+                Recompensa recompensa = recompensaDAO.buscar(id_recompensa);
+
+                Sala sala = new Sala(id, dificuldade, nome, descricao);
+                sala.setRecompensa(recompensa);
+
+                System.out.printf("Defina quantos monstros existem na sala, e então o ID de cada um deles."); 
+                int num_monstros = keyboardInt.nextInt();
+                for (int i = 0; i<num_monstros; i++) {
+                    long id_monstro = keyboardInt.nextLong();
+                    Monstro monstro = monstroDAO.buscar(id_monstro);
+
+                    sala.addInimigos(monstro);
+                }
+
+                salaDAO.editar(sala);
+
+                System.out.println("Sala de ID=" + id + " atualizada com sucesso.");
+                break;
+            }
+            case 4: {
+                //DELETE
+
+                System.out.printf("%Defina o ID da sala que deseja excluir.");
+
+                long id = keyboardInt.nextLong();
+                salaDAO.excluir(id);
+
+                System.out.println("Sala de ID=" + id + " excluída com sucesso.");
+                break;
+            }
+            default: {
+                System.out.println("Valor inválido.");
+                break;
+            }
+        }
+    }
+
+    public static void faseCRUD() {
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+
+        int escolha = keyboardInt.nextInt();
+
+        switch (escolha) {
+            case 1: {
+                //CREATE
+                System.out.printf("Defina um nome para a fase e uma quantidade de salas, definindo então o ID de cada uma dessas salas.");
+                String nome = keyboardString.nextLine();
+                int num_salas = keyboardInt.nextInt();
+
+                List<Sala> listaSalas = new ArrayList<Sala>(num_salas);
+                for (int i = 0; i<num_salas; i++) {
+                    long id_sala = keyboardInt.nextLong();
+                    Sala sala = salaDAO.buscar(id_sala);
+                    listaSalas.add(sala);
+                }
+
+                Fase fase = new Fase(nome, listaSalas);
+                fase.setId(faseDAO.salvar(fase));
+
+                System.out.println("Fase de ID=" + fase.getId() + " criada com sucesso.");
+                break;
+            }
+            case 2: {
+                //READ
+
+                System.out.printf("%nDefina o ID da fase a ser buscada.");
+
+                long id = keyboardInt.nextLong();
+
+                Fase fase = faseDAO.buscar(id);
+                System.out.println(fase.toString());
+                break;
+            }
+            case 3: {
+                //UPDATE
+
+                System.out.printf("Escolha o ID da fase a ser atualizada. Defina um nome para a fase e uma quantidade de salas, definindo então o ID de cada uma dessas salas.");
+                long id = keyboardInt.nextLong();
+                String nome = keyboardString.nextLine();
+                int num_salas = keyboardInt.nextInt();
+
+                List<Sala> listaSalas = new ArrayList<Sala>(num_salas);
+                for (int i = 0; i<num_salas; i++) {
+                    long id_sala = keyboardInt.nextLong();
+                    Sala sala = salaDAO.buscar(id_sala);
+                    listaSalas.add(sala);
+                }
+
+                Fase fase = new Fase(nome, listaSalas);
+                fase.setId(id);
+                faseDAO.editar(fase);
+
+                System.out.println("Fase de ID=" + fase.getId() + " atualizada com sucesso.");
+
+                break;
+            }
+            case 4: {
+                //DELETE
+
+                System.out.printf("%Defina o ID da fase que deseja excluir.");
+
+                long id = keyboardInt.nextLong();
+                faseDAO.excluir(id);
+
+                System.out.println("Fase de ID=" + id + " excluída com sucesso.");
+                break;
+            }
+            default: {
+                System.out.println("Valor inválido.");
+                break;
+            }
+        }
+    }
 
 }

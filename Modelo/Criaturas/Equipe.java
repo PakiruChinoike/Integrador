@@ -34,6 +34,10 @@ public class Equipe {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public Criatura get(int index) {
         return criaturas.get(index);
     }

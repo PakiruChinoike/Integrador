@@ -16,11 +16,11 @@ CREATE TABLE personagem(
 
 CREATE TABLE equipe(
     id_equipe BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
-    id_personagem BIGINT NOT NULL,
+    id_personagem1 BIGINT NOT NULL,
     id_personagem2 BIGINT NOT NULL,
     id_personagem3 BIGINT NOT NULL,
     PRIMARY KEY(id_equipe),
-    FOREIGN KEY(id_personagem) REFERENCES personagem(id_personagem),
+    FOREIGN KEY(id_personagem1) REFERENCES personagem(id_personagem),
     FOREIGN KEY(id_personagem2) REFERENCES personagem(id_personagem),
     FOREIGN KEY(id_personagem3) REFERENCES personagem(id_personagem)
 );
@@ -148,12 +148,17 @@ CREATE TABLE monstro_sala(
 CREATE TABLE fase(
     id_fase BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
     nome VARCHAR(30) NOT NULL,
-    num_sala VARCHAR(30) NOT NULL,
-    id_sala BIGINT UNIQUE NOT NULL,
-    id_chefe BIGINT UNIQUE NOT NULL,
+    num_salas TINYINT NOT NULL,
     id_equipe BIGINT NOT NULL,
     PRIMARY KEY(id_fase),
-    FOREIGN KEY(id_sala) REFERENCES sala(id_sala),
-    FOREIGN KEY(id_chefe) REFERENCES monstro(id_monstro),
     FOREIGN KEY(id_equipe) REFERENCES equipe(id_equipe) 
+);
+
+CREATE TABLE sala_fase(
+	id_sala_fase BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
+    id_sala BIGINT NOT NULL,
+    id_fase BIGINT NOT NULL, 
+    PRIMARY KEY(id_sala_fase),
+    FOREIGN KEY(id_sala) REFERENCES sala(id_sala),
+    FOREIGN KEY(id_fase) REFERENCES fase(id_fase)
 );

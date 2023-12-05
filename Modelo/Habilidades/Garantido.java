@@ -34,24 +34,25 @@ public class Garantido extends Habilidade{
     }
 
     public String usaHabilidade(Criatura usuario, Equipe inimigos, int alvo) {
-        if(usuario.getEquipe() != inimigos.getId()) {
-            int damage = rolagemValor(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
-            int vidaAtual = causaDano(damage, inimigos.get(alvo));
-            return usuario.getNome() + " acertou " + super.getDescricao() + " em " + inimigos.get(alvo).getNome() + " causando "
-            + damage + " de dano, e o deixando com " + vidaAtual + " pontos de vida.";
-        } else {
-             int cura = rolagemValor();
-             int vidaAtual = causaCura(cura, inimigos.get(alvo));
-             return usuario.getNome() + " curou " + inimigos.get(alvo).getNome() + " " + cura + " pontos de vida, " + 
-             "o deixando com " + vidaAtual;
+        if (usuario instanceof Personagem && ((Personagem)usuario).getPoder()<super.getCusto()) {
+            return usuario.getNome() + " não possui Poder suficiente para esta ação.";
         }
-    }
+        else {
+            if (usuario instanceof Personagem) {
+                ((Personagem)usuario).setPoder(((Personagem)usuario).getPoder()-super.getCusto());
+            }
 
-    public String usaHabilidade(Criatura usuario, Equipe aliados) {
-        int cura = rolagemValor();
-        for (int i = 0; i<aliados.size(); i++) {
-            causaCura(cura, aliados.get(i));
+            if (usuario.getEquipe() != inimigos.getId()) {
+                int damage = rolagemValor(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
+                int vidaAtual = causaDano(damage, inimigos.get(alvo));
+                return usuario.getNome() + " acertou " + super.getDescricao() + " em " + inimigos.get(alvo).getNome() + " causando "
+                + damage + " de dano, e o deixando com " + vidaAtual + " pontos de vida.";
+            } else {
+                int cura = rolagemValor();
+                int vidaAtual = causaCura(cura, inimigos.get(alvo));
+                return usuario.getNome() + " curou " + inimigos.get(alvo).getNome() + " " + cura + " pontos de vida, " + 
+                "o deixando com " + vidaAtual;
+            }
         }
-        return usuario.getNome() + " curou " + cura + " pontos de vida de sua equipe.";
     }
 }

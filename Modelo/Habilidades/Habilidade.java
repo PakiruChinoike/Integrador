@@ -1,4 +1,4 @@
-public abstract class Habilidade {
+public abstract class Habilidade extends Acao{
 
     private long id;
     private String nome;
@@ -118,6 +118,10 @@ public abstract class Habilidade {
 
     public void setCusto(int custo) {
         this.custo = custo;
+    }
+
+    public String toString() {
+        return nome + ", " + descricao + " (" + custo + ")%n";
     }
 
 }

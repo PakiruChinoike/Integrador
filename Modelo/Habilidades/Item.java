@@ -1,22 +1,20 @@
-public class Item {
+public class Item extends Acao{
 
     private long id;
     private String nome;
-    private int raridade;
     private int usos;
     private Habilidade habilidade;
 
     public Item() {
         this.id = 0;
         this.nome = "";
-        this.raridade = 0;
         this.usos = 1;
         this.habilidade = null;
     }
 
-    public Item(String nome, int raridade, int usos, Habilidade habilidade) {
+    public Item(long id, String nome, int usos, Habilidade habilidade) {
+        this.id = id;
         this.nome = nome;
-        this.raridade = raridade;
         this.usos = usos;
         this.habilidade = habilidade;
     }
@@ -27,10 +25,6 @@ public class Item {
 
     public String getNome(){
         return nome;
-    }
-    
-    public int getRaridade() {
-        return raridade;
     }
 
     public int getUsos() {
@@ -49,16 +43,24 @@ public class Item {
         this.nome = nome;
     }
 
-    public void setRaridade(int raridade) {
-        this.raridade = raridade;
-    }
-
     public void setUsos(int usos) {
         this.usos = usos;
     }
 
     public void setHabilidade(Habilidade habilidade) {
         this.habilidade = habilidade;
+    }
+
+    public String toString() {
+        return nome + ", " + habilidade.getDescricao() + " (" + usos + ")%n";
+    }
+
+    public String usaItem(Criatura usuario, Equipe inimigos, int alvo) {
+        return this.habilidade.usaHabilidade(usuario, inimigos, alvo);
+    }
+
+    public void gastaUso() {
+        this.usos = this.usos-1;
     }
 
 }

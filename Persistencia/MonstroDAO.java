@@ -139,7 +139,7 @@ public class MonstroDAO {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                Monstro monstro = new Monstro(rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"), rs.getInt("experiencia"), rs.getLong("equipe"));
+                Monstro monstro = new Monstro(rs.getLong("id"), rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"), rs.getInt("experiencia"), rs.getLong("equipe"));
 
                 String sql2 = "SELECT * FROM monstro_habilidade WHERE id_monstro=?";
                 PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
@@ -205,7 +205,7 @@ public class MonstroDAO {
             ResultSet rs = statement.executeQuery();
             List<Monstro> listaMonstros = new ArrayList<Monstro>();
             while (rs.next()) {
-                Monstro monstro = new Monstro(rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"), rs.getInt("experiencia"), rs.getLong("equipe"));                
+                Monstro monstro = new Monstro(rs.getLong("id"), rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"), rs.getInt("experiencia"), rs.getLong("equipe"));                
                 listaMonstros.add(monstro);
             }
             return listaMonstros;

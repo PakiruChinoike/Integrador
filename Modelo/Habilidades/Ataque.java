@@ -39,30 +39,26 @@ public class Ataque extends Habilidade{
 
     //METODO PARA O PERSONAGEM USAR A HABILIDADE EM ALVO UNICO 
     public String usaHabilidade(Criatura usuario, Equipe inimigos, int alvo) {
-        int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
-        int damage = rolagemDano(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
-        if (testeAtaque(hit, inimigos.get(alvo).getArmadura())) {
-            int vidaAtual = causaDano(damage, inimigos.get(alvo));
-            return usuario.getNome() + " acertou " + super.getDescricao() + " em " + inimigos.get(alvo).getNome() + " com um " + hit + " causando "
-            + damage + " de dano, e o deixando com " + vidaAtual + " pontos de vida.";
+        if (usuario instanceof Personagem && ((Personagem)usuario).getPoder()<super.getCusto()) {
+            return usuario.getNome() + " não possui Poder suficiente para esta ação.";
         }
         else {
-            return usuario.getNome() + " errou " + super.getNome();
-        }
-    }
+            int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
+            int damage = rolagemDano(inimigos.get(alvo).getFraquezas(super.getTipoDano()));
+            if (testeAtaque(hit, inimigos.get(alvo).getArmadura())) {
+                int vidaAtual = causaDano(damage, inimigos.get(alvo));
 
-    //METODO PARA O PERSONAGEM USAR A HABILIDADE EM AREA  
-    public String usaHabilidade(Criatura usuario, Equipe inimigos) {
-        int hit = rolagemAtaque(usuario.getAtributos(super.getAtributo()));
-        int acertos = 0;
-        for (int i = 0; i<inimigos.size(); i++) {
-            int damage = rolagemDano(inimigos.get(i).getFraquezas(super.getTipoDano()));
-            if (testeAtaque(hit, inimigos.get(i).getArmadura())) {
-                causaDano(damage, inimigos.get(i));
-                acertos++;
+                if (usuario instanceof Personagem) {
+                    ((Personagem)usuario).setPoder(((Personagem)usuario).getPoder()-super.getCusto());
+                }
+
+                return usuario.getNome() + " acertou " + super.getDescricao() + " em " + inimigos.get(alvo).getNome() + " com um " + hit + " causando "
+                + damage + " de dano, e o deixando com " + vidaAtual + " pontos de vida.";
+            }
+            else {
+                return usuario.getNome() + " errou " + super.getNome();
             }
         }
-        return usuario.getNome() + " acertou " + acertos + " inimigos com " + super.getDescricao();
     }
 
 }

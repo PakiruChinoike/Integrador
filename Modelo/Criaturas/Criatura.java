@@ -24,6 +24,7 @@ public class Criatura {
         this.fraquezas = new ArrayList<Boolean>(5);
         this.atributos = new ArrayList<Integer>(4);
         this.habilidades = new ArrayList<Habilidade>();
+        this.itens = new ArrayList<Item>();
         this.equipe = 0;
     }
 
@@ -37,6 +38,7 @@ public class Criatura {
         this.fraquezas = new ArrayList<Boolean>(5);
         this.atributos = new ArrayList<Integer>(4);
         this.habilidades = new ArrayList<Habilidade>();
+        this.itens = new ArrayList<Item>();
         this.equipe = equipe;
     }
 
@@ -185,7 +187,7 @@ public class Criatura {
 
     //METODO QUE ADICIONA UMA HABILIDADE 
     public void addHabilidade(Habilidade habilidade) {
-        habilidades.add(habilidade);
+         habilidades.add(habilidade);
     }
 
     public void setItens(List<Item> itens) {
@@ -202,6 +204,11 @@ public class Criatura {
 
     public void addItem(Item item) {
         itens.add(item);
+    }
+
+    public void removerItem(Item item) {
+        int index = itens.indexOf(item);
+        itens.remove(index);
     }
 
     public long getEquipe() {

@@ -12,18 +12,25 @@ public class SalaDAO {
 		this.conexao = new ConexaoMYSQL();
     }
 
-    public void salvar(Sala sala) {
+    public long salvar(Sala sala) {
         try {
             this.conexao.abrirConexao();
-            String sql = "INSERT INTO sala VALUES(null, ?, ?, ?, ?)";
+            String sql = "INSERT INTO sala VALUES(null, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, sala.getNome());
-            statement.setInt(2, sala.getTipo());
-            statement.setString(3, sala.getDescricao());
-            statement.setLong(4, sala.getRecompensa().getId());
+            statement.setString(2, sala.getDescricao());
+            statement.setLong(3, sala.getRecompensa().getId());
             statement.executeUpdate();
+
+            String sql0 = "SELECT id_sala FROM sala ORDER BY id_sala DESC LIMIT 1"; 
+            PreparedStatement statement0 = this.conexao.getConexao().prepareStatement(sql0);
+            ResultSet rs0 = statement0.executeQuery();
+            long id_sala = rs0.getLong("id_sala");
+            return id_sala;
+
         } catch(SQLException e) {
             e.printStackTrace();
+            return (Long)null;
         } finally {
             this.conexao.fecharConexao();
         }
@@ -32,13 +39,12 @@ public class SalaDAO {
     public void editar(Sala sala) {
         try {
             this.conexao.abrirConexao();
-            String sql = "UPDATE sala SET nome=?, tipo=?, descricao=?, id_recompensa=? WHERE id_sala=?";
+            String sql = "UPDATE sala SET nome=? descricao=?, id_recompensa=? WHERE id_sala=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, sala.getNome());
-            statement.setInt(2, sala.getTipo());
-            statement.setString(3, sala.getDescricao());
-            statement.setLong(4, sala.getRecompensa().getId());
-            statement.setLong(5, sala.getId());
+            statement.setString(2, sala.getDescricao());
+            statement.setLong(3, sala.getRecompensa().getId());
+            statement.setLong(4, sala.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,7 +76,7 @@ public class SalaDAO {
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                Sala sala = new Sala(rs.getLong("id_sala"), rs.getInt("tipo"), rs.getInt("dificuldade"), rs.getString("nome"), rs.getString("descricao"));
+                Sala sala = new Sala(rs.getLong("id_sala"), rs.getInt("dificuldade"), rs.getString("nome"), rs.getString("descricao"));
 
                 String sql2 = "SELECT * FROM recompensa WHERE id_sala=?";
                 PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);

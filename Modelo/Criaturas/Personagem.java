@@ -5,8 +5,9 @@ public class Personagem extends Criatura{
         private Classe classe;
 
         //CONSTRUTOR COM TODOS OS PARÂMETROS 
-        public Personagem(String nome, int classe, int armadura, int vida, int nivel, int poder, int experiencia, int equipe) {
-            super(nome, vida, armadura, nivel, equipe, experiencia);
+        public Personagem(long id, String nome, int classe, int armadura, int vida, int nivel, int poder, int experiencia, long equipe) {
+            super(nome, vida, armadura, nivel, experiencia, equipe);
+            this.id = id;
             this.poder = poder;
 
             this.classe = new Classe(classe);
@@ -67,11 +68,5 @@ public class Personagem extends Criatura{
 
         public String toString() {
             return super.getNome() + " é um " + classe.getNome() + " de nível " + super.getNivel();
-        }
-
-        //RECEBE UM ATRIBUTO AUMENTAR E O AUMENTA EM UM, DEFINE O NIVEL DO PERSONAGEM E O AUMENTA 
-        public void subirNivel(int atributoAumentar) {
-            super.setNivel(super.getNivel()+1);
-            super.setAtributos(atributoAumentar, (super.getAtributos(atributoAumentar))+1);
         }
 }

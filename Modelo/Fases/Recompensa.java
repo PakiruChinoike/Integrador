@@ -96,10 +96,10 @@ public class Recompensa{
     public String toString() {
         String toString = experiencia + " de experiencia";
         if (getItem()!=null) {
-            toString = toString + " , " + item.getNome();
+            toString = toString + ", " + item.getNome();
         }
         if (getHabilidade()!=null) {
-            toString = toString + " , " + habilidade.getNome();
+            toString = toString + ", " + habilidade.getNome();
         }
         toString = toString + "!";
         return toString;

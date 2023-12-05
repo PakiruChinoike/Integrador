@@ -159,9 +159,9 @@ public class PersonagemDAO {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                Personagem personagem = new Personagem(rs.getString("nome"), rs.getInt("classe"));
+                Personagem personagem = new Personagem(rs.getLong("id"), rs.getString("nome"), rs.getInt("classe"), rs.getInt("armadura"), rs.getInt("vida"), rs.getInt("nivel"), rs.getInt("poder"), rs.getInt("experiencia"), rs.getInt("id_equipe"));
 
-                String sql2 = "SELECT * FROM personagem_item WHERE id_personagem=?";
+                String sql2 = "SELECT * FROM item WHERE id_personagem=?";
                 PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
                 statement2.setLong(1, id);
                 ResultSet rs2 = statement2.executeQuery();

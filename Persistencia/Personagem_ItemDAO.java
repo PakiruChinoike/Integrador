@@ -68,50 +68,13 @@ public class Personagem_ItemDAO{
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
+
+            ItemDAO itemDAO = new ItemDAO();
             if (rs.next()) {
                 long id_item = rs.getLong("id_item");
-                
-                String sql2 = "SELECT * FROM item WHERE id_item=?";
-                PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
-                statement.setLong(1, id_item);
-                ResultSet rs2 = statement.executeQuery();
+                Item item = itemDAO.buscar(id_item);
 
-                if(rs2.next()) {
-                    String sql3 = "SELECT * FROM habilidade WHERE id_habilidade=?";
-                    PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
-                    statement2.setLong(1, rs.getLong("id_habilidade"));
-                    ResultSet rs3 = statement.executeQuery();
-                    
-                    if (rs3.next()) {
-                        Habilidade habilidade;
-    
-                        int tipo = rs.getInt("tipo");
-                        switch (tipo) {
-                            case 0: {
-                                habilidade = new Ataque();
-                                break;
-                            }
-                            case 1: {
-                                habilidade = new Resistencia();
-                                break;
-                            }
-                            case 2: {
-                                habilidade = new Garantido();
-                                break;
-                            }
-                            default: {
-                                return null;
-                            }
-                        }
-    
-                        Item item = new Item(rs3.getString("nome"), rs3.getInt("raridade"), rs3.getInt("usos"), habilidade);
-                        return item;
-                    }
-                    else {
-                        return null;
-                    }
-                }
-                else return null;
+                return item;
             }   
             else {
                 return null;
