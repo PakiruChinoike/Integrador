@@ -51,11 +51,11 @@ public class Personagem_ItemDAO{
                 return id_personagem;
             }   
             else {
-                return (Long)null;
+                return 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return (Long)null;
+            return 0;
         } finally {
             conexao.fecharConexao();
         }

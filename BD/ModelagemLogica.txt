@@ -1,29 +1,29 @@
-personagem(id_personagem, nome, classe, vida, armadura, poder, nivel, experiencia, equipe)
+personagem(id_personagem, nome, classe, vida, armadura, poder, nivel, experiencia, #id_equipe)
+
+equipe(id_equipe, #id_personagem, #id_personagem2, #id_personagem3)
+
+monstro(id_monstro, nome, vida, armadura, nivel, experiencia, #id_equipe)
 
 atributos(id_atributos, agilidade, forca, inteligencia, #id_personagem, #id_monstro)
 
 fraquezas(id_fraquezas, flamejante, congelante, eletrico, fisico, arcano, #id_personagem, #id_monstro)
 
-equipe(id_equipe, #id_personagem, #id_personagem2, #id_personagem3)
+habilidade(id_habilidade, nome, tipo, descricao, max_roll, min_roll, min_teste, tipo_dano, atributo, custo)
 
-habilidade(id_habilidade, nome, tipo, descricao, max_roll, min_roll, min_teste, tipo_dano, atributo)
+item(id_item, nome, usos, #id_habilidade)
 
-personagem_habilidade(id_personagem_habilidade, #id_personagem, #id_habilidadde)
-
-item(id_item, nome, raridade, #id_habilidade)
-
-personagem_item(id_personagem_item, #id_personagem, #id_item)
-
-sala(id_sala, nome, tipo, dificuldade, descricao, #id_recompensa)
-
-fase(id_fase, nome, num_sala, #id_chefe, #id_equipe)
-
-sala_fase(id_sala_fase, #id_sala, #id_fase)
-
-recompensa(id_recompensa, tipo, experiencia, raridade, #id_item, id_habilidade)
-
-monstro(id_monstro, nome, dificuldade, vida, armadura, experiencia, equipe)
+personagem_habilidade(id_personagem_habilidade, #id_personagem, #id_habilidade)
 
 monstro_habilidade(id_monstro_habilidade, #id_monstro, #id_habilidade)
 
+personagem_item(id_personagem_item, #id_personagem, #id_item)
+
+recompensa(id_recompensa, tipo, experiencia, #id_item, id_habilidade)
+
+sala(id_sala, nome, descricao, #id_recompensa)
+
 monstro_sala(id_monstro_sala, #id_monstro, #id_sala)
+
+fase(id_fase, nome, num_sala, #id_equipe)
+
+sala_fase(id_sala_fase, #id_sala, #id_fase)

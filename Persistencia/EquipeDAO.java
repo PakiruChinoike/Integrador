@@ -4,8 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare;
-
 public class EquipeDAO {
     
     private ConexaoMYSQL conexao;
@@ -27,12 +25,14 @@ public class EquipeDAO {
             String sql0 = "SELECT id_equipe FROM equipe ORDER BY id_equipe DESC LIMIT 1";
             PreparedStatement statement0 = this.conexao.getConexao().prepareStatement(sql0);
             ResultSet rs0 = statement0.executeQuery();
+
+            rs0.next();
             long id_equipe = rs0.getLong("id_equipe");
             return id_equipe;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return (Long)null;
+            return 0;
         } finally {
             this.conexao.fecharConexao();
         }

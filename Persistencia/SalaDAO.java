@@ -1,8 +1,6 @@
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SalaDAO {
 
@@ -30,7 +28,7 @@ public class SalaDAO {
 
         } catch(SQLException e) {
             e.printStackTrace();
-            return (Long)null;
+            return 0;
         } finally {
             this.conexao.fecharConexao();
         }
@@ -39,7 +37,7 @@ public class SalaDAO {
     public void editar(Sala sala) {
         try {
             this.conexao.abrirConexao();
-            String sql = "UPDATE sala SET nome=? descricao=?, id_recompensa=? WHERE id_sala=?";
+            String sql = "UPDATE sala SET nome=?, descricao=?, id_recompensa=? WHERE id_sala=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, sala.getNome());
             statement.setString(2, sala.getDescricao());
@@ -76,7 +74,7 @@ public class SalaDAO {
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
-                Sala sala = new Sala(rs.getLong("id_sala"), rs.getInt("dificuldade"), rs.getString("nome"), rs.getString("descricao"));
+                Sala sala = new Sala(rs.getLong("id_sala"), rs.getString("nome"), rs.getString("descricao"));
 
                 String sql2 = "SELECT * FROM recompensa WHERE id_sala=?";
                 PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
@@ -112,26 +110,6 @@ public class SalaDAO {
             else {
                 return null;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            this.conexao.fecharConexao();
-        }
-    }
-
-    public List<Sala> buscarTodos() {
-        try {
-            this.conexao.abrirConexao();
-            String sql = "SELECT * FROM sala";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
-            List<Sala> listaPersonagens = new ArrayList<Sala>();
-            while (rs.next()) {
-                Sala sala = new Sala();
-                listaPersonagens.add(sala);
-            }
-            return listaPersonagens;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

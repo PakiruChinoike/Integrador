@@ -51,11 +51,11 @@ public class Monstro_HabilidadeDAO{
                 return id_monstro;
             }   
             else {
-                return (Long)null;
+                return 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return (Long)null;
+            return 0;
         } finally {
             conexao.fecharConexao();
         }

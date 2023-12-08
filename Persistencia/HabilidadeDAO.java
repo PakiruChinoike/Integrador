@@ -15,7 +15,7 @@ public class HabilidadeDAO {
     public long salvar(Habilidade habilidade) {
         try {
             this.conexao.abrirConexao();
-            String sql = "INSERT INTO habilidade VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO habilidade VALUES(null, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, habilidade.getNome());
             statement.setInt(2, habilidade.getTipo());
@@ -24,18 +24,21 @@ public class HabilidadeDAO {
             statement.setInt(5, habilidade.getMinRoll());
             statement.setInt(6, habilidade.getMinTeste());
             statement.setInt(7, habilidade.getTipoDano());
-            statement.setLong(8, habilidade.getAtributo());
+            statement.setInt(8, habilidade.getAtributo());
+            statement.setInt(9, habilidade.getCusto());
             statement.executeUpdate();
 
             String sql0 = "SELECT id_habilidade FROM habilidade ORDER BY id_habilidade DESC LIMIT 1";
             PreparedStatement statement0 = this.conexao.getConexao().prepareStatement(sql0);
             ResultSet rs0 = statement0.executeQuery();
+                        
+            rs0.next();
             long id_habilidade = rs0.getLong("id_habilidade");
             return id_habilidade;
 
         } catch(SQLException e) {
             e.printStackTrace();
-            return (Long)null;
+            return 0;
         } finally {
             this.conexao.fecharConexao();
         }
@@ -44,7 +47,7 @@ public class HabilidadeDAO {
     public void editar(Habilidade habilidade) {
         try {
             this.conexao.abrirConexao();
-            String sql = "UPDATE habilidade SET nome=?, tipo=?, descricao=?, max_roll=?, min_roll=?, min_test=?, tipo_dano=?, atributo=? WHERE id_habilidade=?";
+            String sql = "UPDATE habilidade SET nome=?, tipo=?, descricao=?, max_roll=?, min_roll=?, min_teste=?, tipo_dano=?, atributo=?, custo=? WHERE id_habilidade=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, habilidade.getNome());
             statement.setInt(2, habilidade.getTipo());
@@ -53,8 +56,9 @@ public class HabilidadeDAO {
             statement.setInt(5, habilidade.getMinRoll());
             statement.setInt(6, habilidade.getMinTeste());
             statement.setInt(7, habilidade.getTipoDano());
-            statement.setLong(8, habilidade.getAtributo());
-            statement.setLong(9, habilidade.getId());
+            statement.setInt(8, habilidade.getAtributo());
+            statement.setInt(9, habilidade.getCusto());
+            statement.setLong(10, habilidade.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -39,17 +39,16 @@ private ConexaoMYSQL conexao;
             PreparedStatement statement0 = this.conexao.getConexao().prepareStatement(sql0);
             ResultSet rs0 = statement0.executeQuery();
 
-            if (rs0.next()) {
-                long id_recompensa = rs0.getLong("id_recompensa");
-                return id_recompensa;
-            }
+            rs0.next();
+            long id_recompensa = rs0.getLong("id_recompensa");
+            return id_recompensa;
         }
         catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
         finally {
             this.conexao.fecharConexao();
-            return (Long)null;
         }
     }
 
@@ -70,6 +69,20 @@ private ConexaoMYSQL conexao;
             e.printStackTrace();
         } 
         finally {
+            this.conexao.fecharConexao();
+        }
+    }
+
+    public void excluir(long id) {
+        try {
+            this.conexao.abrirConexao();
+            String sql = "DELETE FROM recompensa WHERE id_recompensa=?";
+            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
             this.conexao.fecharConexao();
         }
     }
@@ -120,9 +133,5 @@ private ConexaoMYSQL conexao;
         finally {
             conexao.fecharConexao();
         }
-    }
-
-    public void excluir(long id) {
-
     }
 }

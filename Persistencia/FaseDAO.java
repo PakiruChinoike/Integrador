@@ -25,12 +25,14 @@ public class FaseDAO {
             String sql0 = "SELECT id_fase FROM fase ORDER BY id_fase DESC LIMIT 1";
             PreparedStatement statement0 = this.conexao.getConexao().prepareStatement(sql0);
             ResultSet rs0 = statement0.executeQuery();
+
+            rs0.next();
             long id_fase = rs0.getLong("id_fase");
             return id_fase;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return (Long)null;
+            return 0;
         } finally {
             this.conexao.fecharConexao();
         }

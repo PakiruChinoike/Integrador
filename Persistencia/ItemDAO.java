@@ -25,12 +25,14 @@ public class ItemDAO{
             String sql0 = "SELECT id_item FROM item ORDER BY id_item DESC LIMIT 1";
             PreparedStatement statement0 = this.conexao.getConexao().prepareStatement(sql0);
             ResultSet rs0 = statement0.executeQuery();
+            
+            rs0.next();
             long id_item = rs0.getLong("id_item");
             return id_item;
 
         } catch(SQLException e) {
             e.printStackTrace();
-            return (Long)null;
+            return 0;
         } finally {
             this.conexao.fecharConexao();
         }

@@ -10,20 +10,22 @@ CREATE TABLE personagem(
     poder TINYINT NOT NULL,
     nivel TINYINT NOT NULL,
     experiencia SMALLINT NOT NULL,
-    equipe SMALLINT, 
+    id_equipe BIGINT, 
     PRIMARY KEY (id_personagem)
 );
 
 CREATE TABLE equipe(
     id_equipe BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
-    id_personagem1 BIGINT NOT NULL,
-    id_personagem2 BIGINT NOT NULL,
-    id_personagem3 BIGINT NOT NULL,
+    id_personagem1 BIGINT,
+    id_personagem2 BIGINT,
+    id_personagem3 BIGINT,
     PRIMARY KEY(id_equipe),
     FOREIGN KEY(id_personagem1) REFERENCES personagem(id_personagem),
     FOREIGN KEY(id_personagem2) REFERENCES personagem(id_personagem),
     FOREIGN KEY(id_personagem3) REFERENCES personagem(id_personagem)
 );
+
+ALTER TABLE personagem ADD FOREIGN KEY(id_equipe) REFERENCES equipe(id_equipe);
 
 CREATE TABLE monstro(
     id_monstro BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
@@ -32,8 +34,9 @@ CREATE TABLE monstro(
     armadura TINYINT NOT NULL,
 	nivel TINYINT NOT NULL,
     experiencia SMALLINT,
-    equipe SMALLINT,
-    PRIMARY KEY(id_monstro)
+    id_equipe BIGINT,
+    PRIMARY KEY(id_monstro),
+    FOREIGN KEY(id_equipe) REFERENCES equipe(id_equipe)
 );
 
 CREATE TABLE atributos(
@@ -79,7 +82,6 @@ CREATE TABLE habilidade(
 CREATE TABLE item(
     id_item BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
     nome VARCHAR(30) NOT NULL,
-    raridade TINYINT NOT NULL,
     usos TINYINT NOT NULL,
     id_habilidade BIGINT NOT NULL,
     PRIMARY KEY(id_item),
@@ -117,7 +119,6 @@ CREATE TABLE recompensa(
     id_recompensa BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
     tipo TINYINT NOT NULL,
     experiencia SMALLINT,
-    raridade TINYINT NOT NULL,
     id_item BIGINT,
     id_habilidade BIGINT,
     PRIMARY KEY(id_recompensa),
@@ -128,8 +129,6 @@ CREATE TABLE recompensa(
 CREATE TABLE sala(
     id_sala BIGINT NOT NULL UNIQUE AUTO_INCREMENT, 
     nome VARCHAR(30) NOT NULL,
-    tipo TINYINT NOT NULL,
-    dificuldade TINYINT NOT NULL,
     descricao VARCHAR(500) NOT NULL,
     id_recompensa BIGINT NOT NULL,
     PRIMARY KEY(id_sala),
@@ -149,7 +148,7 @@ CREATE TABLE fase(
     id_fase BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
     nome VARCHAR(30) NOT NULL,
     num_salas TINYINT NOT NULL,
-    id_equipe BIGINT NOT NULL,
+    id_equipe BIGINT,
     PRIMARY KEY(id_fase),
     FOREIGN KEY(id_equipe) REFERENCES equipe(id_equipe) 
 );
@@ -162,3 +161,5 @@ CREATE TABLE sala_fase(
     FOREIGN KEY(id_sala) REFERENCES sala(id_sala),
     FOREIGN KEY(id_fase) REFERENCES fase(id_fase)
 );
+
+SELECT * FROM habilidade;

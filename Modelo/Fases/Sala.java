@@ -4,7 +4,6 @@ import java.util.List;
 public class Sala{
 
     private long id;
-    private int dificuldade;
     private String nome;
     private String descricao;
     private List<Criatura> inimigos;
@@ -12,7 +11,6 @@ public class Sala{
 
     public Sala() {
         this.id = 0;
-        this.dificuldade = 0;
         this.nome = "";
         this.descricao = "";
         this.recompensa = new Recompensa();
@@ -20,18 +18,16 @@ public class Sala{
         this.inimigos = new ArrayList<Criatura>();
     }
 
-    public Sala(long id, int dificuldade, String nome, String descricao) {
+    public Sala(long id, String nome, String descricao) {
         this.id = id;
-        this.dificuldade = dificuldade;
         this.nome = nome;
         this.descricao = descricao;
 
         this.inimigos = new ArrayList<Criatura>();
     }
 
-    public Sala(long id, int dificuldade, String nome, String descricao, Recompensa recompesa, List<Criatura> inimigos) {
+    public Sala(long id, String nome, String descricao, Recompensa recompesa, List<Criatura> inimigos) {
         this.id = id;
-        this.dificuldade = dificuldade;
         this.nome = nome;
         this.descricao = descricao;
         this.recompensa = recompesa;
@@ -46,10 +42,6 @@ public class Sala{
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public int getDificuldade() {
-        return dificuldade;
     }
 
     public String getNome() {

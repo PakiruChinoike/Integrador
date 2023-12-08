@@ -19,7 +19,7 @@ public class Equipe {
         criatura.setEquipe(id);
     }
 
-    //UM 
+    //UM CONSTRUTOR QUE CRIA UMA EQUIPE COM UMA LISTA DE CRIATURAS
     public Equipe(long id, List<Criatura> criaturas) {
         this.id = id;
         this.criaturas = new ArrayList<Criatura>(3);

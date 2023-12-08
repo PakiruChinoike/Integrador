@@ -329,9 +329,11 @@ public class Metodos {
         switch(escolha) {
             case 0: {
                 modoDev();
+                break;
             }
             default: {
                 modoCampanha();
+                break;
             }
         }
     }
@@ -413,7 +415,7 @@ public class Metodos {
     }
 
     public static void habilidadeCRUD() {
-        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete%n");
 
         int escolha = keyboardInt.nextInt();
 
@@ -466,18 +468,18 @@ public class Metodos {
             case 2: {
                 //READ
 
-                System.out.printf("Defina um valor de ID para ser buscado.");
+                System.out.printf("Defina um valor de ID para ser buscado.%n");
 
                 long id = keyboardInt.nextLong();
                 Habilidade habilidade = habilidadeDAO.buscar(id);
 
-                System.out.println(habilidade.toString());
+                System.out.printf(habilidade.toString());
                 break;
             }
             case 3: {
                 //UPDATE
 
-                System.out.printf("%nEscolha o ID da habilidade a ser atualizada.%nEntão defina um nome, uma descrição, um tipo, um valor máximo de dano/cura, um valor mínimo de dano/cura, um valor mínimo para o teste de resistência, um tipo de dano, um atributo de resistência/ataque e um custo de Poder da sua atualização.%n");
+                System.out.printf("%nEscolha o ID da habilidade a ser atualizada. Então defina um nome, uma descrição, um tipo, um valor máximo de dano/cura, um valor mínimo de dano/cura, um valor mínimo para o teste de resistência, um tipo de dano, um atributo de resistência/ataque e um custo de Poder da sua atualização.%n");
                 long id = keyboardInt.nextLong();
                 String nome = keyboardString.nextLine();
                 String descricao = keyboardString.nextLine();
@@ -539,7 +541,7 @@ public class Metodos {
     }
 
     public static void itemCRUD() {
-        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete%n");
 
         int escolha = keyboardInt.nextInt();
 
@@ -563,7 +565,7 @@ public class Metodos {
             case 2: {
                 //READ
 
-                System.out.printf("%nDefina o ID do item a ser buscado.");
+                System.out.printf("%nDefina o ID do item a ser buscado.%n");
 
                 long id = keyboardInt.nextLong();
 
@@ -607,7 +609,7 @@ public class Metodos {
     }
 
     public static void personagemCRUD() {
-        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete%n");
 
         int escolha = keyboardInt.nextInt();
 
@@ -615,7 +617,7 @@ public class Metodos {
             case 1: {
                 //CREATE
 
-                System.out.printf("%nDefina o nome, a classe, a vida, a armadura, o poder, o nível, a experiência e o ID da equipe do personagem.");
+                System.out.printf("%nDefina o nome, a classe, a vida, a armadura, o poder, o nível, a experiência e o ID da equipe do personagem.%n");
                 String nome = keyboardString.nextLine();
                 int classe = keyboardInt.nextInt();
                 int vida = keyboardInt.nextInt();
@@ -627,7 +629,7 @@ public class Metodos {
 
                 Personagem personagem = new Personagem(1, nome, classe, armadura, vida, nivel, poder, experiencia, equipe);
 
-                System.out.printf("%nDefina os valores de agilidade, força e inteligência do personagem.");
+                System.out.printf("%nDefina os valores de agilidade, força e inteligência do personagem.%n");
                 int agilidade = keyboardInt.nextInt();
                 int forca = keyboardInt.nextInt();
                 int inteligencia = keyboardInt.nextInt();
@@ -636,7 +638,7 @@ public class Metodos {
                 personagem.setAtributos(1, forca);
                 personagem.setAtributos(2, inteligencia);
 
-                System.out.printf("%nDefina as fraquezas do personagem."); 
+                System.out.printf("%nDefina as fraquezas do personagem.%n"); 
                 boolean flamejante = keyboardString.nextBoolean();
                 boolean congelante = keyboardString.nextBoolean();
                 boolean eletrico = keyboardString.nextBoolean();
@@ -649,7 +651,7 @@ public class Metodos {
                 personagem.setFraquezas(3, fisico);
                 personagem.setFraquezas(4, arcano);
 
-                System.out.printf("%nDefina quantas habilidades o personagem possui, e então, o ID de cada uma delas.");
+                System.out.printf("%nDefina quantas habilidades o personagem possui, e então, o ID de cada uma delas.%n");
                 int num_hab = keyboardInt.nextInt();
                 for (int i = 0; i<num_hab; i++) {
                     int id_habilidade = keyboardInt.nextInt();
@@ -658,7 +660,7 @@ public class Metodos {
                     personagem.addHabilidade(habilidade);
                 }
                 
-                System.out.printf("%nDefina quantos itens o personagem possui, e então, o ID de cada um deles.");
+                System.out.printf("%nDefina quantos itens o personagem possui, e então, o ID de cada um deles.%n");
                 int num_item = keyboardInt.nextInt();
                 for (int i = 0; i<num_item; i++) {
                     int id_item = keyboardInt.nextInt();
@@ -675,7 +677,7 @@ public class Metodos {
             case 2: {
                 //READ
 
-                System.out.printf("%nDefina o ID do personagem a ser buscado.");
+                System.out.printf("%nDefina o ID do personagem a ser buscado.%n");
 
                 long id = keyboardInt.nextLong();
 
@@ -686,7 +688,7 @@ public class Metodos {
             case 3: {
                 //UPDATE
 
-                System.out.printf("%nEscolha o ID do personagem a ser atualizado. Então defina o nome, a classe, a vida, a armadura, o poder, o nível, a experiência e o ID da equipe do personagem atualizado.");
+                System.out.printf("%nEscolha o ID do personagem a ser atualizado. Então defina o nome, a classe, a vida, a armadura, o poder, o nível, a experiência e o ID da equipe do personagem atualizado.%n");
                 long id = keyboardInt.nextLong();
                 String nome = keyboardString.nextLine();
                 int classe = keyboardInt.nextInt();
@@ -699,7 +701,7 @@ public class Metodos {
 
                 Personagem personagem = new Personagem(id, nome, classe, armadura, vida, nivel, poder, experiencia, equipe);
 
-                System.out.printf("%nDefina os valores de agilidade, força e inteligência do personagem.");
+                System.out.printf("%nDefina os valores de agilidade, força e inteligência do personagem.%n");
                 int agilidade = keyboardInt.nextInt();
                 int forca = keyboardInt.nextInt();
                 int inteligencia = keyboardInt.nextInt();
@@ -708,7 +710,7 @@ public class Metodos {
                 personagem.setAtributos(1, forca);
                 personagem.setAtributos(2, inteligencia);
 
-                System.out.printf("%nDefina as fraquezas do personagem."); 
+                System.out.printf("%nDefina as fraquezas do personagem.%n"); 
                 boolean flamejante = keyboardString.nextBoolean();
                 boolean congelante = keyboardString.nextBoolean();
                 boolean eletrico = keyboardString.nextBoolean();
@@ -721,7 +723,7 @@ public class Metodos {
                 personagem.setFraquezas(3, fisico);
                 personagem.setFraquezas(4, arcano);
 
-                System.out.printf("%nDefina quantas habilidades o personagem possui, e então, o ID de cada uma delas.");
+                System.out.printf("%nDefina quantas habilidades o personagem possui, e então, o ID de cada uma delas.%n");
                 int num_hab = keyboardInt.nextInt();
                 for (int i = 0; i<num_hab; i++) {
                     int id_habilidade = keyboardInt.nextInt();
@@ -730,7 +732,7 @@ public class Metodos {
                     personagem.addHabilidade(habilidade);
                 }
                 
-                System.out.printf("%nDefina quantos itens o personagem possui, e então, o ID de cada um deles.");
+                System.out.printf("%nDefina quantos itens o personagem possui, e então, o ID de cada um deles.%n");
                 int num_item = keyboardInt.nextInt();
                 for (int i = 0; i<num_item; i++) {
                     int id_item = keyboardInt.nextInt();
@@ -747,7 +749,7 @@ public class Metodos {
             case 4: {
                 //DELETE
 
-                System.out.printf("%Defina o ID do personagem que deseja excluir.");
+                System.out.printf("%Defina o ID do personagem que deseja excluir.%n");
 
                 long id = keyboardInt.nextLong();
                 personagemDAO.excluir(id);
@@ -763,7 +765,7 @@ public class Metodos {
     }
 
     public static void monstroCRUD() {
-        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete%n");
 
         int escolha = keyboardInt.nextInt();
 
@@ -771,7 +773,7 @@ public class Metodos {
             case 1: {
                 //CREATE
 
-                System.out.printf("Defina o nome, a vida, a armadura, o nivel e o ID da equipe do monstro.");
+                System.out.printf("Defina o nome, a vida, a armadura, o nivel e o ID da equipe do monstro.%n");
                 String nome = keyboardString.nextLine();
                 int vida = keyboardInt.nextInt();
                 int armadura = keyboardInt.nextInt();
@@ -780,7 +782,7 @@ public class Metodos {
 
                 Monstro monstro = new Monstro(1, nome, vida, armadura, nivel, 0, equipe);
 
-                System.out.printf("%nDefina os valores de agilidade, força e inteligência do monstro.");
+                System.out.printf("%nDefina os valores de agilidade, força e inteligência do monstro.%n");
                 int agilidade = keyboardInt.nextInt();
                 int forca = keyboardInt.nextInt();
                 int inteligencia = keyboardInt.nextInt();
@@ -789,7 +791,7 @@ public class Metodos {
                 monstro.setAtributos(1, forca);
                 monstro.setAtributos(2, inteligencia);
 
-                System.out.printf("%nDefina as fraquezas do monstro."); 
+                System.out.printf("%nDefina as fraquezas do monstro.%n"); 
                 boolean flamejante = keyboardString.nextBoolean();
                 boolean congelante = keyboardString.nextBoolean();
                 boolean eletrico = keyboardString.nextBoolean();
@@ -802,7 +804,7 @@ public class Metodos {
                 monstro.setFraquezas(3, fisico);
                 monstro.setFraquezas(4, arcano);
 
-                System.out.printf("%nDefina quantas habilidades o monstro possui, e então, o ID de cada uma delas.");
+                System.out.printf("%nDefina quantas habilidades o monstro possui, e então, o ID de cada uma delas.%n");
                 int num_hab = keyboardInt.nextInt();
                 for (int i = 0; i<num_hab; i++) {
                     int id_habilidade = keyboardInt.nextInt();
@@ -819,7 +821,7 @@ public class Metodos {
             case 2: {
                 //READ
 
-                System.out.printf("%nDefina o ID do monstro a ser buscado.");
+                System.out.printf("%nDefina o ID do monstro a ser buscado.%n");
 
                 long id = keyboardInt.nextLong();
 
@@ -830,7 +832,7 @@ public class Metodos {
             case 3: {
                 //UPDATE
 
-                System.out.printf("Escolha o ID do monstro a ser atualizado. Então, defina o nome, a vida, a armadura, o nivel e o ID da equipe do monstro atualizado.");
+                System.out.printf("Escolha o ID do monstro a ser atualizado. Então, defina o nome, a vida, a armadura, o nivel e o ID da equipe do monstro atualizado.%n");
                 long id = keyboardInt.nextLong();
                 String nome = keyboardString.nextLine();
                 int vida = keyboardInt.nextInt();
@@ -840,7 +842,7 @@ public class Metodos {
 
                 Monstro monstro = new Monstro(id, nome, vida, armadura, nivel, 0, equipe);
 
-                System.out.printf("%nDefina os valores de agilidade, força e inteligência do monstro.");
+                System.out.printf("%nDefina os valores de agilidade, força e inteligência do monstro.%n");
                 int agilidade = keyboardInt.nextInt();
                 int forca = keyboardInt.nextInt();
                 int inteligencia = keyboardInt.nextInt();
@@ -849,7 +851,7 @@ public class Metodos {
                 monstro.setAtributos(1, forca);
                 monstro.setAtributos(2, inteligencia);
 
-                System.out.printf("%nDefina as fraquezas do monstro."); 
+                System.out.printf("%nDefina as fraquezas do monstro.%n"); 
                 boolean flamejante = keyboardString.nextBoolean();
                 boolean congelante = keyboardString.nextBoolean();
                 boolean eletrico = keyboardString.nextBoolean();
@@ -862,7 +864,7 @@ public class Metodos {
                 monstro.setFraquezas(3, fisico);
                 monstro.setFraquezas(4, arcano);
 
-                System.out.printf("%nDefina quantas habilidades o monstro possui, e então, o ID de cada uma delas.");
+                System.out.printf("%nDefina quantas habilidades o monstro possui, e então, o ID de cada uma delas.%n");
                 int num_hab = keyboardInt.nextInt();
                 for (int i = 0; i<num_hab; i++) {
                     int id_habilidade = keyboardInt.nextInt();
@@ -879,7 +881,7 @@ public class Metodos {
             case 4: {
                 //DELETE
 
-                System.out.printf("%Defina o ID do monstro que deseja excluir.");
+                System.out.printf("%Defina o ID do monstro que deseja excluir.%n");
 
                 long id = keyboardInt.nextLong();
                 monstroDAO.excluir(id);
@@ -895,7 +897,7 @@ public class Metodos {
     }
 
     public static void recompensaCRUD() {
-        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete%n");
 
         int escolha = keyboardInt.nextInt();
 
@@ -903,7 +905,7 @@ public class Metodos {
             case 1: {
                 //CREATE
 
-                System.out.printf("Defina o tipo, a raridade, a experiência concedida, o ID do item concedido e o ID da habilidade concedida.");
+                System.out.printf("Defina o tipo, a raridade, a experiência concedida, o ID do item concedido e o ID da habilidade concedida.%n");
                 int tipo = keyboardInt.nextInt();
                 int raridade = keyboardInt.nextInt();
                 int experiencia = keyboardInt.nextInt();
@@ -953,7 +955,7 @@ public class Metodos {
             case 2: {
                 //READ
 
-                System.out.printf("%nDefina o ID do recompensa a ser buscado.");
+                System.out.printf("%nDefina o ID do recompensa a ser buscado.%n");
 
                 long id = keyboardInt.nextLong();
 
@@ -963,7 +965,7 @@ public class Metodos {
             }
             case 3: {
                 //UPDATE
-                System.out.printf("Escolha o ID da recompensa a ser atualizada. Então defina o tipo, a raridade, a experiência concedida, o ID do item concedido e o ID da habilidade concedida da atualização.");
+                System.out.printf("Escolha o ID da recompensa a ser atualizada. Então defina o tipo, a raridade, a experiência concedida, o ID do item concedido e o ID da habilidade concedida da atualização.%n");
                 long id = keyboardInt.nextLong();
                 int tipo = keyboardInt.nextInt();
                 int raridade = keyboardInt.nextInt();
@@ -1018,7 +1020,7 @@ public class Metodos {
             case 4: {
                 //DELETE
 
-                System.out.printf("%Defina o ID do recompensa que deseja excluir.");
+                System.out.printf("%Defina o ID do recompensa que deseja excluir.%n");
 
                 long id = keyboardInt.nextLong();
                 recompensaDAO.excluir(id);
@@ -1034,7 +1036,7 @@ public class Metodos {
     }
 
     public static void salaCRUD() {
-        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete%n");
 
         int escolha = keyboardInt.nextInt();
 
@@ -1042,17 +1044,16 @@ public class Metodos {
             case 1: {
                 //CREATE
 
-                System.out.printf("Defina o nome, a descrição, a dificuldade da sala e o ID da sua recompensa.");
+                System.out.printf("Defina o nome, a descrição e o ID da sua recompensa.%n");
                 String nome = keyboardString.nextLine();
                 String descricao = keyboardString.nextLine();
-                int dificuldade = keyboardInt.nextInt();
                 long id_recompensa = keyboardInt.nextLong();
                 Recompensa recompensa = recompensaDAO.buscar(id_recompensa);
 
-                Sala sala = new Sala(1, dificuldade, nome, descricao);
+                Sala sala = new Sala(1, nome, descricao);
                 sala.setRecompensa(recompensa);
 
-                System.out.printf("Defina quantos monstros existem na sala, e então o ID de cada um deles."); 
+                System.out.printf("Defina quantos monstros existem na sala, e então o ID de cada um deles.%n"); 
                 int num_monstros = keyboardInt.nextInt();
                 for (int i = 0; i<num_monstros; i++) {
                     long id_monstro = keyboardInt.nextLong();
@@ -1069,7 +1070,7 @@ public class Metodos {
             case 2: {
                 //READ
 
-                System.out.printf("%nDefina o ID da sala a ser buscada.");
+                System.out.printf("%nDefina o ID da sala a ser buscada.%n");
 
                 long id = keyboardInt.nextLong();
 
@@ -1080,18 +1081,17 @@ public class Metodos {
             case 3: {
                 //UPDATE
 
-                System.out.printf("Escolha o ID da sala a ser atualizada. Então defina o nome, a descrição, a dificuldade da sala e o ID da sua recompensa da atualização.");
+                System.out.printf("Escolha o ID da sala a ser atualizada. Então defina o nome, a descrição e o ID da sua recompensa da atualização.%n");
                 long id = keyboardInt.nextLong();
                 String nome = keyboardString.nextLine();
                 String descricao = keyboardString.nextLine();
-                int dificuldade = keyboardInt.nextInt();
                 long id_recompensa = keyboardInt.nextLong();
                 Recompensa recompensa = recompensaDAO.buscar(id_recompensa);
 
-                Sala sala = new Sala(id, dificuldade, nome, descricao);
+                Sala sala = new Sala(id, nome, descricao);
                 sala.setRecompensa(recompensa);
 
-                System.out.printf("Defina quantos monstros existem na sala, e então o ID de cada um deles."); 
+                System.out.printf("Defina quantos monstros existem na sala, e então o ID de cada um deles.%n"); 
                 int num_monstros = keyboardInt.nextInt();
                 for (int i = 0; i<num_monstros; i++) {
                     long id_monstro = keyboardInt.nextLong();
@@ -1108,7 +1108,7 @@ public class Metodos {
             case 4: {
                 //DELETE
 
-                System.out.printf("%Defina o ID da sala que deseja excluir.");
+                System.out.printf("%Defina o ID da sala que deseja excluir.%n");
 
                 long id = keyboardInt.nextLong();
                 salaDAO.excluir(id);
@@ -1124,14 +1124,14 @@ public class Metodos {
     }
 
     public static void faseCRUD() {
-        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete");
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete%n");
 
         int escolha = keyboardInt.nextInt();
 
         switch (escolha) {
             case 1: {
                 //CREATE
-                System.out.printf("Defina um nome para a fase e uma quantidade de salas, definindo então o ID de cada uma dessas salas.");
+                System.out.printf("Defina um nome para a fase e uma quantidade de salas, definindo então o ID de cada uma dessas salas.%n");
                 String nome = keyboardString.nextLine();
                 int num_salas = keyboardInt.nextInt();
 
@@ -1151,7 +1151,7 @@ public class Metodos {
             case 2: {
                 //READ
 
-                System.out.printf("%nDefina o ID da fase a ser buscada.");
+                System.out.printf("%nDefina o ID da fase a ser buscada.%n");
 
                 long id = keyboardInt.nextLong();
 
@@ -1162,7 +1162,7 @@ public class Metodos {
             case 3: {
                 //UPDATE
 
-                System.out.printf("Escolha o ID da fase a ser atualizada. Defina um nome para a fase e uma quantidade de salas, definindo então o ID de cada uma dessas salas.");
+                System.out.printf("Escolha o ID da fase a ser atualizada. Defina um nome para a fase e uma quantidade de salas, definindo então o ID de cada uma dessas salas.%n");
                 long id = keyboardInt.nextLong();
                 String nome = keyboardString.nextLine();
                 int num_salas = keyboardInt.nextInt();
@@ -1185,7 +1185,7 @@ public class Metodos {
             case 4: {
                 //DELETE
 
-                System.out.printf("%Defina o ID da fase que deseja excluir.");
+                System.out.printf("%Defina o ID da fase que deseja excluir.%n");
 
                 long id = keyboardInt.nextLong();
                 faseDAO.excluir(id);

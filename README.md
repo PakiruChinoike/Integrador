@@ -1,5 +1,14 @@
 # Integrador
+-- Desenvolvido por Henrique Buffleben e Victor Hugo Fumagalli --
 
+
+# - Como usar -
+1. Crie o Banco de Dados e suas tables com o arquivo '*/Integrador/BD/CatacombsIntegrador.sql';
+2. Adicione os dados essenciais no Banco de Dados com o arquivo '*/Integrador/BD/Adding.sql';
+3. Rode o arquivo '*/Integrador/Apresentacao/Main.java' // Alternativamente, utilize o método estático 'inicializacao' da classe 'Metodos'; 
+4. Aperte qualquer botão para iniciar o Modo Campanha // Alternativemente, aperte '0' para iniciar o Modo Dev;
+
+# Base de Informações
 Tipos de Dano:
 0 - Flamejante
 1 - Congelante
@@ -33,11 +42,3 @@ Tipo de Recompensa:
 1 - XP e Item
 2 - XP e Habilidade
 3 - XP, Item e Habilidade
-
-Dificuldade:
--- A dificuldade identifica a soma da dificuldade de todos os monstros encontrados nela.
-0 - Nenhum monstro, apenas recompensa
-1 até 3 - Até 3 monstros, recompensas comuns
-4 até 7 - Até 7 monstros, recompensas raras
-8 e 9 - até 9 monstros, recompensas épicas
-10 - chefe final, recompensas lendárias
