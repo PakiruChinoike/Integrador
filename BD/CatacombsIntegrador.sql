@@ -25,8 +25,6 @@ CREATE TABLE equipe(
     FOREIGN KEY(id_personagem3) REFERENCES personagem(id_personagem)
 );
 
-ALTER TABLE personagem ADD FOREIGN KEY(id_equipe) REFERENCES equipe(id_equipe);
-
 CREATE TABLE monstro(
     id_monstro BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
     nome VARCHAR(30) NOT NULL,
@@ -90,8 +88,8 @@ CREATE TABLE item(
 
 CREATE TABLE personagem_habilidade(
     id_personagem_habilidade BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
-    id_personagem BIGINT UNIQUE NOT NULL,
-    id_habilidade BIGINT NOT NULL UNIQUE,
+    id_personagem BIGINT NOT NULL,
+    id_habilidade BIGINT NOT NULL,
     PRIMARY KEY (id_personagem_habilidade),
     FOREIGN KEY (id_personagem) REFERENCES personagem(id_personagem),
     FOREIGN KEY (id_habilidade) REFERENCES habilidade(id_habilidade)
@@ -108,8 +106,8 @@ CREATE TABLE monstro_habilidade(
 
 CREATE TABLE personagem_item(
     id_personagem_item BIGINT UNIQUE NOT NULL AUTO_INCREMENT,
-    id_personagem BIGINT UNIQUE NOT NULL,
-    id_item BIGINT UNIQUE NOT NULL,
+    id_personagem BIGINT NOT NULL,
+    id_item BIGINT NOT NULL,
     PRIMARY KEY(id_personagem_item),
     FOREIGN KEY(id_personagem) REFERENCES personagem(id_personagem),
     FOREIGN KEY (id_item) REFERENCES item(id_item)
@@ -161,5 +159,3 @@ CREATE TABLE sala_fase(
     FOREIGN KEY(id_sala) REFERENCES sala(id_sala),
     FOREIGN KEY(id_fase) REFERENCES fase(id_fase)
 );
-
-SELECT * FROM habilidade;

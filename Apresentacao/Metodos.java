@@ -102,7 +102,7 @@ public class Metodos {
             for(int i = 0; i<atual.getItens().size(); i++) {
                 System.out.printf(i+1 + " - " + atual.getItem(i).getNome() + " (" + atual.getItem(i).getUsos() + ")%n");
             }                
-            acao = keyboardInt.nextInt();
+            acao = keyboardInt.nextInt()-1;
             return atual.getItem(acao);
         }
     }
@@ -350,17 +350,17 @@ public class Metodos {
         List<Criatura> listaJogadores = new ArrayList<>();
         listaJogadores.addAll(Metodos.criarPersonagens(3));
 
+        Equipe equipe = new Equipe(10);
+        equipeDAO.salvar(equipe);
+
         for (int i = 0; i<listaJogadores.size(); i++) {
             Personagem personagem = ((Personagem)listaJogadores.get(i));
+            personagem.setEquipe(10);
             personagem.setId(personagemDAO.salvar(personagem));
         }
 
         Equipe jogadores = new Equipe(10, listaJogadores);
-        jogadores.setId(equipeDAO.salvar(jogadores));
-
-        for (int i = 0; i<jogadores.size(); i++) {
-            jogadores.get(i).setEquipe(jogadores.getId());
-        }
+        equipeDAO.editar(jogadores);
 
         System.out.printf("%nSelecione, a seguir, a Fase da qual deseja participar:" + 
         "%n(OBS: Fases além da de ID=1 são Fases personalizadas que devem ser criadas no Modo Dev.)%n");
@@ -368,6 +368,8 @@ public class Metodos {
         int escolha = keyboardInt.nextInt();
 
         Fase fase = faseDAO.buscar(escolha);
+        fase.setEquipe(jogadores);
+        faseDAO.editar(fase);
 
         realizaTentativa(fase);
     }
@@ -375,7 +377,7 @@ public class Metodos {
     public static void modoDev() {
         System.out.printf("%n--Bem-vindo ao Modo Dev--" + 
         "%nAqui pode ser realizado o CRUD de todas as tabelas no Banco de Dados." + 
-        "%n1 - Habilidade%n2 - Item%n3 - Personagem%n4 - Monstro%n5 - Recompensa%n6 - Sala%n7 - Fase%n");
+        "%n1 - Habilidade%n2 - Item%n3 - Personagem%n4 - Monstro%n5 - Recompensa%n6 - Sala%n7 - Fase%n8 - Equipe%n");
 
         int escolha = keyboardInt.nextInt();
 
@@ -406,6 +408,11 @@ public class Metodos {
             }
             case 7: {
                 faseCRUD();
+                break;
+            }
+            case 8: {
+                equipeCRUD();
+                break;
             }
             default: {
                 System.out.println("Valor inválido.");
@@ -570,7 +577,7 @@ public class Metodos {
                 long id = keyboardInt.nextLong();
 
                 Item item = itemDAO.buscar(id);
-                System.out.println(item.toString());
+                System.out.printf(item.toString());
                 break;
             }
             case 3: {
@@ -593,7 +600,7 @@ public class Metodos {
             case 4: {
                 //DELETE
 
-                System.out.printf("%Defina o ID do item que deseja excluir.");
+                System.out.printf("%nDefina o ID do item que deseja excluir.%n");
 
                 long id = keyboardInt.nextLong();
                 itemDAO.excluir(id);
@@ -654,7 +661,7 @@ public class Metodos {
                 System.out.printf("%nDefina quantas habilidades o personagem possui, e então, o ID de cada uma delas.%n");
                 int num_hab = keyboardInt.nextInt();
                 for (int i = 0; i<num_hab; i++) {
-                    int id_habilidade = keyboardInt.nextInt();
+                    long id_habilidade = keyboardInt.nextLong();
                     Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
 
                     personagem.addHabilidade(habilidade);
@@ -663,7 +670,7 @@ public class Metodos {
                 System.out.printf("%nDefina quantos itens o personagem possui, e então, o ID de cada um deles.%n");
                 int num_item = keyboardInt.nextInt();
                 for (int i = 0; i<num_item; i++) {
-                    int id_item = keyboardInt.nextInt();
+                    long id_item = keyboardInt.nextLong();
                     Item item = itemDAO.buscar(id_item);
 
                     personagem.addItem(item);
@@ -726,7 +733,7 @@ public class Metodos {
                 System.out.printf("%nDefina quantas habilidades o personagem possui, e então, o ID de cada uma delas.%n");
                 int num_hab = keyboardInt.nextInt();
                 for (int i = 0; i<num_hab; i++) {
-                    int id_habilidade = keyboardInt.nextInt();
+                    long id_habilidade = keyboardInt.nextLong();
                     Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
 
                     personagem.addHabilidade(habilidade);
@@ -735,7 +742,7 @@ public class Metodos {
                 System.out.printf("%nDefina quantos itens o personagem possui, e então, o ID de cada um deles.%n");
                 int num_item = keyboardInt.nextInt();
                 for (int i = 0; i<num_item; i++) {
-                    int id_item = keyboardInt.nextInt();
+                    long id_item = keyboardInt.nextLong();
                     Item item = itemDAO.buscar(id_item);
 
                     personagem.addItem(item);
@@ -749,7 +756,7 @@ public class Metodos {
             case 4: {
                 //DELETE
 
-                System.out.printf("%Defina o ID do personagem que deseja excluir.%n");
+                System.out.printf("%nDefina o ID do personagem que deseja excluir.%n");
 
                 long id = keyboardInt.nextLong();
                 personagemDAO.excluir(id);
@@ -881,7 +888,7 @@ public class Metodos {
             case 4: {
                 //DELETE
 
-                System.out.printf("%Defina o ID do monstro que deseja excluir.%n");
+                System.out.printf("%nDefina o ID do monstro que deseja excluir.%n");
 
                 long id = keyboardInt.nextLong();
                 monstroDAO.excluir(id);
@@ -905,16 +912,15 @@ public class Metodos {
             case 1: {
                 //CREATE
 
-                System.out.printf("Defina o tipo, a raridade, a experiência concedida, o ID do item concedido e o ID da habilidade concedida.%n");
+                System.out.printf("Defina o tipo, a experiência concedida, o ID do item concedido e o ID da habilidade concedida.%n");
                 int tipo = keyboardInt.nextInt();
-                int raridade = keyboardInt.nextInt();
                 int experiencia = keyboardInt.nextInt();
                 long id_item = keyboardInt.nextLong();
                 long id_habilidade = keyboardInt.nextLong();
 
                 switch (tipo) {
                     case 0: {
-                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia);
+                        Recompensa recompensa = new Recompensa(tipo, experiencia);
                         recompensa.setId(recompensaDAO.salvar(recompensa));
 
                         System.out.println("Recompensa de ID=" + recompensa.getId() + " criada com sucesso.");
@@ -922,7 +928,7 @@ public class Metodos {
                     }
                     case 1: {
                         Item item = itemDAO.buscar(id_item);
-                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia, item);
+                        Recompensa recompensa = new Recompensa(tipo, experiencia, item);
                         recompensa.setId(recompensaDAO.salvar(recompensa));
 
                         System.out.println("Recompensa de ID=" + recompensa.getId() + " criada com sucesso.");
@@ -930,7 +936,7 @@ public class Metodos {
                     }
                     case 2: {
                         Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
-                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia, habilidade);
+                        Recompensa recompensa = new Recompensa(tipo, experiencia, habilidade);
                         recompensa.setId(recompensaDAO.salvar(recompensa));
 
                         System.out.println("Recompensa de ID=" + recompensa.getId() + " criada com sucesso.");
@@ -939,7 +945,7 @@ public class Metodos {
                     case 3: {
                         Item item = itemDAO.buscar(id_item);
                         Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
-                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia, item, habilidade);
+                        Recompensa recompensa = new Recompensa(tipo, experiencia, item, habilidade);
                         recompensa.setId(recompensaDAO.salvar(recompensa));
 
                         System.out.println("Recompensa de ID=" + recompensa.getId() + " criada com sucesso.");
@@ -965,17 +971,16 @@ public class Metodos {
             }
             case 3: {
                 //UPDATE
-                System.out.printf("Escolha o ID da recompensa a ser atualizada. Então defina o tipo, a raridade, a experiência concedida, o ID do item concedido e o ID da habilidade concedida da atualização.%n");
+                System.out.printf("Escolha o ID da recompensa a ser atualizada. Então defina o tipo, a experiência concedida, o ID do item concedido e o ID da habilidade concedida da atualização.%n");
                 long id = keyboardInt.nextLong();
                 int tipo = keyboardInt.nextInt();
-                int raridade = keyboardInt.nextInt();
                 int experiencia = keyboardInt.nextInt();
                 long id_item = keyboardInt.nextLong();
                 long id_habilidade = keyboardInt.nextLong();
 
                 switch (tipo) {
                     case 0: {
-                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia);
+                        Recompensa recompensa = new Recompensa(tipo, experiencia);
                         recompensa.setId(id);
                         recompensaDAO.editar(recompensa);
 
@@ -984,7 +989,7 @@ public class Metodos {
                     }
                     case 1: {
                         Item item = itemDAO.buscar(id_item);
-                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia, item);
+                        Recompensa recompensa = new Recompensa(tipo, experiencia, item);
                         recompensa.setId(id);
                         recompensaDAO.editar(recompensa);
 
@@ -993,7 +998,7 @@ public class Metodos {
                     }
                     case 2: {
                         Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
-                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia, habilidade);
+                        Recompensa recompensa = new Recompensa(tipo, experiencia, habilidade);
                         recompensa.setId(id);
                         recompensaDAO.editar(recompensa);
 
@@ -1003,7 +1008,7 @@ public class Metodos {
                     case 3: {
                         Item item = itemDAO.buscar(id_item);
                         Habilidade habilidade = habilidadeDAO.buscar(id_habilidade);
-                        Recompensa recompensa = new Recompensa(tipo, raridade, experiencia, item, habilidade);
+                        Recompensa recompensa = new Recompensa(tipo, experiencia, item, habilidade);
                         recompensa.setId(id);
                         recompensaDAO.editar(recompensa);
 
@@ -1020,7 +1025,7 @@ public class Metodos {
             case 4: {
                 //DELETE
 
-                System.out.printf("%Defina o ID do recompensa que deseja excluir.%n");
+                System.out.printf("%nDefina o ID do recompensa que deseja excluir.%n");
 
                 long id = keyboardInt.nextLong();
                 recompensaDAO.excluir(id);
@@ -1108,7 +1113,7 @@ public class Metodos {
             case 4: {
                 //DELETE
 
-                System.out.printf("%Defina o ID da sala que deseja excluir.%n");
+                System.out.printf("%nDefina o ID da sala que deseja excluir.%n");
 
                 long id = keyboardInt.nextLong();
                 salaDAO.excluir(id);
@@ -1131,8 +1136,9 @@ public class Metodos {
         switch (escolha) {
             case 1: {
                 //CREATE
-                System.out.printf("Defina um nome para a fase e uma quantidade de salas, definindo então o ID de cada uma dessas salas.%n");
+                System.out.printf("Defina um nome para a fase, um ID de equipe e uma quantidade de salas, definindo então o ID de cada uma dessas salas.%n");
                 String nome = keyboardString.nextLine();
+                long id_equipe = keyboardInt.nextLong();
                 int num_salas = keyboardInt.nextInt();
 
                 List<Sala> listaSalas = new ArrayList<Sala>(num_salas);
@@ -1142,7 +1148,10 @@ public class Metodos {
                     listaSalas.add(sala);
                 }
 
+                Equipe equipe = equipeDAO.buscar(id_equipe);
+
                 Fase fase = new Fase(nome, listaSalas);
+                fase.setEquipe(equipe);
                 fase.setId(faseDAO.salvar(fase));
 
                 System.out.println("Fase de ID=" + fase.getId() + " criada com sucesso.");
@@ -1162,9 +1171,10 @@ public class Metodos {
             case 3: {
                 //UPDATE
 
-                System.out.printf("Escolha o ID da fase a ser atualizada. Defina um nome para a fase e uma quantidade de salas, definindo então o ID de cada uma dessas salas.%n");
+                System.out.printf("Escolha o ID da fase a ser atualizada. Defina um nome para a fase, um ID de equipe e uma quantidade de salas, definindo então o ID de cada uma dessas salas.%n");
                 long id = keyboardInt.nextLong();
                 String nome = keyboardString.nextLine();
+                long id_equipe = keyboardInt.nextLong();
                 int num_salas = keyboardInt.nextInt();
 
                 List<Sala> listaSalas = new ArrayList<Sala>(num_salas);
@@ -1174,8 +1184,11 @@ public class Metodos {
                     listaSalas.add(sala);
                 }
 
+                Equipe equipe = equipeDAO.buscar(id_equipe);
+
                 Fase fase = new Fase(nome, listaSalas);
                 fase.setId(id);
+                fase.setEquipe(equipe);
                 faseDAO.editar(fase);
 
                 System.out.println("Fase de ID=" + fase.getId() + " atualizada com sucesso.");
@@ -1185,12 +1198,97 @@ public class Metodos {
             case 4: {
                 //DELETE
 
-                System.out.printf("%Defina o ID da fase que deseja excluir.%n");
+                System.out.printf("%nDefina o ID da fase que deseja excluir.%n");
 
                 long id = keyboardInt.nextLong();
                 faseDAO.excluir(id);
 
                 System.out.println("Fase de ID=" + id + " excluída com sucesso.");
+                break;
+            }
+            default: {
+                System.out.println("Valor inválido.");
+                break;
+            }
+        }
+    }
+
+    public static void equipeCRUD() {
+        System.out.printf("%n1 - Create%n2 - Read%n3 - Update%n4 - Delete%n");
+
+        int escolha = keyboardInt.nextInt();
+
+        switch (escolha) {
+            case 1: {
+                //CREATE
+
+                System.out.printf("%nDefina o ID da equipe e de todos os personagens da equipe.%n");
+
+                long id = keyboardInt.nextLong();
+                long id_personagem1 = keyboardInt.nextLong();
+                long id_personagem2 = keyboardInt.nextLong();
+                long id_personagem3 = keyboardInt.nextLong();
+
+                Personagem personagem1 = personagemDAO.buscar(id_personagem1);
+                Personagem personagem2 = personagemDAO.buscar(id_personagem2);
+                Personagem personagem3 = personagemDAO.buscar(id_personagem3);
+
+                List<Criatura> listaPersonagems = new ArrayList<Criatura>();
+                listaPersonagems.add(personagem1);
+                listaPersonagems.add(personagem2);
+                listaPersonagems.add(personagem3);
+
+                Equipe equipe = new Equipe(id, listaPersonagems);
+                equipeDAO.salvar(equipe);
+
+                System.out.println("Equipe de ID=" + equipe.getId() + " criada com sucesso.");
+                break;
+            }
+            case 2: {
+                //READ
+
+                System.out.printf("%nDefina o ID da equipe a ser buscado.%n");
+
+                long id = keyboardInt.nextLong();
+
+                Equipe equipe = equipeDAO.buscar(id);
+                System.out.println(equipe.toString());
+                break;
+            }
+            case 3: {
+                //UPDATE 
+
+                System.out.printf("%nEscolha o ID do equipe a ser atualizada.%nEntão defina o ID de todos os personagens nela.%n");
+
+                long id = keyboardInt.nextLong();
+                long id_personagem1 = keyboardInt.nextLong();
+                long id_personagem2 = keyboardInt.nextLong();
+                long id_personagem3 = keyboardInt.nextLong();
+
+                Personagem personagem1 = personagemDAO.buscar(id_personagem1);
+                Personagem personagem2 = personagemDAO.buscar(id_personagem2);
+                Personagem personagem3 = personagemDAO.buscar(id_personagem3);
+
+                List<Criatura> listaPersonagems = new ArrayList<Criatura>();
+                listaPersonagems.add(personagem1);
+                listaPersonagems.add(personagem2);
+                listaPersonagems.add(personagem3);
+
+                Equipe equipe = new Equipe(id, listaPersonagems);
+                equipeDAO.editar(equipe);
+
+                System.out.println("Equipe de ID=" + equipe.getId() + " atualizada com sucesso.");
+                break;
+            }
+            case 4: {
+                //DELETE
+
+                System.out.printf("%nDefina o ID da equipe que deseja excluir.%n");
+
+                long id = keyboardInt.nextLong();
+                equipeDAO.excluir(id);
+
+                System.out.println("Equipe de ID=" + id + " excluído com sucesso.");
                 break;
             }
             default: {

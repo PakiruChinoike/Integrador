@@ -13,27 +13,39 @@ private ConexaoMYSQL conexao;
     public long salvar(Recompensa recompensa) {
         try{
             this.conexao.abrirConexao();
-            String sql = "INSERT INTO recompensa VALUES(null, ?, ?, ?, ?, ?)";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
-            statement.setInt(1, recompensa.getTipo());
-            statement.setInt(2, recompensa.getExperiencia());
-            statement.setInt(3, recompensa.getRaridade());
 
-            if(recompensa.getHabilidade()!=null) {
+            if (recompensa.getTipo()==3) {
+                String sql = "INSERT INTO recompensa VALUES(null, ?, ?, ?, ?)";
+                PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+                statement.setInt(1, recompensa.getTipo());
+                statement.setInt(2, recompensa.getExperiencia());
+                statement.setLong(3, recompensa.getItem().getId());
                 statement.setLong(4, recompensa.getHabilidade().getId());
+                statement.executeUpdate();
+            }
+            else if (recompensa.getTipo()==2) {
+                String sql = "INSERT INTO recompensa VALUES(null, ?, ?, null, ?)";
+                PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+                statement.setInt(1, recompensa.getTipo());
+                statement.setInt(2, recompensa.getExperiencia());
+                statement.setLong(3, recompensa.getHabilidade().getId());
+                statement.executeUpdate();
+            }
+            else if (recompensa.getTipo()==1) {
+                String sql = "INSERT INTO recompensa VALUES(null, ?, ?, ?, null)";
+                PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+                statement.setInt(1, recompensa.getTipo());
+                statement.setInt(2, recompensa.getExperiencia());
+                statement.setLong(3, recompensa.getItem().getId());
+                statement.executeUpdate();
             }
             else {
-                statement.setRef(4, null);
+                String sql = "INSERT INTO recompensa VALUES(null, ?, ?, null, null)";
+                PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+                statement.setInt(1, recompensa.getTipo());
+                statement.setInt(2, recompensa.getExperiencia());
+                statement.executeUpdate();
             }
-
-            if(recompensa.getItem()!=null){
-                statement.setLong(5, recompensa.getItem().getId());
-            }
-            else {
-                statement.setRef(5, null);
-            }
-
-            statement.executeUpdate();
 
             String sql0 = "SELECT * FROM recompensa ORDER BY id_recompensa DESC LIMIT 1";
             PreparedStatement statement0 = this.conexao.getConexao().prepareStatement(sql0);
@@ -55,15 +67,43 @@ private ConexaoMYSQL conexao;
     public void editar(Recompensa recompensa) {
         try {
             this.conexao.abrirConexao();
-            String sql = "UPDATE recompensa SET tipo=?, experiencia=?, raridade=?, id_habilidade=?, id_item=? WHERE id_recompensa=?";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
-            statement.setInt(1, recompensa.getTipo());
-            statement.setInt(2, recompensa.getExperiencia());
-            statement.setInt(3, recompensa.getRaridade());
-            statement.setLong(4, recompensa.getHabilidade().getId());
-            statement.setLong(5, recompensa.getItem().getId());
-            statement.setLong(6, recompensa.getId());
-            statement.executeUpdate();
+
+            if (recompensa.getTipo()==3) {
+                String sql = "UPDATE recompensa SET tipo=?, experiencia=?, id_habilidade=?, id_item=? WHERE id_recompensa=?";
+                PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+                statement.setInt(1, recompensa.getTipo());
+                statement.setInt(2, recompensa.getExperiencia());
+                statement.setLong(3, recompensa.getHabilidade().getId());
+                statement.setLong(4, recompensa.getItem().getId());
+                statement.setLong(5, recompensa.getId());
+                statement.executeUpdate();
+            }
+            else if (recompensa.getTipo()==2) {
+                String sql = "UPDATE recompensa SET tipo=?, experiencia=?, id_habilidade=? WHERE id_recompensa=?";
+                PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+                statement.setInt(1, recompensa.getTipo());
+                statement.setInt(2, recompensa.getExperiencia());
+                statement.setLong(3, recompensa.getHabilidade().getId());
+                statement.setLong(4, recompensa.getId());
+                statement.executeUpdate();
+            }
+            else if (recompensa.getTipo()==1) {
+                String sql = "UPDATE recompensa SET tipo=?, experiencia=?, id_item=? WHERE id_recompensa=?";
+                PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+                statement.setInt(1, recompensa.getTipo());
+                statement.setInt(2, recompensa.getExperiencia());
+                statement.setLong(3, recompensa.getItem().getId());
+                statement.setLong(4, recompensa.getId());
+                statement.executeUpdate();
+            }
+            else {
+                String sql = "UPDATE recompensa SET tipo=?, experiencia=? WHERE id_recompensa=?";
+                PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+                statement.setInt(1, recompensa.getTipo());
+                statement.setInt(2, recompensa.getExperiencia());
+                statement.setLong(3, recompensa.getId());
+                statement.executeUpdate();
+            }
         } 
         catch (SQLException e) {
             e.printStackTrace();
@@ -96,7 +136,7 @@ private ConexaoMYSQL conexao;
             ResultSet rs = statement.executeQuery();
 
             if(rs.next()) {
-                Recompensa recompensa = new Recompensa(rs.getInt("tipo"), rs.getInt("raridade"), rs.getInt("experiencia"));
+                Recompensa recompensa = new Recompensa(rs.getInt("tipo"), rs.getInt("experiencia"));
                 recompensa.setId(rs.getLong("id_recompensa"));
 
                 switch (rs.getInt("tipo")) {

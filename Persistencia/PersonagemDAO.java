@@ -84,16 +84,17 @@ public class PersonagemDAO {
     public void editar(Personagem personagem) {
         try {
             this.conexao.abrirConexao();
-            String sql = "UPDATE personagem SET nome=?, classe=?, vida=?, armadura=?, poder=?, nivel=?, experiencia=?, equipe=? WHERE id_personagem=?";
+            String sql = "UPDATE personagem SET nome=?, classe=?, vida=?, armadura=?, poder=?, nivel=?, experiencia=?, id_equipe=? WHERE id_personagem=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, personagem.getNome());
             statement.setInt(2, personagem.getClasse());
             statement.setInt(3, personagem.getVida());
             statement.setInt(4, personagem.getArmadura());
             statement.setInt(5, personagem.getPoder());
-            statement.setInt(6, personagem.getExperiencia());
-            statement.setLong(7, personagem.getEquipe());
-            statement.setLong(8, personagem.getId());
+            statement.setInt(6, personagem.getNivel());
+            statement.setInt(7, personagem.getExperiencia());
+            statement.setLong(8, personagem.getEquipe());
+            statement.setLong(9, personagem.getId());
             statement.executeUpdate();
 
             String sql2 = "UPDATE atributos SET agilidade=?, forca=?, inteligencia=? WHERE id_personagem=?";
@@ -140,6 +141,41 @@ public class PersonagemDAO {
     public void excluir(long id) {
         try {
             this.conexao.abrirConexao();
+            String sql2 = "DELETE FROM personagem_item WHERE id_personagem=?";
+            PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
+            statement2.setLong(1, id);
+            statement2.executeUpdate();
+
+            String sql3 = "DELETE FROM personagem_habilidade WHERE id_personagem=?";
+            PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
+            statement3.setLong(1, id);
+            statement3.executeUpdate();
+
+            String sql4 = "DELETE FROM atributos WHERE id_personagem=?";
+            PreparedStatement statement4 = this.conexao.getConexao().prepareStatement(sql4);
+            statement4.setLong(1, id);
+            statement4.executeUpdate();
+
+            String sql5 = "DELETE FROM fraquezas WHERE id_personagem=?";
+            PreparedStatement statement5 = this.conexao.getConexao().prepareStatement(sql5);
+            statement5.setLong(1, id);
+            statement5.executeUpdate();
+
+            String sql6 = "DELETE FROM equipe WHERE id_personagem1=?";
+            PreparedStatement statement6 = this.conexao.getConexao().prepareStatement(sql6);
+            statement6.setLong(1, id);
+            statement6.executeUpdate();
+
+            String sql7 = "DELETE FROM equipe WHERE id_personagem2=?";
+            PreparedStatement statement7 = this.conexao.getConexao().prepareStatement(sql7);
+            statement7.setLong(1, id);
+            statement7.executeUpdate();
+
+            String sql8 = "DELETE FROM equipe WHERE id_personagem3=?";
+            PreparedStatement statement8 = this.conexao.getConexao().prepareStatement(sql8);
+            statement8.setLong(1, id);
+            statement8.executeUpdate();
+
             String sql = "DELETE FROM personagem WHERE id_personagem=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
@@ -159,9 +195,9 @@ public class PersonagemDAO {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                Personagem personagem = new Personagem(rs.getLong("id"), rs.getString("nome"), rs.getInt("classe"), rs.getInt("armadura"), rs.getInt("vida"), rs.getInt("nivel"), rs.getInt("poder"), rs.getInt("experiencia"), rs.getInt("id_equipe"));
+                Personagem personagem = new Personagem(rs.getLong("id_personagem"), rs.getString("nome"), rs.getInt("classe"), rs.getInt("armadura"), rs.getInt("vida"), rs.getInt("nivel"), rs.getInt("poder"), rs.getInt("experiencia"), rs.getInt("id_equipe"));
 
-                String sql2 = "SELECT * FROM item WHERE id_personagem=?";
+                String sql2 = "SELECT * FROM personagem_item WHERE id_personagem=?";
                 PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
                 statement2.setLong(1, id);
                 ResultSet rs2 = statement2.executeQuery();
@@ -219,26 +255,6 @@ public class PersonagemDAO {
             else {
                 return null;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            this.conexao.fecharConexao();
-        }
-    }
-
-    public List<Personagem> buscarTodos() {
-        try {
-            this.conexao.abrirConexao();
-            String sql = "SELECT * FROM personagem";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
-            List<Personagem> listaPersonagens = new ArrayList<Personagem>();
-            while (rs.next()) {
-                Personagem personagem = new Personagem(rs.getString("nome"), rs.getInt("classe"));
-                listaPersonagens.add(personagem);
-            }
-            return listaPersonagens;
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

@@ -58,6 +58,12 @@ public class FaseDAO {
     public void excluir(long id) {
         try {
             this.conexao.abrirConexao();
+
+            String sql2 = "DELETE FROM sala_fase WHERE id_fase=?";
+            PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
+            statement2.setLong(1, id);
+            statement2.executeUpdate();
+
             String sql = "DELETE FROM fase WHERE id_fase=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);

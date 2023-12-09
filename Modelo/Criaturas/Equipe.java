@@ -11,6 +11,12 @@ public class Equipe {
         this.criaturas = new ArrayList<Criatura>();
     }
 
+    public Equipe(long id) {
+        this.id = 0;
+        this.criaturas = new ArrayList<Criatura>();
+        this.criaturas.add(0, null);
+    }
+
     //UM CONSTRUTOR QUE CRIA UMA EQUIPE DE APENAS UMA CRIATURA
     public Equipe(long id, Criatura criatura) {
         this.id = id;
@@ -23,10 +29,9 @@ public class Equipe {
     public Equipe(long id, List<Criatura> criaturas) {
         this.id = id;
         this.criaturas = new ArrayList<Criatura>(3);
-        this.criaturas.addAll(criaturas);
-
-        for(int i = 0; i<criaturas.size(); i++) {
-            criaturas.get(i).setEquipe(id);
+        
+        for(int i =0; i<criaturas.size(); i++) {
+            this.criaturas.add(i, criaturas.get(i));
         }
     }
 

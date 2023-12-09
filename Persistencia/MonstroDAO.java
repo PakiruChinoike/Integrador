@@ -15,13 +15,14 @@ public class MonstroDAO {
     public long salvar(Monstro monstro) {
         try {
             this.conexao.abrirConexao();
-            String sql = "INSERT INTO monstro VALUES(null, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO monstro VALUES(null, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, monstro.getNome());
             statement.setInt(2, monstro.getVida());
             statement.setInt(3, monstro.getArmadura());
             statement.setInt(4, monstro.getNivel());
-            statement.setLong(5, monstro.getEquipe());
+            statement.setInt(5, monstro.getExperiencia());
+            statement.setLong(6, monstro.getEquipe());
             statement.executeUpdate();
 
             String sql0 = "SELECT id_monstro FROM monstro ORDER BY id_monstro DESC LIMIT 1";
@@ -74,21 +75,22 @@ public class MonstroDAO {
     public void editar(Monstro monstro) {
         try {
             this.conexao.abrirConexao();
-            String sql = "UPDATE monstro SET nome=?, classe=?, vida=?, armadura=?, nivel=?, equipe=? WHERE id_monstro=?";
+            String sql = "UPDATE monstro SET nome=?, vida=?, armadura=?, nivel=?, experiencia=?, id_equipe=? WHERE id_monstro=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setString(1, monstro.getNome());
-            statement.setInt(2, monstro.getNivel());
-            statement.setInt(3, monstro.getVida());
-            statement.setInt(4, monstro.getArmadura());
-            statement.setLong(5, monstro.getEquipe());
-            statement.setLong(6, monstro.getId());
+            statement.setInt(2, monstro.getVida());
+            statement.setInt(3, monstro.getArmadura());
+            statement.setInt(4, monstro.getNivel());
+            statement.setInt(5, monstro.getExperiencia());
+            statement.setLong(6, monstro.getEquipe());
+            statement.setLong(7, monstro.getId());
             statement.executeUpdate();
 
             String sql2 = "UPDATE atributos SET agilidade=?, forca=?, inteligencia=? WHERE id_monstro=?";
             PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
             statement2.setInt(1, monstro.getAtributos(0));
             statement2.setInt(2, monstro.getAtributos(1));
-            statement2.setInt(3, monstro.getAtributos(3));
+            statement2.setInt(3, monstro.getAtributos(2));
             statement2.setLong(4, monstro.getId());
             statement2.executeUpdate();
 
@@ -120,6 +122,27 @@ public class MonstroDAO {
     public void excluir(long id) {
         try {
             this.conexao.abrirConexao();
+
+            String sql2 = "DELETE FROM monstro_habilidade WHERE id_monstro=?";
+            PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
+            statement2.setLong(1, id);
+            statement2.executeUpdate();
+
+            String sql3 = "DELETE FROM atributos WHERE id_monstro=?";
+            PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
+            statement3.setLong(1, id);
+            statement3.executeUpdate();
+
+            String sql4 = "DELETE FROM fraquezas WHERE id_monstro=?";
+            PreparedStatement statement4 = this.conexao.getConexao().prepareStatement(sql4);
+            statement4.setLong(1, id);
+            statement4.executeUpdate();
+
+            String sql5 = "DELETE FROM monstro_sala WHERE id_monstro=?";
+            PreparedStatement statement5 = this.conexao.getConexao().prepareStatement(sql5);
+            statement5.setLong(1, id);
+            statement5.executeUpdate();
+
             String sql = "DELETE FROM monstro WHERE id_monstro=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
@@ -139,7 +162,7 @@ public class MonstroDAO {
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                Monstro monstro = new Monstro(rs.getLong("id"), rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"), rs.getInt("experiencia"), rs.getLong("equipe"));
+                Monstro monstro = new Monstro(rs.getLong("id_monstro"), rs.getString("nome"), rs.getInt("vida"), rs.getInt("armadura"), rs.getInt("nivel"), rs.getInt("experiencia"), rs.getLong("id_equipe"));
 
                 String sql2 = "SELECT * FROM monstro_habilidade WHERE id_monstro=?";
                 PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);

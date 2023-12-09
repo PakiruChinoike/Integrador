@@ -42,7 +42,7 @@ public class Monstro_SalaDAO{
     public Monstro buscarMonstro(long id) {
         try {
             this.conexao.abrirConexao();
-            String sql = "SELECT id_monstro FROM monstro_sala WHERE id_sala=?";
+            String sql = "SELECT * FROM monstro_sala WHERE id_sala=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
             ResultSet rs = statement.executeQuery();

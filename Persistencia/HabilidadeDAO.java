@@ -70,6 +70,17 @@ public class HabilidadeDAO {
     public void excluir(long id) {
         try {
             this.conexao.abrirConexao();
+
+            String sql2 = "DELETE FROM personagem_habilidade WHERE id_habilidade=?";
+            PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
+            statement2.setLong(1, id);
+            statement2.executeUpdate();
+
+            String sql3 = "DELETE FROM monstro_habilidade WHERE id_habilidade=?";
+            PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
+            statement3.setLong(1, id);
+            statement3.executeUpdate();
+
             String sql = "DELETE FROM habilidade WHERE id_habilidade=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);

@@ -23,6 +23,8 @@ public class SalaDAO {
             String sql0 = "SELECT id_sala FROM sala ORDER BY id_sala DESC LIMIT 1"; 
             PreparedStatement statement0 = this.conexao.getConexao().prepareStatement(sql0);
             ResultSet rs0 = statement0.executeQuery();
+
+            rs0.next();
             long id_sala = rs0.getLong("id_sala");
             return id_sala;
 
@@ -54,6 +56,17 @@ public class SalaDAO {
     public void excluir(long id) {
         try {
             this.conexao.abrirConexao();
+
+            String sql2 = "DELETE FROM monstro_sala WHERE id_sala=?";
+            PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
+            statement2.setLong(1, id);
+            statement2.executeUpdate();
+
+            String sql3 = "DELETE FROM sala_fase WHERE id_sala=?";
+            PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
+            statement3.setLong(1, id);
+            statement3.executeUpdate();
+
             String sql = "DELETE FROM sala WHERE id_sala=?";
             PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
             statement.setLong(1, id);
@@ -76,31 +89,19 @@ public class SalaDAO {
             if (rs.next()) {
                 Sala sala = new Sala(rs.getLong("id_sala"), rs.getString("nome"), rs.getString("descricao"));
 
-                String sql2 = "SELECT * FROM recompensa WHERE id_sala=?";
-                PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
-                statement2.setLong(1, id);
-                ResultSet rs2 = statement2.executeQuery();
+                RecompensaDAO recompensaDAO = new RecompensaDAO();
+                Recompensa recompensa = recompensaDAO.buscar(rs.getLong("id_recompensa"));
+                sala.setRecompensa(recompensa);
 
-                if (rs2.next()) {
-                    HabilidadeDAO habilidadeDao = new HabilidadeDAO();
-                    Habilidade habilidade = habilidadeDao.buscar(rs2.getLong("id_habilidade"));
-
-                    ItemDAO itemDao = new ItemDAO();
-                    Item item = itemDao.buscar(rs2.getLong("id_item"));
-
-                    Recompensa recompensa = new Recompensa(rs2.getInt("tipo"), rs2.getInt("raridade"), rs2.getInt("experiencia"), item, habilidade);
-                    sala.setRecompensa(recompensa);
-                }
-
-                String sql3 = "SELECT COUNT(id_monstro_sala) FROM monstro_sala WHERE id_sala=?";
+                String sql3 = "SELECT * FROM monstro_sala WHERE id_sala=?";
                 PreparedStatement statement3 = this.conexao.getConexao().prepareStatement(sql3);
                 statement3.setLong(1, id);
                 ResultSet rs3 = statement3.executeQuery();
 
-                Monstro_SalaDAO monstro_SalaDAO = new Monstro_SalaDAO();
+                MonstroDAO monstroDAO = new MonstroDAO();
 
                 while (rs3.next()) {
-                    Monstro monstro = monstro_SalaDAO.buscarMonstro(id);
+                    Monstro monstro = monstroDAO.buscar(rs3.getLong("id_monstro"));
 
                     sala.addInimigos(monstro);
                 }

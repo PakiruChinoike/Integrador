@@ -2,7 +2,6 @@ public class Recompensa{
 
     private long id;
     private int tipo;
-    private int raridade;
     private int experiencia;
     private Item item;
     private Habilidade habilidade;
@@ -10,35 +9,30 @@ public class Recompensa{
     public Recompensa() {
         this.id = 0;
         this.tipo = 0;
-        this.raridade = 0;
         this.experiencia = 0;
         this.item = new Item();
         this.habilidade = null;
     }
 
-    public Recompensa(int tipo, int raridade, int experiencia) {
+    public Recompensa(int tipo, int experiencia) {
         this.tipo = tipo;
-        this.raridade = raridade;
         this.experiencia = experiencia;
     }
 
-    public Recompensa(int tipo, int raridade, int experiencia, Item item) {
+    public Recompensa(int tipo, int experiencia, Item item) {
         this.tipo = tipo;
-        this.raridade = raridade;
         this.experiencia = experiencia;
         this.item = item;
     }
 
-    public Recompensa(int tipo, int raridade, int experiencia, Habilidade habilidade) {
+    public Recompensa(int tipo, int experiencia, Habilidade habilidade) {
         this.tipo = tipo;
-        this.raridade = raridade;
         this.experiencia = experiencia;
         this.habilidade = habilidade;
     }
 
-    public Recompensa(int tipo, int raridade, int experiencia, Item item, Habilidade habilidade) {
+    public Recompensa(int tipo, int experiencia, Item item, Habilidade habilidade) {
         this.tipo = tipo;
-        this.raridade = raridade;
         this.experiencia = experiencia;
         this.item = item;
         this.habilidade = habilidade;
@@ -58,14 +52,6 @@ public class Recompensa{
 
     public void setTipo(int tipo) {
         this.tipo = tipo;
-    }
-
-    public int getRaridade() {
-        return raridade;
-    }
-
-    public void setRaridade(int raridade) {
-        this.raridade = raridade;
     }
 
     public int getExperiencia() {

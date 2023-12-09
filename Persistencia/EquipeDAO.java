@@ -15,12 +15,21 @@ public class EquipeDAO {
     public long salvar(Equipe equipe) {
         try {
             this.conexao.abrirConexao();
-            String sql = "INSERT INTO equipe VALUES(null, ?, ?, ?)";
-            PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
-            statement.setLong(1, ((Personagem)equipe.get(0)).getId());
-            statement.setLong(2, ((Personagem)equipe.get(1)).getId());
-            statement.setLong(3, ((Personagem)equipe.get(2)).getId());
-            statement.executeUpdate();
+
+            if (equipe.get(0)!=null) {
+                String sql = "INSERT INTO equipe VALUES(?, ?, ?, ?)";
+                PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+                statement.setLong(1, equipe.getId());
+                statement.setLong(2, ((Personagem)equipe.get(0)).getId());
+                statement.setLong(3, ((Personagem)equipe.get(1)).getId());
+                statement.setLong(4, ((Personagem)equipe.get(2)).getId());
+                statement.executeUpdate();
+            }
+            else {
+                String sql = "INSERT INTO equipe VALUES(?, null, null, null)";
+                PreparedStatement statement = this.conexao.getConexao().prepareStatement(sql);
+                statement.setLong(1, equipe.getId());
+            }
 
             String sql0 = "SELECT id_equipe FROM equipe ORDER BY id_equipe DESC LIMIT 1";
             PreparedStatement statement0 = this.conexao.getConexao().prepareStatement(sql0);
@@ -46,6 +55,7 @@ public class EquipeDAO {
             statement.setLong(1, ((Personagem)equipe.get(0)).getId());
             statement.setLong(2, ((Personagem)equipe.get(1)).getId());
             statement.setLong(3, ((Personagem)equipe.get(2)).getId());
+            statement.setLong(4, equipe.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

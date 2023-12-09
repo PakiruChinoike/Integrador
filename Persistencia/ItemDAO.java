@@ -78,6 +78,9 @@ public class ItemDAO{
             ResultSet rs = statement.executeQuery();
 
             if (rs.next()) {
+                String nome = rs.getString("nome");
+                int usos = rs.getInt("usos");
+
                 String sql2 = "SELECT * FROM habilidade WHERE id_habilidade=?";
                 PreparedStatement statement2 = this.conexao.getConexao().prepareStatement(sql2);
                 statement2.setLong(1, rs.getLong("id_habilidade"));
@@ -87,7 +90,7 @@ public class ItemDAO{
                     HabilidadeDAO habilidadeDao = new HabilidadeDAO();
                     Habilidade habilidade = habilidadeDao.buscar(rs2.getLong("id_habilidade"));
 
-                    Item item = new Item(rs.getLong("id"), rs.getString("nome"), rs.getInt("usos"), habilidade);
+                    Item item = new Item(id, nome, usos, habilidade);
                     return item;
                 }
                 else {

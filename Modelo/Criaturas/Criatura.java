@@ -35,8 +35,19 @@ public class Criatura {
         this.armadura = armadura;
         this.nivel = nivel;
         this.experiencia = experiencia;
+
         this.fraquezas = new ArrayList<Boolean>(5);
-        this.atributos = new ArrayList<Integer>(4);
+        this.fraquezas.add(0, false);
+        this.fraquezas.add(1, false);
+        this.fraquezas.add(2, false);
+        this.fraquezas.add(3, false);
+        this.fraquezas.add(4, false);
+
+        this.atributos = new ArrayList<Integer>(3);
+        this.atributos.add(0, 0);
+        this.atributos.add(1, 0);
+        this.atributos.add(2, 0);
+
         this.habilidades = new ArrayList<Habilidade>();
         this.itens = new ArrayList<Item>();
         this.equipe = equipe;
@@ -50,7 +61,7 @@ public class Criatura {
         this.nivel = 1;
         this.fraquezas = new ArrayList<Boolean>(5);
         this.fraquezas.addAll(fraquezas);
-        this.atributos = new ArrayList<Integer>(4);
+        this.atributos = new ArrayList<Integer>(3);
         this.atributos.addAll(atributos);
         this.habilidades = new ArrayList<Habilidade>();
         this.itens = new ArrayList<Item>();
